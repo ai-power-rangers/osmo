@@ -177,10 +177,12 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
             
             self?.processRectangleObservations(request.results as? [VNRectangleObservation] ?? [])
         }
-        rectangleDetectionRequest?.minimumAspectRatio = 0.5
-        rectangleDetectionRequest?.maximumAspectRatio = 2.0
-        rectangleDetectionRequest?.minimumSize = 0.2
+        // Parameters for rectangle detection - more permissive for smaller objects
+        rectangleDetectionRequest?.minimumAspectRatio = 0.5  // Allow more rectangular shapes
+        rectangleDetectionRequest?.maximumAspectRatio = 2.0  // Allow more rectangular shapes
+        rectangleDetectionRequest?.minimumSize = 0.05  // Much smaller minimum size (5% of frame)
         rectangleDetectionRequest?.maximumObservations = 1
+        rectangleDetectionRequest?.minimumConfidence = 0.4  // Lower confidence for initial detection
         
         // Text recognition request (for sudoku digits)
         textRecognitionRequest = VNRecognizeTextRequest { [weak self] request, error in
@@ -280,6 +282,28 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
                 observation.bottomLeft
             ]
             
+            // Additional filtering for square-like shapes
+            let width = abs(observation.topRight.x - observation.topLeft.x)
+            let height = abs(observation.topLeft.y - observation.bottomLeft.y)
+            let aspectRatio = width > 0 ? height / width : 0
+            
+            // Check if it's a reasonable rectangle (books, papers, etc.)
+            guard aspectRatio > 0.5 && aspectRatio < 2.0 else {
+                if debugMode {
+                    logger.info("[ARKitCV] Rejected rectangle: aspect ratio \(aspectRatio) out of range")
+                }
+                continue
+            }
+            
+            // Check minimum area (at least 2% of frame for smaller objects)
+            let area = observation.boundingBox.width * observation.boundingBox.height
+            guard area > 0.02 else {
+                if debugMode {
+                    logger.info("[ARKitCV] Rejected rectangle: area \(area) too small")
+                }
+                continue
+            }
+            
             let rectangleObs = RectangleObservation(
                 id: UUID(),
                 corners: corners,
@@ -289,10 +313,10 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
             
             // Check if this is a new grid
             let isNewGrid = !trackedRectangles.values.contains { rect in
-                distance(from: rect.boundingBox.center, to: rectangleObs.boundingBox.center) < 0.1
+                distance(from: rect.boundingBox.center, to: rectangleObs.boundingBox.center) < 0.05
             }
             
-            if isNewGrid && rectangleObs.confidence > 0.7 {
+            if isNewGrid && rectangleObs.confidence > 0.4 {
                 trackedRectangles[rectangleObs.id] = rectangleObs
                 publishEvent(CVEvent(
                     type: .sudokuGridDetected(gridId: rectangleObs.id, corners: corners),

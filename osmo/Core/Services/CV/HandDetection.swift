@@ -11,7 +11,7 @@ import CoreGraphics
 
 // MARK: - Hand Detection Types
 struct HandObservation {
-    let id: UUID
+    var id: UUID
     let chirality: HandChirality
     let landmarks: HandLandmarks
     let confidence: Float

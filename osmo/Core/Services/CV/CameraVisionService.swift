@@ -33,10 +33,20 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
     private var eventContinuations: [String: AsyncStream<CVEvent>.Continuation] = [:]
     var debugMode = false
     
+    // Public access to camera session for preview
+    var cameraSession: AVCaptureSession? {
+        captureSession
+    }
+    
     // Tracking
     private var lastProcessedTime: TimeInterval = 0
-    private let processingInterval: TimeInterval = 1.0 / 30.0 // 30 FPS
+    private var processingInterval: TimeInterval = 1.0 / 30.0 // Default 30 FPS, will adjust based on camera
     private var fingerDetector = FingerDetector()
+    
+    // Smoothing
+    private var recentFingerCounts: [Int] = []
+    private let smoothingWindowSize = 3
+    private var lastPublishedCount: Int = 0
     
     // MARK: - Initialization
     override init() {
@@ -98,12 +108,48 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
     }
     
     // MARK: - Camera Setup
+    private func findBest60FpsFormat(for device: AVCaptureDevice) -> AVCaptureDevice.Format? {
+        var bestFormat: AVCaptureDevice.Format?
+        var bestResolution = 0
+        
+        for format in device.formats {
+            // Check if format supports 60 FPS
+            for range in format.videoSupportedFrameRateRanges {
+                if range.maxFrameRate >= 60.0 && range.minFrameRate <= 60.0 {
+                    let desc = format.formatDescription
+                    let dimensions = CMVideoFormatDescriptionGetDimensions(desc)
+                    let resolution = Int(dimensions.width * dimensions.height)
+                    
+                    // Prefer 720p (1280x720) for Vision framework performance
+                    if dimensions.width == 1280 && dimensions.height == 720 {
+                        logger.debug("[CameraVision] Found ideal 720p 60fps format")
+                        return format // Best choice for computer vision
+                    }
+                    
+                    // Otherwise, pick highest resolution that supports 60fps
+                    if resolution > bestResolution {
+                        bestResolution = resolution
+                        bestFormat = format
+                    }
+                }
+            }
+        }
+        
+        if bestFormat != nil {
+            logger.debug("[CameraVision] Found 60fps format")
+        } else {
+            logger.debug("[CameraVision] No 60fps format available")
+        }
+        
+        return bestFormat
+    }
+    
     private func setupCamera() async throws {
         let session = AVCaptureSession()
         session.beginConfiguration()
         
-        // Use high quality for better hand detection
-        session.sessionPreset = .high
+        // Don't force a preset - we'll select format manually
+        session.sessionPreset = .inputPriority
         
         // Get front camera
         guard let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else {
@@ -115,9 +161,37 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
         // Configure camera for optimal hand detection
         try frontCamera.lockForConfiguration()
         
-        // Set frame rate for smooth detection
-        frontCamera.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 30)
-        frontCamera.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: 30)
+        // Find and set 60 FPS format if available
+        if let format60fps = findBest60FpsFormat(for: frontCamera) {
+            // MUST set format first before frame duration
+            frontCamera.activeFormat = format60fps
+            
+            let frameDuration = CMTime(value: 1, timescale: 60)
+            frontCamera.activeVideoMinFrameDuration = frameDuration
+            frontCamera.activeVideoMaxFrameDuration = frameDuration
+            
+            // Update processing interval to match
+            processingInterval = 1.0 / 60.0
+            
+            let dimensions = CMVideoFormatDescriptionGetDimensions(format60fps.formatDescription)
+            logger.info("[CameraVision] Configured 60 FPS at \(dimensions.width)x\(dimensions.height)")
+        } else {
+            // Fallback to best available frame rate on current format
+            let format = frontCamera.activeFormat
+            let ranges = format.videoSupportedFrameRateRanges
+            if let bestRange = ranges.max(by: { $0.maxFrameRate < $1.maxFrameRate }) {
+                let targetFPS = min(30, Int32(bestRange.maxFrameRate))
+                frontCamera.activeVideoMinFrameDuration = CMTime(value: 1, timescale: targetFPS)
+                frontCamera.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: targetFPS)
+                processingInterval = 1.0 / Double(targetFPS)
+                logger.info("[CameraVision] Using fallback frame rate: \(targetFPS) FPS")
+            }
+        }
+        
+        // Disable smooth autofocus for better performance at high frame rates
+        if frontCamera.isSmoothAutoFocusSupported {
+            frontCamera.isSmoothAutoFocusEnabled = false
+        }
         
         // Enable auto-exposure and auto-focus
         if frontCamera.isExposureModeSupported(.continuousAutoExposure) {
@@ -205,10 +279,12 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
             self?.processRectangleObservations(request.results as? [VNRectangleObservation] ?? [])
         }
         
-        rectangleDetectionRequest?.minimumAspectRatio = 0.5
-        rectangleDetectionRequest?.maximumAspectRatio = 2.0
-        rectangleDetectionRequest?.minimumSize = 0.2
+        // Parameters for rectangle detection - more permissive for smaller objects
+        rectangleDetectionRequest?.minimumAspectRatio = 0.5  // Allow more rectangular shapes
+        rectangleDetectionRequest?.maximumAspectRatio = 2.0  // Allow more rectangular shapes
+        rectangleDetectionRequest?.minimumSize = 0.05  // Much smaller minimum size (5% of frame)
         rectangleDetectionRequest?.maximumObservations = 1
+        rectangleDetectionRequest?.minimumConfidence = 0.4  // Lower confidence for initial detection
     }
     
     // MARK: - Event Publishing
@@ -230,6 +306,8 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
             logger.info("[CameraVision] Processing \(observations.count) hand observations")
         }
         
+        // Create hand observations
+        var currentHands: [HandObservation] = []
         for observation in observations {
             guard let handObservation = createHandObservation(from: observation) else {
                 if debugMode {
@@ -237,35 +315,118 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
                 }
                 continue
             }
+            currentHands.append(handObservation)
+        }
+        
+        // Match current hands to tracked hands
+        var matchedHands: [(tracked: HandObservation, current: HandObservation)] = []
+        var unmatchedCurrentHands = currentHands
+        var unmatchedTrackedIds = Set(trackedHands.keys)
+        
+        // Find best matches based on position
+        for currentHand in currentHands {
+            var bestMatch: (id: UUID, distance: CGFloat)?
             
-            // Track hand
-            if !trackedHands.keys.contains(handObservation.id) {
-                trackedHands[handObservation.id] = handObservation
-                publishEvent(CVEvent(
-                    type: .handDetected(handId: handObservation.id, chirality: handObservation.chirality)
-                ))
+            for (trackedId, trackedHand) in trackedHands {
+                let dist = distance(from: trackedHand.boundingBox.center, to: currentHand.boundingBox.center)
+                // Match if hand moved less than 20% of screen
+                if dist < 0.2 {
+                    if bestMatch == nil || dist < bestMatch!.distance {
+                        bestMatch = (trackedId, dist)
+                    }
+                }
             }
             
-            // Detect fingers
-            let fingerResult = fingerDetector.detectRaisedFingers(from: handObservation)
-            
-            if debugMode {
-                logger.info("[CameraVision] Finger detection result: count=\(fingerResult.count), confidence=\(fingerResult.confidence)")
+            if let match = bestMatch {
+                // Update tracked hand with new observation but keep same ID
+                var updatedHand = currentHand
+                updatedHand.id = match.id
+                matchedHands.append((trackedHands[match.id]!, updatedHand))
+                unmatchedTrackedIds.remove(match.id)
+                unmatchedCurrentHands.removeAll { $0.id == currentHand.id }
             }
-            
-            // Publish finger count event
+        }
+        
+        // Handle new hands
+        for newHand in unmatchedCurrentHands {
+            let id = UUID()
+            var handWithId = newHand
+            handWithId.id = id
+            trackedHands[id] = handWithId
             publishEvent(CVEvent(
-                type: .fingerCountDetected(count: fingerResult.count),
-                position: CGPoint(x: 0.5, y: 0.5),
-                confidence: fingerResult.confidence,
-                metadata: CVMetadata(
-                    boundingBox: handObservation.boundingBox,
-                    additionalProperties: [
-                        "hand_chirality": fingerResult.handChirality.rawValue,
-                        "raised_fingers": fingerResult.raisedFingers.map { $0.rawValue }
-                    ]
-                )
+                type: .handDetected(handId: id, chirality: handWithId.chirality)
             ))
+        }
+        
+        // Handle lost hands
+        for lostId in unmatchedTrackedIds {
+            trackedHands.removeValue(forKey: lostId)
+            publishEvent(CVEvent(type: .handLost(handId: lostId)))
+        }
+        
+        // Update tracked hands and process fingers for each hand
+        for (_, updatedHand) in matchedHands {
+            trackedHands[updatedHand.id] = updatedHand
+        }
+        
+        // Process finger detection for all current hands
+        if !trackedHands.isEmpty {
+            // For multiple hands, show total finger count
+            var totalFingerCount = 0
+            var avgConfidence: Float = 0
+            var handResults: [(HandObservation, FingerDetectionResult)] = []
+            
+            for (_, hand) in trackedHands {
+                let fingerResult = fingerDetector.detectRaisedFingers(from: hand)
+                handResults.append((hand, fingerResult))
+                totalFingerCount += fingerResult.count
+                avgConfidence += fingerResult.confidence
+            }
+            
+            avgConfidence /= Float(trackedHands.count)
+            
+            // For single hand, show individual result with smoothing
+            if trackedHands.count == 1, let (hand, fingerResult) = handResults.first {
+                let smoothedCount = smoothFingerCount(fingerResult.count)
+                
+                // Always publish to update position even if count hasn't changed
+                publishEvent(CVEvent(
+                    type: .fingerCountDetected(count: smoothedCount),
+                    position: hand.boundingBox.center,
+                    confidence: fingerResult.confidence,
+                    metadata: CVMetadata(
+                        boundingBox: hand.boundingBox,
+                        additionalProperties: [
+                            "hand_chirality": fingerResult.handChirality.rawValue,
+                            "raised_fingers": fingerResult.raisedFingers.map { $0.rawValue }
+                        ]
+                    )
+                ))
+                lastPublishedCount = smoothedCount
+            } else if trackedHands.count > 1 {
+                // For multiple hands, show each hand separately without smoothing
+                for (hand, fingerResult) in handResults {
+                    publishEvent(CVEvent(
+                        type: .fingerCountDetected(count: fingerResult.count),
+                        position: hand.boundingBox.center,
+                        confidence: fingerResult.confidence,
+                        metadata: CVMetadata(
+                            boundingBox: hand.boundingBox,
+                            additionalProperties: [
+                                "hand_chirality": fingerResult.handChirality.rawValue,
+                                "raised_fingers": fingerResult.raisedFingers.map { $0.rawValue },
+                                "hand_id": hand.id.uuidString
+                            ]
+                        )
+                    ))
+                }
+                // Clear smoothing for multiple hands
+                recentFingerCounts.removeAll()
+            }
+        } else {
+            // No hands detected
+            lastPublishedCount = 0
+            recentFingerCounts.removeAll()
         }
     }
     
@@ -318,11 +479,18 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
     }
     
     private func determineChirality(landmarks: HandLandmarks) -> HandChirality {
-        // Simple heuristic: check if thumb is on left or right of wrist
-        if landmarks.thumbCMC.x < landmarks.wrist.x {
-            return .left
+        // For front camera (mirrored), check thumb position relative to index finger
+        // In a mirrored view:
+        // - Right hand: thumb is to the left of index finger
+        // - Left hand: thumb is to the right of index finger
+        let thumbX = landmarks.thumbCMC.x
+        let indexX = landmarks.indexMCP.x
+        
+        // Since the camera is mirrored, we need to invert the logic
+        if thumbX < indexX {
+            return .right  // Thumb on left side in mirrored view = right hand
         } else {
-            return .right
+            return .left   // Thumb on right side in mirrored view = left hand
         }
     }
     
@@ -356,11 +524,34 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
+    // MARK: - Smoothing
+    private func smoothFingerCount(_ newCount: Int) -> Int {
+        // Add to recent counts
+        recentFingerCounts.append(newCount)
+        
+        // Keep only recent values
+        if recentFingerCounts.count > smoothingWindowSize {
+            recentFingerCounts.removeFirst()
+        }
+        
+        // Use mode (most frequent value) for stability
+        let countFrequency = Dictionary(recentFingerCounts.map { ($0, 1) }, uniquingKeysWith: +)
+        let mode = countFrequency.max(by: { $0.value < $1.value })?.key ?? newCount
+        
+        return mode
+    }
+    
     // MARK: - Rectangle Processing
     private var trackedRectangles: [UUID: RectangleObservation] = [:]
+    private var rectangleDetectionHistory: [Date] = []
+    private var lastRectanglePublishTime: Date = Date()
+    private var stableRectangleId: UUID?
     
     private func processRectangleObservations(_ observations: [VNRectangleObservation]) {
-        // Similar to ARKitCVService implementation
+        if debugMode && !observations.isEmpty {
+            logger.info("[CameraVision] Processing \(observations.count) rectangle observations")
+        }
+        
         for observation in observations {
             let corners = [
                 observation.topLeft,
@@ -369,6 +560,53 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
                 observation.bottomLeft
             ]
             
+            // Validate it's actually a rectangle (not a parallelogram)
+            let topWidth = abs(observation.topRight.x - observation.topLeft.x)
+            let bottomWidth = abs(observation.bottomRight.x - observation.bottomLeft.x)
+            let leftHeight = abs(observation.topLeft.y - observation.bottomLeft.y)
+            let rightHeight = abs(observation.topRight.y - observation.bottomRight.y)
+            
+            // Check if opposite sides are roughly equal (within 10% tolerance)
+            let widthRatio = min(topWidth, bottomWidth) / max(topWidth, bottomWidth)
+            let heightRatio = min(leftHeight, rightHeight) / max(leftHeight, rightHeight)
+            
+            guard widthRatio > 0.9 && heightRatio > 0.9 else {
+                if debugMode {
+                    logger.info("[CameraVision] Rejected parallelogram: width ratio \(widthRatio), height ratio \(heightRatio)")
+                }
+                continue
+            }
+            
+            // Check angles are roughly 90 degrees
+            let topLeftAngle = angleAtCorner(p1: observation.bottomLeft, corner: observation.topLeft, p2: observation.topRight)
+            let topRightAngle = angleAtCorner(p1: observation.topLeft, corner: observation.topRight, p2: observation.bottomRight)
+            
+            // Angles should be close to 90 degrees (within 15 degree tolerance)
+            guard abs(topLeftAngle - 90) < 15 && abs(topRightAngle - 90) < 15 else {
+                if debugMode {
+                    logger.info("[CameraVision] Rejected non-rectangle: angles \(topLeftAngle)°, \(topRightAngle)°")
+                }
+                continue
+            }
+            
+            // Check aspect ratio
+            let aspectRatio = topWidth > 0 ? leftHeight / topWidth : 0
+            guard aspectRatio > 0.4 && aspectRatio < 2.5 else {
+                if debugMode {
+                    logger.info("[CameraVision] Rejected rectangle: aspect ratio \(aspectRatio) out of range")
+                }
+                continue
+            }
+            
+            // Check minimum area (at least 2% of frame for smaller objects)
+            let area = observation.boundingBox.width * observation.boundingBox.height
+            guard area > 0.02 else {
+                if debugMode {
+                    logger.info("[CameraVision] Rejected rectangle: area \(area) too small")
+                }
+                continue
+            }
+            
             let rectangleObs = RectangleObservation(
                 id: UUID(),
                 corners: corners,
@@ -376,14 +614,100 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
                 boundingBox: observation.boundingBox
             )
             
-            if rectangleObs.confidence > 0.7 {
-                trackedRectangles[rectangleObs.id] = rectangleObs
-                publishEvent(CVEvent(
-                    type: .sudokuGridDetected(gridId: rectangleObs.id, corners: corners),
-                    confidence: rectangleObs.confidence
-                ))
+            if debugMode {
+                logger.info("[CameraVision] Rectangle candidate: confidence=\(rectangleObs.confidence), aspectRatio=\(aspectRatio), area=\(area)")
+            }
+            
+            // Lower confidence threshold for better detection
+            if rectangleObs.confidence > 0.4 {
+                // Track detection history
+                let now = Date()
+                rectangleDetectionHistory.append(now)
+                
+                // Remove old detections (older than 0.5 seconds)
+                rectangleDetectionHistory.removeAll { now.timeIntervalSince($0) > 0.5 }
+                
+                // Find matching existing rectangle
+                let matchingRectangle = trackedRectangles.values.first { existing in
+                    let centerDistance = distance(from: existing.boundingBox.center, to: rectangleObs.boundingBox.center)
+                    return centerDistance < 0.1 // 10% movement threshold
+                }
+                
+                if let existing = matchingRectangle {
+                    // Update existing rectangle
+                    trackedRectangles[existing.id] = rectangleObs
+                    
+                    // Only publish updates every 100ms to reduce flicker
+                    if now.timeIntervalSince(lastRectanglePublishTime) > 0.1 {
+                        lastRectanglePublishTime = now
+                        publishEvent(CVEvent(
+                            type: .sudokuGridDetected(gridId: existing.id, corners: corners),
+                            confidence: rectangleObs.confidence,
+                            metadata: CVMetadata(
+                                boundingBox: observation.boundingBox,
+                                additionalProperties: [
+                                    "corners": corners.map { ["x": $0.x, "y": $0.y] },
+                                    "aspectRatio": aspectRatio,
+                                    "area": area
+                                ]
+                            )
+                        ))
+                    }
+                } else if rectangleDetectionHistory.count >= 3 {
+                    // Need at least 3 detections in 0.5 seconds to consider it stable
+                    let newId = UUID()
+                    trackedRectangles[newId] = rectangleObs
+                    stableRectangleId = newId
+                    
+                    publishEvent(CVEvent(
+                        type: .sudokuGridDetected(gridId: newId, corners: corners),
+                        confidence: rectangleObs.confidence,
+                        metadata: CVMetadata(
+                            boundingBox: observation.boundingBox,
+                            additionalProperties: [
+                                "corners": corners.map { ["x": $0.x, "y": $0.y] },
+                                "aspectRatio": aspectRatio,
+                                "area": area
+                            ]
+                        )
+                    ))
+                }
             }
         }
+        
+        // Check for lost rectangles with hysteresis
+        if observations.isEmpty {
+            let now = Date()
+            // Only clear if no detections for 0.3 seconds
+            if rectangleDetectionHistory.isEmpty || now.timeIntervalSince(rectangleDetectionHistory.last!) > 0.3 {
+                if !trackedRectangles.isEmpty {
+                    for (gridId, _) in trackedRectangles {
+                        publishEvent(CVEvent(type: .sudokuGridLost(gridId: gridId)))
+                    }
+                    trackedRectangles.removeAll()
+                    stableRectangleId = nil
+                }
+            }
+        }
+    }
+    
+    // Helper function for center calculation
+    private func distance(from p1: CGPoint, to p2: CGPoint) -> CGFloat {
+        let dx = p2.x - p1.x
+        let dy = p2.y - p1.y
+        return sqrt(dx * dx + dy * dy)
+    }
+    
+    // Helper function to calculate angle at a corner
+    private func angleAtCorner(p1: CGPoint, corner: CGPoint, p2: CGPoint) -> CGFloat {
+        let v1 = CGPoint(x: p1.x - corner.x, y: p1.y - corner.y)
+        let v2 = CGPoint(x: p2.x - corner.x, y: p2.y - corner.y)
+        
+        let dot = v1.x * v2.x + v1.y * v2.y
+        let det = v1.x * v2.y - v1.y * v2.x
+        
+        let angle = atan2(det, dot) * 180 / .pi
+        return abs(angle)
     }
 }
 
@@ -424,4 +748,11 @@ extension CameraVisionService: AVCaptureVideoDataOutputSampleBufferDelegate {
 extension CVError {
     static let cameraNotAvailable = CVError.sessionFailure(NSError(domain: "CameraVision", code: 1, userInfo: [NSLocalizedDescriptionKey: "Front camera not available"]))
     static let cameraConfigurationFailed = CVError.sessionFailure(NSError(domain: "CameraVision", code: 2, userInfo: [NSLocalizedDescriptionKey: "Failed to configure camera"]))
+}
+
+// MARK: - CGRect Extension
+private extension CGRect {
+    var center: CGPoint {
+        CGPoint(x: midX, y: midY)
+    }
 }
