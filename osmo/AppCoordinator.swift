@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import Observation
 
 // MARK: - App Coordinator
+@Observable
 final class AppCoordinator: CoordinatorProtocol {
-    @Published var navigationPath = NavigationPath()
-    @Published var errorMessage: String?
-    @Published var showError = false
+    var navigationPath = NavigationPath()
+    var errorMessage: String?
+    var showError = false
     
     // MARK: - Navigation
     func navigateTo(_ destination: NavigationDestination) {

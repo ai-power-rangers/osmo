@@ -1,5 +1,28 @@
 # Phase 3: CV/ARKit Integration - Detailed Implementation Plan
 
+--------------------------
+
+NOTE:
+Add rectangle detection to CV Service - Phase 3 only has hand detection, but sudoku needs VNDetectRectanglesRequest for grid detection
+Extend CVEventType enum - Add the sudoku events from Phase 4:
+
+sudokuGridDetected
+sudokuCellWritten
+sudokuGridLost
+sudokuCompleted
+
+
+Add grid tracking to ARKitCVService - Need to track detected grids with transforms, not just process hand observations
+AsyncStream support - Update CVServiceProtocol to use AsyncStream<CVEvent> instead of the callback-based subscription (as shown in Phase 4)
+Add text recognition request - Include VNRecognizeTextRequest setup for digit detection
+
+ALSO:
+-Replace Combine subscriptions with AsyncStream
+-Update CVService event system
+-Permission manager to @Observable
+
+--------------------------
+
 ## Overview
 Phase 3 implements the computer vision service using ARKit and Vision framework for finger detection. This phase includes camera permissions, real-time hand tracking, event publishing, and debug visualization tools.
 

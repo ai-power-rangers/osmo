@@ -60,25 +60,3 @@ struct CVMetadata {
         self.additionalProperties = additionalProperties
     }
 }
-
-// MARK: - CV Subscription
-class CVSubscription {
-    let id = UUID()
-    let gameId: String
-    let eventTypes: [CVEventType]
-    private let handler: (CVEvent) -> Void
-    
-    init(gameId: String, eventTypes: [CVEventType], handler: @escaping (CVEvent) -> Void) {
-        self.gameId = gameId
-        self.eventTypes = eventTypes
-        self.handler = handler
-    }
-    
-    func handle(_ event: CVEvent) {
-        handler(event)
-    }
-    
-    func cancel() {
-        // Implementation will be added when we build the real CV service
-    }
-}

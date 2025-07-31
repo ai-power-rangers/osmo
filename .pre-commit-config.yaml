@@ -1,0 +1,14 @@
+repos:
+  - repo: https://github.com/realm/SwiftLint
+    rev: 0.54.0
+    hooks:
+      - id: swiftlint
+        
+  - repo: local
+    hooks:
+      - id: swift-compile-check
+        name: Swift Compile Check
+        entry: swift -typecheck
+        language: system
+        files: '\.swift$'
+        pass_filenames: true

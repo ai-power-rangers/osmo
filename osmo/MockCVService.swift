@@ -7,13 +7,17 @@
 
 import Foundation
 import CoreGraphics
+import Observation
+import os.log
 
 // MARK: - Mock CV Service
+@Observable
 final class MockCVService: CVServiceProtocol {
+    private let logger = Logger(subsystem: "com.osmoapp", category: "cv")
     var isSessionActive = false
     var debugMode = false
     
-    private var subscriptions: [UUID: CVSubscription] = [:]
+    private var eventContinuations: [String: AsyncStream<CVEvent>.Continuation] = [:]
     private var eventTimer: Timer?
     
     // MARK: - Session Management
@@ -21,33 +25,32 @@ final class MockCVService: CVServiceProtocol {
         guard !isSessionActive else { return }
         isSessionActive = true
         startMockEventGeneration()
-        print("[MockCV] Session started")
+        logger.info("[MockCV] Session started")
     }
     
     func stopSession() {
         isSessionActive = false
         eventTimer?.invalidate()
         eventTimer = nil
-        print("[MockCV] Session stopped")
+        
+        // End all streams
+        eventContinuations.values.forEach { $0.finish() }
+        eventContinuations.removeAll()
+        
+        logger.info("[MockCV] Session stopped")
     }
     
-    // MARK: - Subscriptions
-    func subscribe(gameId: String,
-                  events: [CVEventType],
-                  handler: @escaping (CVEvent) -> Void) -> CVSubscription {
-        let subscription = CVSubscription(
-            gameId: gameId,
-            eventTypes: events,
-            handler: handler
-        )
-        subscriptions[subscription.id] = subscription
-        print("[MockCV] Game \(gameId) subscribed to \(events.count) event types")
-        return subscription
-    }
-    
-    func unsubscribe(_ subscription: CVSubscription) {
-        subscriptions.removeValue(forKey: subscription.id)
-        print("[MockCV] Subscription removed for game \(subscription.gameId)")
+    // MARK: - Event Stream
+    func eventStream(gameId: String, events: [CVEventType]) -> AsyncStream<CVEvent> {
+        AsyncStream { continuation in
+            eventContinuations[gameId] = continuation
+            logger.info("[MockCV] Game \(gameId) subscribed to event stream")
+            
+            continuation.onTermination = { [weak self] _ in
+                self?.eventContinuations.removeValue(forKey: gameId)
+                self?.logger.info("[MockCV] Game \(gameId) stream terminated")
+            }
+        }
     }
     
     // MARK: - Mock Event Generation
@@ -66,25 +69,13 @@ final class MockCVService: CVServiceProtocol {
             confidence: 0.95
         )
         
-        // Notify relevant subscribers
-        DispatchQueue.main.async { [weak self] in
-            self?.subscriptions.values.forEach { subscription in
-                // Check if this subscription wants this type of event
-                let wantsFingerEvents = subscription.eventTypes.contains { eventType in
-                    if case .fingerCountDetected = eventType {
-                        return true
-                    }
-                    return false
-                }
-                
-                if wantsFingerEvents {
-                    subscription.handle(event)
-                }
-            }
+        // Send to all active continuations
+        eventContinuations.values.forEach { continuation in
+            continuation.yield(event)
         }
         
         if debugMode {
-            print("[MockCV] Generated event: \(fingerCount) fingers detected")
+            logger.debug("[MockCV] Generated event: \(fingerCount) fingers detected")
         }
     }
 }

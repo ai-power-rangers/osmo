@@ -1,0 +1,4 @@
+-only do ios 17+ modern ios
+-swiftui (no uikit)
+-lint check: chmod +x /Users/mitchellwhite/Code/osmo/Scripts/lint.sh
+-type check: chmod +x /Users/mitchellwhite/Code/osmo/Scripts/typecheck.sh

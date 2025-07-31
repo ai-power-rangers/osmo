@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import Observation
+import os.log
 
 // MARK: - Service Locator
+@Observable
 final class ServiceLocator {
+    private static let logger = Logger(subsystem: "com.osmoapp", category: "services")
     static let shared = ServiceLocator()
     
     private init() {}
@@ -75,41 +79,37 @@ final class ServiceLocator {
     
     // MARK: - Service Validation
     static func validateServices() {
-        print("\n=== Service Validation ===")
+        logger.info("\n=== Service Validation ===")
         
         // Test CV Service
-        do {
-            let cvService = shared.resolve(CVServiceProtocol.self)
-            print("✅ CV Service: \(type(of: cvService))")
-        } catch {
-            print("❌ CV Service: Not registered")
+        if let cvService = shared.cvService {
+            logger.info("✅ CV Service: \(type(of: cvService))")
+        } else {
+            logger.error("❌ CV Service: Not registered")
         }
         
         // Test Audio Service
-        do {
-            let audioService = shared.resolve(AudioServiceProtocol.self)
-            print("✅ Audio Service: \(type(of: audioService))")
-        } catch {
-            print("❌ Audio Service: Not registered")
+        if let audioService = shared.audioService {
+            logger.info("✅ Audio Service: \(type(of: audioService))")
+        } else {
+            logger.error("❌ Audio Service: Not registered")
         }
         
         // Test Analytics Service
-        do {
-            let analyticsService = shared.resolve(AnalyticsServiceProtocol.self)
-            print("✅ Analytics Service: \(type(of: analyticsService))")
-        } catch {
-            print("❌ Analytics Service: Not registered")
+        if let analyticsService = shared.analyticsService {
+            logger.info("✅ Analytics Service: \(type(of: analyticsService))")
+        } else {
+            logger.error("❌ Analytics Service: Not registered")
         }
         
         // Test Persistence Service
-        do {
-            let persistenceService = shared.resolve(PersistenceServiceProtocol.self)
-            print("✅ Persistence Service: \(type(of: persistenceService))")
-        } catch {
-            print("❌ Persistence Service: Not registered")
+        if let persistenceService = shared.persistenceService {
+            logger.info("✅ Persistence Service: \(type(of: persistenceService))")
+        } else {
+            logger.error("❌ Persistence Service: Not registered")
         }
         
-        print("========================\n")
+        logger.info("========================\n")
     }
 }
 

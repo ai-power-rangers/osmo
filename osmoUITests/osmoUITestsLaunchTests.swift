@@ -31,3 +31,4 @@ final class osmoUITestsLaunchTests: XCTestCase {
         add(attachment)
     }
 }
+

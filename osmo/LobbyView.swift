@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LobbyView: View {
     @Environment(\.coordinator) var coordinator
-    @State private var selectedCategory: GameCategory? = nil
+    @State private var selectedCategory: GameCategory?
     
     // Mock game data for Phase 1
     let mockGames = [

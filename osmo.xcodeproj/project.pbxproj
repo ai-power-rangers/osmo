@@ -13,6 +13,7 @@
 		BDA25A172E3AFE0300667CEC /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA25A162E3AFE0300667CEC /* SpriteKit.framework */; };
 		BDA25A272E3AFF2C00667CEC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA25A262E3AFF2C00667CEC /* AVFoundation.framework */; };
 		BDA25A292E3AFFD500667CEC /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA25A282E3AFFD500667CEC /* Vision.framework */; };
+		BDA25A2B2E3B03EF00667CEC /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA25A2A2E3B03EF00667CEC /* SwiftData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		BDA25A162E3AFE0300667CEC /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		BDA25A262E3AFF2C00667CEC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BDA25A282E3AFFD500667CEC /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
+		BDA25A2A2E3B03EF00667CEC /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +72,7 @@
 				BDA25A152E3AFDFC00667CEC /* ARKit.framework in Frameworks */,
 				BDA25A0F2E3AFDE700667CEC /* SwiftUI.framework in Frameworks */,
 				BDA25A272E3AFF2C00667CEC /* AVFoundation.framework in Frameworks */,
+				BDA25A2B2E3B03EF00667CEC /* SwiftData.framework in Frameworks */,
 				BDA25A172E3AFE0300667CEC /* SpriteKit.framework in Frameworks */,
 				BDA25A292E3AFFD500667CEC /* Vision.framework in Frameworks */,
 				BDA25A132E3AFDF600667CEC /* StoreKit.framework in Frameworks */,
@@ -117,6 +120,7 @@
 		BDA25A0D2E3AFDE600667CEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDA25A2A2E3B03EF00667CEC /* SwiftData.framework */,
 				BDA25A282E3AFFD500667CEC /* Vision.framework */,
 				BDA25A262E3AFF2C00667CEC /* AVFoundation.framework */,
 				BDA25A162E3AFE0300667CEC /* SpriteKit.framework */,

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var coordinator: AppCoordinator
+    @Environment(AppCoordinator.self) var coordinator
     
     var body: some View {
+        @Bindable var coordinator = coordinator
+        
         NavigationStack(path: $coordinator.navigationPath) {
             LobbyView()
                 .navigationDestination(for: NavigationDestination.self) { destination in
@@ -72,5 +74,5 @@ struct ParentGatePlaceholder: View {
 
 #Preview {
     ContentView()
-        .environmentObject(AppCoordinator())
+        .environment(AppCoordinator())
 }
