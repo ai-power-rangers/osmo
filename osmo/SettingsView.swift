@@ -46,6 +46,12 @@ struct SettingsView: View {
                         let audio = ServiceLocator.shared.resolve(AudioServiceProtocol.self)
                         audio.playHaptic(.medium)
                     }
+                    
+                    Button("Test Computer Vision") {
+                        dismiss()
+                        coordinator.navigateTo(.cvTest)
+                    }
+                    .foregroundColor(.blue)
                 }
                 
                 Section("About") {

@@ -12,13 +12,19 @@ import os.log
 
 // MARK: - Mock CV Service
 @Observable
-final class MockCVService: CVServiceProtocol {
+final class MockCVService: CVServiceProtocol, ServiceLifecycle {
     private let logger = Logger(subsystem: "com.osmoapp", category: "cv")
     var isSessionActive = false
     var debugMode = false
     
     private var eventContinuations: [String: AsyncStream<CVEvent>.Continuation] = [:]
     private var eventTimer: Timer?
+    
+    // MARK: - ServiceLifecycle
+    func initialize() async throws {
+        logger.info("[MockCV] Service initialized")
+        // Mock service has no dependencies to initialize
+    }
     
     // MARK: - Session Management
     func startSession() async throws {

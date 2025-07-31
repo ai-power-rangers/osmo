@@ -15,6 +15,46 @@ enum CVEventType: Equatable {
     case objectRemoved(type: String, objectId: UUID)
     case gestureRecognized(type: GestureType)
     case fingerCountDetected(count: Int) // For our mock game
+    
+    // Sudoku-specific events
+    case sudokuGridDetected(gridId: UUID, corners: [CGPoint])
+    case sudokuCellWritten(gridId: UUID, row: Int, col: Int, digit: Int)
+    case sudokuGridLost(gridId: UUID)
+    case sudokuCompleted(gridId: UUID)
+    
+    // Hand tracking events
+    case handDetected(handId: UUID, chirality: HandChirality)
+    case handLost(handId: UUID)
+    case handPoseChanged(handId: UUID, pose: HandPose)
+}
+
+// MARK: - Hand Types
+enum HandChirality: String, Equatable {
+    case left
+    case right
+    case unknown
+}
+
+enum HandPose: Equatable {
+    case open
+    case closed
+    case pointing
+    case peace
+    case thumbsUp
+    case ok
+    case custom(String)
+    
+    var rawValue: String {
+        switch self {
+        case .open: return "open"
+        case .closed: return "closed"
+        case .pointing: return "pointing"
+        case .peace: return "peace"
+        case .thumbsUp: return "thumbsUp"
+        case .ok: return "ok"
+        case .custom(let value): return value
+        }
+    }
 }
 
 enum GestureType: String, Equatable {

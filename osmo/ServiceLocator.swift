@@ -12,7 +12,7 @@ import os.log
 // MARK: - Service Locator
 @Observable
 final class ServiceLocator {
-    private static let logger = Logger(subsystem: "com.osmoapp", category: "services")
+    static let logger = Logger(subsystem: "com.osmoapp", category: "services")
     static let shared = ServiceLocator()
     
     private init() {}
@@ -23,16 +23,19 @@ final class ServiceLocator {
     private var analyticsService: AnalyticsServiceProtocol?
     private var persistenceService: PersistenceServiceProtocol?
     
+    // Track initialization state
+    var isInitialized = false
+    
     // MARK: - Registration
     func register<T>(_ service: T, for type: T.Type) {
-        switch type {
-        case is CVServiceProtocol.Type:
+        switch ObjectIdentifier(type) {
+        case ObjectIdentifier(CVServiceProtocol.self):
             cvService = service as? CVServiceProtocol
-        case is AudioServiceProtocol.Type:
+        case ObjectIdentifier(AudioServiceProtocol.self):
             audioService = service as? AudioServiceProtocol
-        case is AnalyticsServiceProtocol.Type:
+        case ObjectIdentifier(AnalyticsServiceProtocol.self):
             analyticsService = service as? AnalyticsServiceProtocol
-        case is PersistenceServiceProtocol.Type:
+        case ObjectIdentifier(PersistenceServiceProtocol.self):
             persistenceService = service as? PersistenceServiceProtocol
         default:
             fatalError("Unknown service type: \(type)")
@@ -75,6 +78,17 @@ final class ServiceLocator {
             analyticsService: resolve(AnalyticsServiceProtocol.self),
             persistenceService: resolve(PersistenceServiceProtocol.self)
         )
+    }
+    
+    // MARK: - Initialization State
+    var servicesInitialized: Bool {
+        isInitialized
+    }
+    
+    func requireInitialized() {
+        guard isInitialized else {
+            fatalError("Services accessed before initialization. Call ServiceLocator.shared.initializeServices() first.")
+        }
     }
     
     // MARK: - Service Validation

@@ -12,7 +12,7 @@ import Observation
 
 // MARK: - Analytics Service
 @Observable
-final class AnalyticsService: AnalyticsServiceProtocol {
+final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
     private let logger = Logger(subsystem: "com.osmoapp", category: "analytics")
     private var eventQueue: [AnalyticsEvent] = []
     private let maxQueueSize = 100
@@ -30,6 +30,23 @@ final class AnalyticsService: AnalyticsServiceProtocol {
     
     deinit {
         flushTask?.cancel()
+    }
+    
+    // MARK: - ServiceLifecycle
+    func initialize() async throws {
+        // Load any persisted session
+        let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
+        if let session = await persistence.loadCurrentSession() {
+            currentSession = GameSession(
+                sessionId: UUID(),
+                gameId: session.gameId,
+                startTime: session.startTime,
+                events: [],
+                cvEventCount: 0,
+                errorCount: 0
+            )
+            logger.info("[Analytics] Resumed session: \(session.gameId)")
+        }
     }
     
     // MARK: - Event Logging

@@ -13,7 +13,7 @@ import os.log
 
 // MARK: - Audio Engine Service
 @Observable
-final class AudioEngineService: AudioServiceProtocol {
+final class AudioEngineService: AudioServiceProtocol, ServiceLifecycle {
     private let logger = Logger(subsystem: "com.osmoapp", category: "audio")
     // Audio Engine
     private let audioEngine = AVAudioEngine()
@@ -42,7 +42,7 @@ final class AudioEngineService: AudioServiceProtocol {
         mainMixer = audioEngine.mainMixerNode
         setupAudioEngine()
         setupHaptics()
-        Task { await loadSettings() }
+        // Don't load settings in init - let the app do it after all services are registered
     }
     
     // MARK: - Setup
@@ -288,6 +288,11 @@ final class AudioEngineService: AudioServiceProtocol {
         if let pattern = hapticPatterns[type] {
             try? hapticEngine?.makePlayer(with: pattern).start(atTime: 0)
         }
+    }
+    
+    // MARK: - ServiceLifecycle
+    func initialize() async throws {
+        await loadSettings()
     }
     
     // MARK: - Settings

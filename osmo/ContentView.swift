@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(AppCoordinator.self) var coordinator
+    @State private var permissionManager = CameraPermissionManager.shared
+    @State private var showPermissionView = false
     
     var body: some View {
         @Bindable var coordinator = coordinator
@@ -20,11 +22,18 @@ struct ContentView: View {
                     case .lobby:
                         LobbyView()
                     case .game(let gameId):
-                        GameHostPlaceholder(gameId: gameId)
+                        // Check permission before showing game
+                        if permissionManager.status.canUseCamera {
+                            GameHostPlaceholder(gameId: gameId)
+                        } else {
+                            CameraPermissionNeededView(gameId: gameId)
+                        }
                     case .settings:
                         SettingsView()
                     case .parentGate:
                         ParentGatePlaceholder()
+                    case .cvTest:
+                        CVTestView()
                     }
                 }
         }
@@ -35,6 +44,19 @@ struct ContentView: View {
         } message: {
             Text(coordinator.errorMessage ?? "An error occurred")
         }
+        .onAppear {
+            checkInitialPermissions()
+        }
+    }
+    
+    private func checkInitialPermissions() {
+        permissionManager.checkCurrentStatus()
+        
+        // Log permission status
+        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
+        analytics.logEvent("app_launch_permission_status", parameters: [
+            "camera_permission": String(describing: permissionManager.status)
+        ])
     }
 }
 
@@ -69,6 +91,22 @@ struct ParentGatePlaceholder: View {
     var body: some View {
         Text("Parent Gate - Coming Soon")
             .navigationTitle("Parent Gate")
+    }
+}
+
+// MARK: - Permission Needed View
+struct CameraPermissionNeededView: View {
+    let gameId: String
+    @Environment(AppCoordinator.self) var coordinator
+    
+    var body: some View {
+        CameraPermissionView {
+            // Permission granted - reload the game
+            coordinator.navigateBack()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                coordinator.launchGame(gameId)
+            }
+        }
     }
 }
 

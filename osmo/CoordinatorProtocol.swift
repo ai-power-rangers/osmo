@@ -13,6 +13,7 @@ enum NavigationDestination: Hashable {
     case game(gameId: String)
     case settings
     case parentGate
+    case cvTest
 }
 
 // MARK: - Coordinator Protocol

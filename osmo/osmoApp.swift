@@ -63,6 +63,9 @@ struct OsmoApp: App {
             .preferredColorScheme(.light)
             .modelContainer(modelContainer)
             .onChange(of: scenePhase) { _, newPhase in
+                // Guard against accessing services before initialization
+                guard ServiceLocator.shared.isInitialized else { return }
+                
                 if let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self) as? AnalyticsService {
                     analytics.handleScenePhaseChange(newPhase)
                 }
@@ -71,18 +74,24 @@ struct OsmoApp: App {
     }
     
     private func setupServices() {
-        // Register modern services
-        ServiceLocator.shared.register(MockCVService(), for: CVServiceProtocol.self) // Still mock in Phase 2
-        ServiceLocator.shared.register(AudioEngineService(), for: AudioServiceProtocol.self)
-        ServiceLocator.shared.register(AnalyticsService(), for: AnalyticsServiceProtocol.self)
+        // CRITICAL: Services must be registered in dependency order
         
-        // Register SwiftData service
+        // 1. Persistence - No dependencies
         do {
             let swiftDataService = try SwiftDataService()
             ServiceLocator.shared.register(swiftDataService, for: PersistenceServiceProtocol.self)
         } catch {
             fatalError("Failed to create SwiftData service: \(error)")
         }
+        
+        // 2. Analytics - Depends on Persistence
+        ServiceLocator.shared.register(AnalyticsService(), for: AnalyticsServiceProtocol.self)
+        
+        // 3. Audio - Depends on Persistence
+        ServiceLocator.shared.register(AudioEngineService(), for: AudioServiceProtocol.self)
+        
+        // 4. CV - Depends on Analytics
+        ServiceLocator.shared.register(MockCVService(), for: CVServiceProtocol.self) // Temporarily using mock to test
         
         logger.info("[App] All services registered")
         
@@ -93,16 +102,20 @@ struct OsmoApp: App {
     
     @MainActor
     private func initializeApp() async {
-        // Perform any async initialization
-        _ = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
+        // Initialize all services properly
+        do {
+            try await ServiceLocator.shared.initializeServices()
+        } catch {
+            logger.error("[App] Failed to initialize services: \(error)")
+        }
         
-        // Preload common sounds
+        // Preload common sounds after initialization
         let audio = ServiceLocator.shared.resolve(AudioServiceProtocol.self)
         if let audioService = audio as? AudioEngineService {
             audioService.preloadCommonSounds()
         }
         
-        // Minimum loading time
+        // Minimum loading time for smooth UX
         try? await Task.sleep(for: .seconds(1.5))
     }
 }
