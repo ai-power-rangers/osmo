@@ -91,7 +91,7 @@ struct OsmoApp: App {
         ServiceLocator.shared.register(AudioEngineService(), for: AudioServiceProtocol.self)
         
         // 4. CV - Depends on Analytics
-        ServiceLocator.shared.register(MockCVService(), for: CVServiceProtocol.self) // Temporarily using mock to test
+        ServiceLocator.shared.register(CameraVisionService(), for: CVServiceProtocol.self)
         
         logger.info("[App] All services registered")
         

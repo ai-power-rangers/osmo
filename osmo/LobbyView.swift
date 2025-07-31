@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LobbyView: View {
-    @Environment(\.coordinator) var coordinator
+    @Environment(AppCoordinator.self) var coordinator
     @State private var selectedCategory: GameCategory?
     
     // Mock game data for Phase 1
@@ -46,59 +46,57 @@ struct LobbyView: View {
     ]
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                // Background
-                Color(uiColor: .systemGroupedBackground)
-                    .ignoresSafeArea()
-                
-                VStack(spacing: 0) {
-                    // Category Filter
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
+        ZStack {
+            // Background
+            Color(uiColor: .systemGroupedBackground)
+                .ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                // Category Filter
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 15) {
+                        CategoryChip(
+                            category: nil,
+                            isSelected: selectedCategory == nil,
+                            action: { selectedCategory = nil }
+                        )
+                        
+                        ForEach(GameCategory.allCases, id: \.self) { category in
                             CategoryChip(
-                                category: nil,
-                                isSelected: selectedCategory == nil,
-                                action: { selectedCategory = nil }
+                                category: category,
+                                isSelected: selectedCategory == category,
+                                action: { selectedCategory = category }
                             )
-                            
-                            ForEach(GameCategory.allCases, id: \.self) { category in
-                                CategoryChip(
-                                    category: category,
-                                    isSelected: selectedCategory == category,
-                                    action: { selectedCategory = category }
-                                )
-                            }
                         }
-                        .padding(.horizontal)
                     }
-                    .padding(.vertical)
-                    
-                    // Games Grid
-                    ScrollView {
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(filteredGames) { game in
-                                GameCard(gameInfo: game) {
-                                    if !game.isLocked {
-                                        coordinator.launchGame(game.gameId)
-                                    }
+                    .padding(.horizontal)
+                }
+                .padding(.vertical)
+                
+                // Games Grid
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(filteredGames) { game in
+                            GameCard(gameInfo: game) {
+                                if !game.isLocked {
+                                    coordinator.launchGame(game.gameId)
                                 }
                             }
                         }
-                        .padding()
                     }
+                    .padding()
                 }
             }
-            .navigationTitle("Choose a Game")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        coordinator.navigateTo(.settings)
-                    } label: {
-                        Image(systemName: "gearshape.fill")
-                            .font(.title2)
-                    }
+        }
+        .navigationTitle("Choose a Game")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    coordinator.navigateTo(.settings)
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(.title2)
                 }
             }
         }

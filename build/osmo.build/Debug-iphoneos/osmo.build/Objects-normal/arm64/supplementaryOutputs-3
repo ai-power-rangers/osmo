@@ -1,0 +1,24 @@
+"/Users/mitchellwhite/Code/osmo/osmo/SettingsView.swift":
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SettingsView.dia"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SettingsView.swiftconstvalues"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SettingsView.swiftdeps"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SettingsView.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SettingsView.o"
+"/Users/mitchellwhite/Code/osmo/osmo/MockCVService.swift":
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/MockCVService.o"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/MockCVService.swiftconstvalues"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/MockCVService.swiftdeps"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/MockCVService.d"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/MockCVService.dia"
+"/Users/mitchellwhite/Code/osmo/osmo/GameModule.swift":
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameModule.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameModule.dia"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameModule.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameModule.o"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameModule.swiftconstvalues"
+"/Users/mitchellwhite/Code/osmo/osmo/CoordinatorProtocol.swift":
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CoordinatorProtocol.o"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CoordinatorProtocol.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CoordinatorProtocol.dia"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CoordinatorProtocol.swiftconstvalues"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CoordinatorProtocol.d"

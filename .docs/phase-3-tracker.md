@@ -225,11 +225,29 @@ With CV service complete, Phase 4 will implement:
 
 The essential CV infrastructure is fully implemented and ready for Phase 4 game development. Debug views and performance tools can be added later as needed without blocking game implementation.
 
-## Critical Handoff Information for Next Agent
+## Session 2 Update - July 31, 2025
 
-### Current State: App Builds but Crashes on Launch
+### Current State: App Builds and Runs but Navigation Issue
 
-**CRITICAL BUG**: The app crashes in `OsmoApp.swift:66` when trying to resolve AnalyticsService in the onChange handler. This needs immediate fix.
+**STATUS**: App launches successfully, services initialize properly, but Settings navigation is not working when tapped.
+
+### Issues Fixed Since Last Update
+1. ✅ **Fixed critical crash**: Added initialization guard to onChange handler
+2. ✅ **Fixed ServiceLocator**: Changed resolve method to use ObjectIdentifier matching registration
+3. ✅ **Added ServiceLifecycle**: Both MockCVService and ARKitCVService now conform to protocol
+4. ✅ **Fixed nested NavigationStack**: Removed duplicate NavigationStack from LobbyView
+5. ✅ **Switched to real CV**: Now using ARKitCVService instead of MockCVService
+
+### Current Issues
+1. **Settings Navigation Not Working**: Gear button shows tap feedback but doesn't navigate
+2. **Interface Orientation Warning**: "All interface orientations must be supported unless the app requires full screen"
+
+### What's Working
+- App launches without crashes
+- Loading screen displays correctly
+- Main lobby view shows games
+- Service initialization completes successfully
+- Build succeeds for physical device
 
 ### Architecture Changes Made
 
@@ -322,18 +340,27 @@ The crash at `OsmoApp.swift:66` is because the onChange handler runs before serv
 - `/osmo/Core/Services/AudioEngineService.swift` - ServiceLifecycle conformance
 - `/osmo/Core/Services/AnalyticsService.swift` - ServiceLifecycle conformance
 
-### Next Steps
+### Remaining Tasks to Complete Phase 3
 
-1. **Fix the crash** - Add safety check in onChange handler
-2. **Switch to real CV** - Change MockCVService to ARKitCVService when ready
-3. **Implement GameHostView** - Replace placeholder with real implementation
-4. **Add debug views** - CVDebugOverlay for development/testing
+1. **Debug Navigation Issue** - Fix Settings button not navigating
+2. **Test Camera Permissions** - Verify permission flow works on device
+3. **Test CV Functionality** - Verify ARKitCVService works with hand detection
+4. **Optional: Debug Views** - CVDebugOverlay, HandVisualizationView, etc.
+5. **Run Linting** - Check and fix any SwiftLint violations
+
+### Next Debugging Steps
+
+1. Add logging to navigation actions
+2. Check if AppCoordinator is properly passed to environment
+3. Verify NavigationStack path binding is working
+4. Test with breakpoints in navigateTo method
 
 ## Time Tracking
 - **Estimated**: 5-6 hours
-- **Actual**: ~4 hours (including service architecture refactor)
-- **Remaining**: ~1-2 hours (debug views + crash fix)
+- **Session 1**: ~4 hours (core implementation + service architecture refactor)
+- **Session 2**: ~1 hour (fixing crashes, navigation issues)
+- **Remaining**: ~1 hour (debug navigation + test CV flow)
 
 ---
 *Last Updated*: July 31, 2025
-*Status*: ⚠️ CORE COMPLETE BUT APP CRASHES - Needs immediate fix in onChange handler
+*Status*: 🟡 APP RUNNING - Navigation needs debugging before CV testing

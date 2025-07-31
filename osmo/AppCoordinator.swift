@@ -7,16 +7,19 @@
 
 import SwiftUI
 import Observation
+import os.log
 
 // MARK: - App Coordinator
 @Observable
-final class AppCoordinator: CoordinatorProtocol {
+final class AppCoordinator: CoordinatorProtocol, ObservableObject {
+    private let logger = Logger(subsystem: "com.osmoapp", category: "navigation")
     var navigationPath = NavigationPath()
     var errorMessage: String?
     var showError = false
     
     // MARK: - Navigation
     func navigateTo(_ destination: NavigationDestination) {
+        logger.info("[Navigation] Navigating to: \(String(describing: destination))")
         navigationPath.append(destination)
     }
     

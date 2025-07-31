@@ -1,0 +1,24 @@
+"/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/ARKitCVService.swift":
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ARKitCVService.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ARKitCVService.dia"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ARKitCVService.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ARKitCVService.o"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ARKitCVService.swiftconstvalues"
+"/Users/mitchellwhite/Code/osmo/osmo/Core/Services/SwiftDataService.swift":
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SwiftDataService.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SwiftDataService.dia"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SwiftDataService.swiftconstvalues"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SwiftDataService.o"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/SwiftDataService.d"
+"/Users/mitchellwhite/Code/osmo/osmo/CameraPermissionView.swift":
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraPermissionView.dia"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraPermissionView.d"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraPermissionView.swiftconstvalues"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraPermissionView.swiftdeps"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraPermissionView.o"
+"/Users/mitchellwhite/Code/osmo/osmo/ServiceModels.swift":
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceModels.d"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceModels.swiftdeps"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceModels.swiftconstvalues"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceModels.o"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceModels.dia"

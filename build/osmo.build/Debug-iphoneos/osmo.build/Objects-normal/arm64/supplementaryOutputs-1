@@ -1,0 +1,24 @@
+"/Users/mitchellwhite/Code/osmo/osmo/LaunchScreen.swift":
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/LaunchScreen.d"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/LaunchScreen.dia"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/LaunchScreen.swiftconstvalues"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/LaunchScreen.o"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/LaunchScreen.swiftdeps"
+"/Users/mitchellwhite/Code/osmo/osmo/ServiceLifecycle.swift":
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceLifecycle.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceLifecycle.dia"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceLifecycle.swiftconstvalues"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceLifecycle.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceLifecycle.o"
+"/Users/mitchellwhite/Code/osmo/osmo/CVEvent.swift":
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CVEvent.swiftconstvalues"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CVEvent.d"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CVEvent.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CVEvent.dia"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CVEvent.o"
+"/Users/mitchellwhite/Code/osmo/osmo/AppCoordinator.swift":
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/AppCoordinator.dia"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/AppCoordinator.swiftdeps"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/AppCoordinator.swiftconstvalues"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/AppCoordinator.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/AppCoordinator.o"

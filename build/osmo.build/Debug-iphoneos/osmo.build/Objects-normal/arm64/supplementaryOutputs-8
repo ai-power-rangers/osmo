@@ -1,0 +1,18 @@
+"/Users/mitchellwhite/Code/osmo/osmo/CameraUnavailableView.swift":
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraUnavailableView.swiftdeps"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraUnavailableView.o"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraUnavailableView.dia"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraUnavailableView.d"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraUnavailableView.swiftconstvalues"
+"/Users/mitchellwhite/Code/osmo/osmo/GameInfo.swift":
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameInfo.dia"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameInfo.d"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameInfo.swiftconstvalues"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameInfo.swiftdeps"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GameInfo.o"
+"/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/DerivedSources/GeneratedAssetSymbols.swift":
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.d"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.dia"

@@ -63,7 +63,7 @@ struct ContentView: View {
 // MARK: - Placeholder Views
 struct GameHostPlaceholder: View {
     let gameId: String
-    @Environment(\.coordinator) var coordinator
+    @Environment(AppCoordinator.self) var coordinator
     
     var body: some View {
         ZStack {

@@ -140,11 +140,19 @@ struct CVTestView: View {
     private func startSession() {
         Task {
             do {
+                // Enable debug mode for more logging
+                if let arKitService = cvService as? ARKitCVService {
+                    arKitService.debugMode = true
+                    print("[CVTest] Debug mode enabled")
+                }
+                
                 // Start CV session
                 try await cvService?.startSession()
+                print("[CVTest] Session started successfully")
                 
                 // Subscribe to events
                 await subscribeToEvents()
+                print("[CVTest] Event subscription active")
                 
                 await MainActor.run {
                     isSessionActive = true
@@ -153,6 +161,7 @@ struct CVTestView: View {
             } catch {
                 await MainActor.run {
                     errorMessage = "Failed to start: \(error.localizedDescription)"
+                    print("[CVTest] Error starting session: \(error)")
                 }
             }
         }
@@ -169,7 +178,7 @@ struct CVTestView: View {
         guard let cvService = cvService else { return }
         let stream = cvService.eventStream(
             gameId: "test",
-            events: [.fingerCountDetected(count: 0)]
+            events: [] // Subscribe to all events for debugging
         )
         
         Task {
@@ -177,10 +186,23 @@ struct CVTestView: View {
                 await MainActor.run {
                     eventCount += 1
                     
-                    if case .fingerCountDetected(let count) = event.type {
+                    // Debug print
+                    print("[CVTest] Received event: \(event.type)")
+                    
+                    switch event.type {
+                    case .fingerCountDetected(let count):
+                        print("[CVTest] Finger count detected: \(count)")
                         withAnimation(.spring()) {
                             lastFingerCount = count
                         }
+                    case .handDetected(let handId, let chirality):
+                        print("[CVTest] Hand detected: \(handId), chirality: \(chirality)")
+                    case .handLost(let handId):
+                        print("[CVTest] Hand lost: \(handId)")
+                    case .handPoseChanged(let handId, let pose):
+                        print("[CVTest] Hand pose changed: \(handId) -> \(pose)")
+                    default:
+                        print("[CVTest] Other event: \(event.type)")
                     }
                 }
             }

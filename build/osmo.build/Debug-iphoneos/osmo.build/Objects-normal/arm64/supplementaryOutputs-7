@@ -1,0 +1,18 @@
+"/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/FingerDetector.swift":
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/FingerDetector.o"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/FingerDetector.dia"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/FingerDetector.d"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/FingerDetector.swiftdeps"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/FingerDetector.swiftconstvalues"
+"/Users/mitchellwhite/Code/osmo/osmo/ServiceProtocols.swift":
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceProtocols.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceProtocols.dia"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceProtocols.swiftconstvalues"
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceProtocols.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/ServiceProtocols.o"
+"/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/CameraVisionService.swift":
+  dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraVisionService.d"
+  object: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraVisionService.o"
+  const-values: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraVisionService.swiftconstvalues"
+  swift-dependencies: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraVisionService.swiftdeps"
+  diagnostics: "/Users/mitchellwhite/Code/osmo/build/osmo.build/Debug-iphoneos/osmo.build/Objects-normal/arm64/CameraVisionService.dia"

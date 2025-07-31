@@ -131,10 +131,21 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
         arSession = ARSession()
         arSession?.delegate = self
         
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.frameSemantics = .personSegmentationWithDepth
-        
-        arSession?.run(configuration)
+        // Use face tracking configuration for front camera
+        if ARFaceTrackingConfiguration.isSupported {
+            let configuration = ARFaceTrackingConfiguration()
+            configuration.isWorldTrackingEnabled = false
+            
+            logger.info("[CVService] Starting AR session with face tracking configuration (front camera)")
+            arSession?.run(configuration)
+        } else {
+            // Fallback to world tracking but it will use back camera
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.planeDetection = []
+            
+            logger.info("[CVService] WARNING: Face tracking not supported, falling back to world tracking (back camera)")
+            arSession?.run(configuration)
+        }
     }
     
     // MARK: - Vision Setup
@@ -146,7 +157,14 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
                 return
             }
             
-            self?.processHandObservations(request.results as? [VNHumanHandPoseObservation] ?? [])
+            guard let observations = request.results as? [VNHumanHandPoseObservation] else {
+                if self?.debugMode ?? false {
+                    self?.logger.info("[CVService] No hand pose observations in results")
+                }
+                return
+            }
+            
+            self?.processHandObservations(observations)
         }
         handDetectionRequest?.maximumHandCount = 2
         
@@ -179,8 +197,17 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
     
     // MARK: - Hand Processing
     private func processHandObservations(_ observations: [VNHumanHandPoseObservation]) {
+        if debugMode {
+            logger.info("[CVService] Processing \(observations.count) hand observations")
+        }
+        
         for observation in observations {
-            guard let handObservation = createHandObservation(from: observation) else { continue }
+            guard let handObservation = createHandObservation(from: observation) else {
+                if debugMode {
+                    logger.info("[CVService] Failed to create hand observation")
+                }
+                continue
+            }
             
             // Check if this is a new hand or existing one
             let isNewHand = !trackedHands.values.contains { existingHand in
@@ -198,6 +225,10 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
             
             // Detect fingers
             let fingerResult = fingerDetector.detectRaisedFingers(from: handObservation)
+            
+            if debugMode {
+                logger.info("[CVService] Finger detection result: count=\(fingerResult.count), confidence=\(fingerResult.confidence)")
+            }
             
             // Publish finger count event
             publishEvent(CVEvent(
@@ -416,6 +447,8 @@ extension ARKitCVService: ARSessionDelegate {
         let pixelBuffer = frame.capturedImage
         
         // Create Vision request handler
+        // For ARKit with front camera in portrait mode, we need .up
+        // ARKit already handles the orientation transforms
         let handler = VNImageRequestHandler(
             cvPixelBuffer: pixelBuffer,
             orientation: .up,
