@@ -6,56 +6,71 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @EnvironmentObject var coordinator: AppCoordinator
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationStack(path: $coordinator.navigationPath) {
+            LobbyView()
+                .navigationDestination(for: NavigationDestination.self) { destination in
+                    switch destination {
+                    case .lobby:
+                        LobbyView()
+                    case .game(let gameId):
+                        GameHostPlaceholder(gameId: gameId)
+                    case .settings:
+                        SettingsView()
+                    case .parentGate:
+                        ParentGatePlaceholder()
                     }
                 }
-                .onDelete(perform: deleteItems)
+        }
+        .alert("Error", isPresented: $coordinator.showError) {
+            Button("OK") {
+                coordinator.showError = false
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
+        } message: {
+            Text(coordinator.errorMessage ?? "An error occurred")
         }
     }
+}
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+// MARK: - Placeholder Views
+struct GameHostPlaceholder: View {
+    let gameId: String
+    @Environment(\.coordinator) var coordinator
+    
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            
+            VStack(spacing: 20) {
+                Text("Game: \(gameId)")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                
+                Text("Game Host will be implemented in Phase 2")
+                    .foregroundColor(.gray)
+                
+                Button("Back to Lobby") {
+                    coordinator.navigateBack()
+                }
+                .buttonStyle(.borderedProminent)
             }
         }
+        .navigationBarHidden(true)
+    }
+}
+
+struct ParentGatePlaceholder: View {
+    var body: some View {
+        Text("Parent Gate - Coming Soon")
+            .navigationTitle("Parent Gate")
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .environmentObject(AppCoordinator())
 }

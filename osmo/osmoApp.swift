@@ -6,27 +6,49 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct osmoApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+    @StateObject private var coordinator = AppCoordinator()
+    @State private var isLoading = true
+    
+    init() {
+        setupServices()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if isLoading {
+                    LaunchScreen()
+                        .onAppear {
+                            // Simulate loading
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                isLoading = false
+                            }
+                        }
+                } else {
+                    ContentView()
+                        .environmentObject(coordinator)
+                        .environment(\.coordinator, coordinator)
+                }
+            }
+            .preferredColorScheme(.light)
         }
-        .modelContainer(sharedModelContainer)
+    }
+    
+    private func setupServices() {
+        // Register all services with mock implementations
+        ServiceLocator.shared.register(MockCVService(), for: CVServiceProtocol.self)
+        ServiceLocator.shared.register(MockAudioService(), for: AudioServiceProtocol.self)
+        ServiceLocator.shared.register(MockAnalyticsService(), for: AnalyticsServiceProtocol.self)
+        ServiceLocator.shared.register(MockPersistenceService(), for: PersistenceServiceProtocol.self)
+        
+        print("[App] All services registered")
+        
+        #if DEBUG
+        // Validate services in debug builds
+        ServiceLocator.validateServices()
+        #endif
     }
 }
