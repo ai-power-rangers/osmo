@@ -37,35 +37,38 @@ final class ServiceLocator {
             analyticsService = service as? AnalyticsServiceProtocol
         case ObjectIdentifier(PersistenceServiceProtocol.self):
             persistenceService = service as? PersistenceServiceProtocol
+            Self.logger.info("[ServiceLocator] Registered PersistenceService")
         default:
+            Self.logger.error("[ServiceLocator] Failed to register unknown service type")
             fatalError("Unknown service type: \(type)")
         }
     }
     
     // MARK: - Retrieval
     func resolve<T>(_ type: T.Type) -> T {
-        switch type {
-        case is CVServiceProtocol.Type:
+        switch ObjectIdentifier(type) {
+        case ObjectIdentifier(CVServiceProtocol.self):
             guard let service = cvService as? T else {
                 fatalError("CVService not registered")
             }
             return service
-        case is AudioServiceProtocol.Type:
+        case ObjectIdentifier(AudioServiceProtocol.self):
             guard let service = audioService as? T else {
                 fatalError("AudioService not registered")
             }
             return service
-        case is AnalyticsServiceProtocol.Type:
+        case ObjectIdentifier(AnalyticsServiceProtocol.self):
             guard let service = analyticsService as? T else {
                 fatalError("AnalyticsService not registered")
             }
             return service
-        case is PersistenceServiceProtocol.Type:
+        case ObjectIdentifier(PersistenceServiceProtocol.self):
             guard let service = persistenceService as? T else {
                 fatalError("PersistenceService not registered")
             }
             return service
         default:
+            Self.logger.error("[ServiceLocator] Failed to resolve unknown service type")
             fatalError("Unknown service type: \(type)")
         }
     }
