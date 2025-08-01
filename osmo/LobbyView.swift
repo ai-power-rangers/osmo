@@ -11,32 +11,32 @@ struct LobbyView: View {
     @Environment(AppCoordinator.self) var coordinator
     @State private var selectedCategory: GameCategory?
     
-    // Mock game data for Phase 1
+    // Our three games
     let mockGames = [
         GameInfo(
-            gameId: "finger_count",
-            displayName: "Finger Count",
-            description: "Show the right number of fingers!",
-            iconName: "hand.raised.fill",
-            minAge: 3,
-            category: .math
+            gameId: "rock-paper-scissors",
+            displayName: "Rock Paper Scissors",
+            description: "Classic hand gesture game - beat the AI!",
+            iconName: "hand.raised",
+            minAge: 4,
+            category: .problemSolving
         ),
         GameInfo(
-            gameId: "shape_match",
-            displayName: "Shape Match",
-            description: "Match shapes with real objects",
-            iconName: "square.on.circle",
-            minAge: 4,
-            category: .spatialReasoning,
+            gameId: "tic-tac-toe",
+            displayName: "Tic-Tac-Toe",
+            description: "Coming Soon - Play on paper against AI!",
+            iconName: "grid",
+            minAge: 5,
+            category: .problemSolving,
             isLocked: true
         ),
         GameInfo(
-            gameId: "color_hunt",
-            displayName: "Color Hunt",
-            description: "Find colors in your room",
-            iconName: "paintpalette.fill",
-            minAge: 3,
-            category: .creativity,
+            gameId: "sudoku",
+            displayName: "Sudoku",
+            description: "Coming Soon - Solve puzzles with CV assistance!",
+            iconName: "square.grid.3x3",
+            minAge: 8,
+            category: .problemSolving,
             isLocked: true
         )
     ]
@@ -146,19 +146,31 @@ struct GameCard: View {
                 // Icon
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(gameInfo.isLocked ? Color.gray : Color.blue)
+                        .fill(gameInfo.isLocked ? Color.gray.opacity(0.3) : Color.blue)
+                        .overlay(
+                            gameInfo.isLocked ? 
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.gray, lineWidth: 2) : nil
+                        )
                         .frame(height: 150)
                     
                     Image(systemName: gameInfo.iconName)
                         .font(.system(size: 60))
-                        .foregroundColor(.white)
+                        .foregroundColor(gameInfo.isLocked ? .gray : .white)
                     
                     if gameInfo.isLocked {
-                        Image(systemName: "lock.fill")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(Color.black.opacity(0.6)).frame(width: 50, height: 50))
-                            .offset(x: 60, y: -60)
+                        VStack(spacing: 4) {
+                            Image(systemName: "clock.fill")
+                                .font(.title2)
+                            Text("COMING SOON")
+                                .font(.system(size: 10, weight: .bold, design: .rounded))
+                        }
+                        .foregroundColor(.white)
+                        .padding(8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.black.opacity(0.7))
+                        )
                     }
                 }
                 

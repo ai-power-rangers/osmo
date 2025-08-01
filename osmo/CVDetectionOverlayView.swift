@@ -260,20 +260,36 @@ struct HandOverlay: View {
             height: hand.boundingBox.height * geometry.size.height
         )
         
+        let gesture = gestureFromFingerCount(hand.fingerCount)
+        
         Rectangle()
             .stroke(Color.blue, lineWidth: 2)
             .frame(width: rect.width, height: rect.height)
             .position(x: rect.midX, y: rect.midY)
             .overlay(
-                Text("\(hand.fingerCount)")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.blue)
-                    .padding(6)
-                    .background(Color.white.opacity(0.9))
-                    .cornerRadius(8)
-                    .position(x: rect.midX, y: rect.minY - 20)
+                HStack(spacing: 4) {
+                    Text(gesture.emoji)
+                        .font(.title2)
+                    Text(gesture.name)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                }
+                .foregroundColor(.blue)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color.white.opacity(0.95))
+                .cornerRadius(12)
+                .position(x: rect.midX, y: rect.minY - 25)
             )
+    }
+    
+    private func gestureFromFingerCount(_ count: Int) -> (emoji: String, name: String) {
+        switch count {
+        case 0: return ("✊", "Rock")
+        case 2: return ("✌️", "Scissors")
+        case 5: return ("✋", "Paper")
+        default: return ("❓", "Unknown")
+        }
     }
 }
 

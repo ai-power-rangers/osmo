@@ -131,9 +131,19 @@ final class ServiceLocator {
 }
 
 // MARK: - Game Context Implementation
-private struct GameContextImpl: GameContext {
+private final class GameContextImpl: GameContext {
     let cvService: CVServiceProtocol
     let audioService: AudioServiceProtocol
     let analyticsService: AnalyticsServiceProtocol
     let persistenceService: PersistenceServiceProtocol
+    
+    init(cvService: CVServiceProtocol,
+         audioService: AudioServiceProtocol,
+         analyticsService: AnalyticsServiceProtocol,
+         persistenceService: PersistenceServiceProtocol) {
+        self.cvService = cvService
+        self.audioService = audioService
+        self.analyticsService = analyticsService
+        self.persistenceService = persistenceService
+    }
 }

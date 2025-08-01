@@ -388,6 +388,7 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
             // For single hand, show individual result with smoothing
             if trackedHands.count == 1, let (hand, fingerResult) = handResults.first {
                 let smoothedCount = smoothFingerCount(fingerResult.count)
+                let handOpenness = fingerDetector.calculateHandOpenness(from: hand)
                 
                 // Always publish to update position even if count hasn't changed
                 publishEvent(CVEvent(
@@ -398,7 +399,8 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
                         boundingBox: hand.boundingBox,
                         additionalProperties: [
                             "hand_chirality": fingerResult.handChirality.rawValue,
-                            "raised_fingers": fingerResult.raisedFingers.map { $0.rawValue }
+                            "raised_fingers": fingerResult.raisedFingers.map { $0.rawValue },
+                            "hand_openness": handOpenness
                         ]
                     )
                 ))
@@ -406,6 +408,7 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
             } else if trackedHands.count > 1 {
                 // For multiple hands, show each hand separately without smoothing
                 for (hand, fingerResult) in handResults {
+                    let handOpenness = fingerDetector.calculateHandOpenness(from: hand)
                     publishEvent(CVEvent(
                         type: .fingerCountDetected(count: fingerResult.count),
                         position: hand.boundingBox.center,
@@ -415,7 +418,8 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
                             additionalProperties: [
                                 "hand_chirality": fingerResult.handChirality.rawValue,
                                 "raised_fingers": fingerResult.raisedFingers.map { $0.rawValue },
-                                "hand_id": hand.id.uuidString
+                                "hand_id": hand.id.uuidString,
+                                "hand_openness": handOpenness
                             ]
                         )
                     ))

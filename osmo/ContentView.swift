@@ -24,7 +24,7 @@ struct ContentView: View {
                     case .game(let gameId):
                         // Check permission before showing game
                         if permissionManager.status.canUseCamera {
-                            GameHostPlaceholder(gameId: gameId)
+                            GameHost(gameId: gameId)
                         } else {
                             CameraPermissionNeededView(gameId: gameId)
                         }

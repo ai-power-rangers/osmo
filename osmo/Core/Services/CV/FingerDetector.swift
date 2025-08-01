@@ -146,4 +146,37 @@ extension FingerDetector {
         
         return nil
     }
+    
+    // Calculate hand openness based on finger spread
+    func calculateHandOpenness(from hand: HandObservation) -> Float {
+        let tips = hand.landmarks.fingerTips
+        guard tips.count >= 5 else { return 0.0 }
+        
+        // Calculate average distance between adjacent fingertips
+        var totalDistance: CGFloat = 0
+        var measurementCount = 0
+        
+        // Distance between thumb and index
+        totalDistance += distance(from: tips[0], to: tips[1])
+        measurementCount += 1
+        
+        // Distance between consecutive fingers
+        for index in 1..<(tips.count - 1) {
+            totalDistance += distance(from: tips[index], to: tips[index + 1])
+            measurementCount += 1
+        }
+        
+        // Calculate average distance
+        let avgDistance = totalDistance / CGFloat(measurementCount)
+        
+        // Normalize based on hand size (using wrist to middle finger MCP as reference)
+        let handSize = distance(from: hand.landmarks.wrist, to: hand.landmarks.middleMCP)
+        let normalizedSpread = avgDistance / handSize
+        
+        // Convert to 0-1 range
+        // Typical values: closed hand ~0.2, open hand ~0.8-1.0
+        let openness = min(max((normalizedSpread - 0.2) / 0.6, 0), 1)
+        
+        return Float(openness)
+    }
 }

@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 
 // MARK: - Game Context Protocol
-protocol GameContext {
+protocol GameContext: AnyObject {
     var cvService: CVServiceProtocol { get }
     var audioService: AudioServiceProtocol { get }
     var analyticsService: AnalyticsServiceProtocol { get }

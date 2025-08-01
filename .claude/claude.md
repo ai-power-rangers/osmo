@@ -2,3 +2,4 @@
 -swiftui (no uikit)
 -lint check: chmod +x /Users/mitchellwhite/Code/osmo/Scripts/lint.sh
 -type check: chmod +x /Users/mitchellwhite/Code/osmo/Scripts/typecheck.sh
+-follow repo's architecture, patterns, and conventions
