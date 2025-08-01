@@ -6,52 +6,52 @@
   "pieces": [
     {
       "pieceId": "square",
-      "description": "face (rotated to diamond)",
-      "targetPosition": { "x": 3.2, "y": 5.5 },
+      "description": "head (diamond)",
+      "targetPosition": { "x": 3.000000, "y": 5.500000 },
       "targetRotation": 0.785398,
       "isMirrored": false
     },
     {
-      "pieceId": "smallTriangle1", 
-      "description": "left ear",
-      "targetPosition": { "x": 2.8, "y": 6.5 },
+      "pieceId": "smallTriangle1",
+      "description": "left ear (outside top-left corner)",
+      "targetPosition": { "x": 2.292893, "y": 6.207107 },
       "targetRotation": 2.356194,
       "isMirrored": false
     },
     {
       "pieceId": "smallTriangle2",
-      "description": "right ear",
-      "targetPosition": { "x": 3.6, "y": 6.5 },
-      "targetRotation": 0.785398,
+      "description": "right ear (outside top-right corner)",
+      "targetPosition": { "x": 3.707107, "y": 6.207107 },
+      "targetRotation": 5.497787,
       "isMirrored": false
     },
     {
       "pieceId": "largeTriangle1",
-      "description": "main body",
-      "targetPosition": { "x": 3.2, "y": 3.5 },
-      "targetRotation": 3.926991,
+      "description": "main body (points right; touches head at bottom tip)",
+      "targetPosition": { "x": 3.000000, "y": 3.500000 },
+      "targetRotation": 0.000000,
       "isMirrored": false
     },
     {
       "pieceId": "mediumTriangle",
-      "description": "front shoulder/chest",
-      "targetPosition": { "x": 2.0, "y": 3.5 },
-      "targetRotation": 4.712389,
+      "description": "chest/shoulder (points left; touches head at bottom tip)",
+      "targetPosition": { "x": 2.000000, "y": 4.500000 },
+      "targetRotation": 0.785398,
       "isMirrored": false
     },
     {
       "pieceId": "largeTriangle2",
-      "description": "back haunch", 
-      "targetPosition": { "x": 4.4, "y": 2.5 },
+      "description": "back haunch (touches body at one point)",
+      "targetPosition": { "x": 5.000000, "y": 1.500000 },
       "targetRotation": 1.570796,
       "isMirrored": false
     },
     {
       "pieceId": "parallelogram",
-      "description": "tail",
-      "targetPosition": { "x": 5.8, "y": 2.5 },
+      "description": "tail (extends right from haunch)",
+      "targetPosition": { "x": 5.000000, "y": 1.500000 },
       "targetRotation": 0.000000,
-      "isMirrored": true
+      "isMirrored": false
     }
   ],
   "rotationReference": {
