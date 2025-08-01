@@ -14,6 +14,7 @@ enum NavigationDestination: Hashable {
     case settings
     case parentGate
     case cvTest
+    case tangramPuzzleSelect
 }
 
 // MARK: - Coordinator Protocol

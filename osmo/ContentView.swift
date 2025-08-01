@@ -34,6 +34,8 @@ struct ContentView: View {
                         ParentGatePlaceholder()
                     case .cvTest:
                         CVTestView()
+                    case .tangramPuzzleSelect:
+                        TangramPuzzleSelectView()
                     }
                 }
         }

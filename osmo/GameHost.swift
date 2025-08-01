@@ -91,6 +91,16 @@ struct GameHost: View {
             // Start CV session and get camera session
             startCVSession(context: context)
             
+        case "tangram":
+            let module = TangramGameModule()
+            gameModule = module
+            gameScene = module.createGameScene(
+                size: UIScreen.main.bounds.size,
+                context: context
+            )
+            
+            // No CV session for Phase 1
+            
         case "finger_count":
             // Placeholder for finger count game
             coordinator.showError("Game not yet implemented: \(gameId)")

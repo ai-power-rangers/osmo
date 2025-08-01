@@ -38,6 +38,15 @@ struct LobbyView: View {
             minAge: 8,
             category: .problemSolving,
             isLocked: false
+        ),
+        GameInfo(
+            gameId: "tangram",
+            displayName: "Tangram Puzzles",
+            description: "Classic shape puzzles - arrange colorful pieces to match the target",
+            iconName: "square.on.square",
+            minAge: 5,
+            category: .spatialReasoning,
+            isLocked: false
         )
     ]
     
@@ -79,7 +88,12 @@ struct LobbyView: View {
                         ForEach(filteredGames) { game in
                             GameCard(gameInfo: game) {
                                 if !game.isLocked {
-                                    coordinator.launchGame(game.gameId)
+                                    if game.gameId == "tangram" {
+                                        // Navigate to puzzle selection for Tangram
+                                        coordinator.navigateTo(.tangramPuzzleSelect)
+                                    } else {
+                                        coordinator.launchGame(game.gameId)
+                                    }
                                 }
                             }
                         }
