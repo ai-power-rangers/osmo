@@ -16,7 +16,6 @@ struct GameHost: View {
     @State private var gameScene: SKScene?
     @State private var showExitConfirmation = false
     @State private var cameraSession: AVCaptureSession?
-    @State private var overlayViewModel = CVOverlayViewModel()
     @State private var cvEventTask: Task<Void, Never>?
     @State private var cvService: CVServiceProtocol?
     
@@ -26,8 +25,7 @@ struct GameHost: View {
                 // Camera preview with game overlay
                 CameraPreviewWithGame(
                     scene: scene,
-                    cameraSession: cameraSession,
-                    overlayViewModel: overlayViewModel
+                    cameraSession: cameraSession
                 )
                 .ignoresSafeArea()
             } else {
@@ -36,28 +34,24 @@ struct GameHost: View {
                     .progressViewStyle(CircularProgressViewStyle())
             }
             
-            // Exit button overlay
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        showExitConfirmation = true
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title)
-                            .foregroundStyle(.white, .black.opacity(0.6))
-                    }
-                    .padding()
-                }
-                Spacer()
-            }
+            // No exit button overlay needed - handled in game scene
         }
         .navigationBarHidden(true)
         .onAppear {
             loadGame()
+            
+            // Listen for exit game notification
+            NotificationCenter.default.addObserver(
+                forName: Notification.Name("ExitGame"),
+                object: nil,
+                queue: .main
+            ) { _ in
+                showExitConfirmation = true
+            }
         }
         .onDisappear {
             cleanupGame()
+            NotificationCenter.default.removeObserver(self)
         }
         .alert("Exit Game?", isPresented: $showExitConfirmation) {
             Button("Cancel", role: .cancel) { }
@@ -70,13 +64,24 @@ struct GameHost: View {
     }
     
     private func loadGame() {
-        // Create game context with overlay view model
-        let context = GameHostContext(overlayViewModel: overlayViewModel)
+        // Create game context
+        let context = GameHostContext()
         
         // Load appropriate game module
         switch gameId {
         case "rock-paper-scissors":
             let module = RockPaperScissorsGameModule()
+            gameModule = module
+            gameScene = module.createGameScene(
+                size: UIScreen.main.bounds.size,
+                context: context
+            )
+            
+            // Start CV session and get camera session
+            startCVSession(context: context)
+            
+        case "sudoku":
+            let module = SudokuGameModule()
             gameModule = module
             gameScene = module.createGameScene(
                 size: UIScreen.main.bounds.size,
@@ -127,58 +132,16 @@ struct GameHost: View {
                     }
                 }
                 
-                // Subscribe to CV events for overlay updates
-                await subscribeToCVEvents(cvService: service)
+                // Games now handle their own CV events
             } catch {
                 print("[GameHost] Failed to start CV session: \(error)")
             }
         }
     }
     
-    private func subscribeToCVEvents(cvService: CVServiceProtocol) async {
-        let stream = cvService.eventStream(
-            gameId: gameId,
-            events: [] // Subscribe to all events
-        )
-        
-        let overlayVM = overlayViewModel
-        cvEventTask = Task {
-            for await event in stream {
-                await MainActor.run {
-                    Self.updateOverlay(overlayVM, with: event)
-                }
-            }
-        }
-    }
+    // Removed - games now handle their own CV events
     
-    private static func updateOverlay(_ overlayViewModel: CVOverlayViewModel, with event: CVEvent) {
-        switch event.type {
-        case .fingerCountDetected(let count):
-            // Update overlay with hand bounding box
-            if let metadata = event.metadata, let boundingBox = metadata.boundingBox {
-                let chirality: HandChirality = {
-                    if let chiralityString = metadata.additionalProperties["hand_chirality"] as? String,
-                       let detectedChirality = HandChirality(rawValue: chiralityString) {
-                        return detectedChirality
-                    }
-                    return .unknown
-                }()
-                
-                overlayViewModel.updateHand(
-                    boundingBox: boundingBox,
-                    fingerCount: count,
-                    confidence: event.confidence,
-                    chirality: chirality
-                )
-            }
-            
-        case .handLost:
-            overlayViewModel.clearHands()
-            
-        default:
-            break
-        }
-    }
+    // Removed - games now handle their own overlays
     
     private func cleanupGame() {
         print("[GameHost] Starting cleanup...")
@@ -204,7 +167,6 @@ struct GameHost: View {
         gameModule = nil
         gameScene = nil
         cameraSession = nil
-        overlayViewModel.clearHands()
         
         // Track game exit
         let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
@@ -218,7 +180,6 @@ struct GameHost: View {
 struct CameraPreviewWithGame: View {
     let scene: SKScene
     let cameraSession: AVCaptureSession?
-    @Bindable var overlayViewModel: CVOverlayViewModel
     
     var body: some View {
         ZStack {
@@ -226,12 +187,6 @@ struct CameraPreviewWithGame: View {
             if let session = cameraSession {
                 CameraPreviewView(session: session)
                     .ignoresSafeArea()
-                    .overlay(
-                        CVDetectionOverlayView(
-                            viewModel: overlayViewModel,
-                            frameSize: UIScreen.main.bounds.size
-                        )
-                    )
             } else {
                 // Fallback to black background
                 Color.black
@@ -247,10 +202,7 @@ struct CameraPreviewWithGame: View {
 
 // MARK: - Game Context Implementation
 private final class GameHostContext: GameContext {
-    let overlayViewModel: CVOverlayViewModel
-    
-    init(overlayViewModel: CVOverlayViewModel) {
-        self.overlayViewModel = overlayViewModel
+    init() {
     }
     
     var cvService: CVServiceProtocol {

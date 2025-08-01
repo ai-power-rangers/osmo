@@ -21,6 +21,7 @@ protocol CVServiceProtocol: AnyObject {
     func startSession() async throws
     func stopSession()
     func eventStream(gameId: String, events: [CVEventType]) -> AsyncStream<CVEvent>
+    func eventStream(gameId: String, events: [CVEventType], configuration: [String: Any]) -> AsyncStream<CVEvent>
 }
 
 // MARK: - Audio Service Protocol

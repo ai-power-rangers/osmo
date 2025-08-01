@@ -132,13 +132,13 @@ enum AIStrategy {
 // MARK: - Game Configuration
 
 struct GameConfiguration {
-    let roundsToWin: Int
+    let winsNeeded: Int  // First to X wins
     let countdownDuration: Int
     let gestureLockDelay: TimeInterval
     let confidenceThreshold: Float
     
     static let `default` = GameConfiguration(
-        roundsToWin: 3,
+        winsNeeded: 3,  // First to 3 wins
         countdownDuration: 3,
         gestureLockDelay: 0.2,
         confidenceThreshold: 0.4  // Lowered to 0.4 for better detection
@@ -165,26 +165,70 @@ struct HandMetrics {
     let position: CGPoint
     
     var inferredPose: RPSHandPose {
+        // Simple finger-count based detection with openness validation
+        
         switch fingerCount {
-        case 0: 
-            // Rock: closed fist
+        case 0, 1:
+            // 0-1 fingers = Rock (fist or nearly closed)
             return .rock
-        case 5:
-            // Paper: 5 fingers detected
-            // Lower threshold for paper detection since CV service might not provide accurate openness
-            return handOpenness > 0.5 ? .paper : .paper  // Always paper for 5 fingers for now
+            
         case 2:
-            // Scissors: 2 fingers extended
+            // 2 fingers = Scissors
             return .scissors
-        case 1, 3, 4:
-            // Could be transitioning or unclear gesture
-            // If 4 fingers with reasonable openness, might be trying for paper
-            if fingerCount >= 4 && handOpenness > 0.4 {
-                return .paper  // Likely attempting paper
-            }
-            return .unknown
+            
+        case 3, 4, 5:
+            // 3-5 fingers = Paper (open hand)
+            // Note: 3 fingers included for cases where detection misses some fingers
+            return .paper
+            
         default:
-            return .unknown
+            // Shouldn't happen, but use openness as fallback
+            if handOpenness < 0.3 {
+                return .rock
+            } else if handOpenness > 0.6 {
+                return .paper
+            } else {
+                return .scissors
+            }
+        }
+    }
+    
+    // Confidence score for the inferred gesture
+    var gestureConfidence: Float {
+        let pose = inferredPose
+        
+        switch pose {
+        case .rock:
+            // High confidence for 0 fingers with low openness
+            if fingerCount == 0 && handOpenness < 0.3 {
+                return 0.95
+            } else if fingerCount <= 1 && handOpenness < 0.4 {
+                return 0.85
+            }
+            return 0.7
+            
+        case .paper:
+            // High confidence for 4-5 fingers with high openness
+            if fingerCount >= 4 && handOpenness > 0.6 {
+                return 0.95
+            } else if fingerCount >= 3 && handOpenness > 0.5 {
+                return 0.85
+            }
+            return 0.7
+            
+        case .scissors:
+            // High confidence for exactly 2 fingers
+            if fingerCount == 2 {
+                // Boost confidence if openness is in expected range
+                if handOpenness > 0.3 && handOpenness < 0.7 {
+                    return 0.95
+                }
+                return 0.85
+            }
+            return 0.7
+            
+        case .unknown:
+            return 0.0
         }
     }
 }
@@ -220,9 +264,9 @@ struct MatchState {
     }
     
     var matchResult: MatchResult {
-        if playerScore >= configuration.roundsToWin {
+        if playerScore >= configuration.winsNeeded {
             return .playerWin(playerScore: playerScore, aiScore: aiScore)
-        } else if aiScore >= configuration.roundsToWin {
+        } else if aiScore >= configuration.winsNeeded {
             return .aiWin(playerScore: playerScore, aiScore: aiScore)
         } else {
             return .ongoing

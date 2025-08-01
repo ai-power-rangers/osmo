@@ -15,24 +15,21 @@ final class RockPaperScissorsViewModel {
     
     private(set) var matchState: MatchState
     private(set) var roundPhase: RoundPhase = .waiting
-    private(set) var countdownValue = 3
+    private(set) var countdownValue = 2
     
     // MARK: - CV State
     
     private(set) var isHandDetected = false
-    private(set) var currentGesture: RPSHandPose = .unknown
+    private(set) var currentGesture: RPSHandPose? = nil
     private(set) var gestureConfidence: Float = 0.0
-    private(set) var recentDetections: [GestureDetection] = []
     
-    // Gesture locking for countdown
-    private var lockedGesture: RPSHandPose?
-    private var lastKnownGoodGesture: RPSHandPose = .unknown
-    private var lastKnownGoodTimestamp: Date = Date()
-    private let handLostGracePeriod: TimeInterval = 1.0  // Keep gesture for 1 second after hand lost
-    
-    // Gesture confidence buffer
-    private let gestureConfidenceWindow: TimeInterval = 0.3  // Look at last 300ms for stability
-    private let minConfidenceForLock: Float = 0.4  // Lowered minimum confidence to lock gesture
+    // Gesture locking state
+    private var savedGesture: RPSHandPose? = nil
+    private var savedGestureTimestamp: Date? = nil
+    private var isGestureLocked = false
+    private var lockCandidateGesture: RPSHandPose? = nil
+    private var lockCandidateFrameCount = 0
+    private let framesNeededForLock = 3  // Need 3 consecutive frames of same gesture to lock
     
     // MARK: - AI State
     
@@ -93,72 +90,95 @@ final class RockPaperScissorsViewModel {
         )
         matchState.rounds.append(newRound)
         
-        // Don't clear recent detections - keep them for gesture locking
-        // Just reset the current gesture display
-        currentGesture = .unknown
+        // Reset lock state for new round
+        isGestureLocked = false
+        lockCandidateGesture = nil
+        lockCandidateFrameCount = 0
+        // Keep current gesture display but allow it to be changed
         
         // Start countdown
         startCountdown()
     }
     
     func processHandMetrics(_ metrics: HandMetrics) {
-        // Don't process during reveal phase - gesture is already locked
-        guard roundPhase != .reveal else {
-            print("[RPS] Ignoring metrics during reveal phase")
+        isHandDetected = true
+        
+        let inferredPose = metrics.inferredPose
+        let poseConfidence = metrics.gestureConfidence
+        
+        // Update current gesture for display
+        currentGesture = inferredPose
+        gestureConfidence = poseConfidence * metrics.stability
+        
+        // If gesture is already locked, don't process further
+        if isGestureLocked {
             return
         }
         
-        // Update hand detection state
-        isHandDetected = true
+        // Check if we should be in locking phase (countdown at 1 or less)
+        let shouldTryToLock = countdownValue <= 1 && roundPhase.isActive
         
-        // Infer gesture from finger count
-        let inferredPose = metrics.inferredPose
-        
-        print("[RPS] Processing metrics - Fingers: \(metrics.fingerCount), Openness: \(metrics.handOpenness), Inferred: \(inferredPose)")
-        
-        // Add to recent detections
-        let detection = GestureDetection(
-            pose: inferredPose,
-            confidence: metrics.stability,
-            timestamp: Date(),
-            handPosition: metrics.position
-        )
-        recentDetections.append(detection)
-        
-        // Keep only recent detections (last 0.5 seconds)
-        let cutoff = Date().addingTimeInterval(-0.5)
-        recentDetections.removeAll { $0.timestamp < cutoff }
-        
-        // Update current gesture if stable
-        updateStableGesture()
-        
-        print("[RPS] Current gesture after update: \(currentGesture) with confidence: \(gestureConfidence)")
+        // Process gesture based on confidence
+        if poseConfidence >= 0.7 && inferredPose != .unknown {
+            if shouldTryToLock {
+                // In locking phase - check for stability
+                if inferredPose == lockCandidateGesture {
+                    lockCandidateFrameCount += 1
+                    
+                    if lockCandidateFrameCount >= framesNeededForLock && !isGestureLocked {
+                        // Lock the gesture!
+                        isGestureLocked = true
+                        savedGesture = inferredPose
+                        savedGestureTimestamp = Date()
+                        
+                        print("[RPS-VM] GESTURE LOCKED: \(inferredPose) after \(lockCandidateFrameCount) stable frames")
+                        
+                        // Strong haptic feedback for lock
+                        audioService?.playSound("gesture_lock")
+                        audioService?.playHaptic(.medium)
+                    }
+                } else {
+                    // Different gesture detected, reset counter
+                    lockCandidateGesture = inferredPose
+                    lockCandidateFrameCount = 1
+                }
+            } else {
+                // Free phase - just save the gesture
+                if savedGesture != inferredPose {
+                    print("[RPS-VM] Gesture changed from \(savedGesture?.rawValue ?? "none") to \(inferredPose)")
+                }
+                
+                savedGesture = inferredPose
+                savedGestureTimestamp = Date()
+                
+                // Light haptic for gesture detection
+                if poseConfidence >= 0.85 {
+                    audioService?.playHaptic(.light)
+                }
+            }
+        } else if savedGesture == nil && poseConfidence >= 0.6 && inferredPose != .unknown {
+            // Lower threshold for initial gesture detection
+            savedGesture = inferredPose
+            savedGestureTimestamp = Date()
+            print("[RPS-VM] Initial gesture saved: \(inferredPose)")
+        }
     }
     
     func handleHandLost() {
         isHandDetected = false
-        
-        // Don't immediately clear gesture - use grace period
-        let timeSinceLastGood = Date().timeIntervalSince(lastKnownGoodTimestamp)
-        
-        // Only clear gesture if we're past the grace period AND not in active countdown
-        if timeSinceLastGood > handLostGracePeriod && !roundPhase.isActive {
-            currentGesture = .unknown
-            gestureConfidence = 0.0
-        }
-        // During active rounds, keep the last known good gesture
+        // Don't change gestures - keep whatever we had
+        print("[RPS] Hand lost but keeping gesture: \(currentGesture)")
     }
     
     // MARK: - Private Methods
     
     private func startCountdown() {
-        roundPhase = .countdown(3)
-        countdownValue = 3
-        lockedGesture = nil  // Reset locked gesture for new round
+        roundPhase = .countdown(2)
+        countdownValue = 2
         
         countdownTimer?.cancel()
         countdownTimer = Task { [weak self] in
-            for i in (1...3).reversed() {
+            for i in (1...2).reversed() {
                 guard !Task.isCancelled else { return }
                 
                 await MainActor.run {
@@ -166,9 +186,9 @@ final class RockPaperScissorsViewModel {
                     self?.roundPhase = .countdown(i)
                     self?.audioService?.playSound("countdown_tick")
                     
-                    // Lock gesture when countdown reaches 1
+                    // At countdown 1, we enter the locking phase
                     if i == 1 {
-                        self?.lockGestureForReveal()
+                        print("[RPS-VM] Entering lock phase - gesture must be stable for \(self?.framesNeededForLock ?? 3) frames")
                     }
                 }
                 
@@ -186,16 +206,11 @@ final class RockPaperScissorsViewModel {
     private func revealGestures() {
         roundPhase = .reveal
         
-        print("[RPS] === REVEAL PHASE ===")
-        print("[RPS] Current gesture: \(currentGesture), confidence: \(gestureConfidence)")
-        print("[RPS] Recent detections count: \(recentDetections.count)")
-        
-        // Lock in player gesture
-        let playerGesture = lockInPlayerGesture()
-        
-        // Generate AI gesture
+        // Use the saved gesture, or if nothing saved, use current gesture, or rock as last resort
+        let playerGesture = savedGesture ?? currentGesture ?? .rock
         let aiGesture = generateAIMove()
         
+        print("[RPS] === REVEAL PHASE ===")
         print("[RPS] Player: \(playerGesture), AI: \(aiGesture)")
         
         // Calculate result
@@ -204,10 +219,8 @@ final class RockPaperScissorsViewModel {
         print("[RPS] Result: \(result)")
         
         // Update history for AI learning
-        if playerGesture != .unknown {
-            playerHistory.append(playerGesture)
-            updateAILearning(playerMove: playerGesture)
-        }
+        playerHistory.append(playerGesture)
+        updateAILearning(playerMove: playerGesture)
         
         // Play result sound
         playResultSound(result)
@@ -222,8 +235,7 @@ final class RockPaperScissorsViewModel {
                 "round_number": matchState.currentRound,
                 "player_gesture": playerGesture.rawValue,
                 "ai_gesture": aiGesture.rawValue,
-                "result": result.rawValue,
-                "confidence": gestureConfidence
+                "result": result.rawValue
             ]
         )
         
@@ -233,162 +245,7 @@ final class RockPaperScissorsViewModel {
         }
     }
     
-    private func lockGestureForReveal() {
-        // Get stable gesture from confidence window
-        let stableGesture = getStableGestureFromWindow()
-        
-        if let (gesture, confidence) = stableGesture, confidence >= minConfidenceForLock {
-            lockedGesture = gesture
-            print("[RPS] Pre-locked stable gesture at countdown 1: \(gesture) with confidence \(confidence)")
-            audioService?.playSound("gesture_lock")
-            audioService?.playHaptic(.light)
-        } else if currentGesture != .unknown && gestureConfidence > 0.5 {
-            // Fallback to current gesture if no stable gesture found
-            lockedGesture = currentGesture
-            print("[RPS] Pre-locked current gesture: \(currentGesture) with confidence \(gestureConfidence)")
-            audioService?.playSound("gesture_lock")
-            audioService?.playHaptic(.light)
-        } else {
-            // Final fallback to best gesture from history
-            let bestGesture = getBestGestureFromHistory()
-            if bestGesture != .unknown {
-                lockedGesture = bestGesture
-                print("[RPS] Pre-locked gesture from history: \(bestGesture)")
-            }
-        }
-    }
-    
-    private func lockInPlayerGesture() -> RPSHandPose {
-        print("[RPS] === LOCK IN PLAYER GESTURE ===")
-        print("[RPS] Locked gesture: \(String(describing: lockedGesture))")
-        print("[RPS] Current gesture: \(currentGesture), confidence: \(gestureConfidence)")
-        print("[RPS] Last known good: \(lastKnownGoodGesture)")
-        print("[RPS] Recent detections count: \(recentDetections.count)")
-        
-        // First priority: Use pre-locked gesture if available
-        if let locked = lockedGesture, locked != .unknown {
-            print("[RPS] ✅ Using pre-locked gesture: \(locked)")
-            return locked
-        }
-        
-        // Second priority: Use current stable gesture if we have good confidence
-        if currentGesture != .unknown && gestureConfidence > 0.5 {
-            print("[RPS] Locking in current gesture: \(currentGesture) with confidence \(gestureConfidence)")
-            audioService?.playSound("gesture_lock")
-            audioService?.playHaptic(.medium)
-            return currentGesture
-        }
-        
-        // Third priority: Use last known good gesture if within grace period
-        let timeSinceLastGood = Date().timeIntervalSince(lastKnownGoodTimestamp)
-        if lastKnownGoodGesture != .unknown && timeSinceLastGood < handLostGracePeriod {
-            print("[RPS] Using last known good gesture: \(lastKnownGoodGesture) from \(timeSinceLastGood)s ago")
-            return lastKnownGoodGesture
-        }
-        
-        // Final fallback: Use the most stable recent gesture
-        let fallbackGesture = getBestGestureFromHistory()
-        print("[RPS] Using fallback gesture from history: \(fallbackGesture)")
-        
-        if fallbackGesture != .unknown {
-            audioService?.playSound("gesture_lock")
-            audioService?.playHaptic(.medium)
-        }
-        
-        return fallbackGesture
-    }
-    
-    private func getBestGestureFromHistory() -> RPSHandPose {
-        guard !recentDetections.isEmpty else {
-            return .unknown
-        }
-        
-        // Count occurrences of each gesture in recent detections
-        var gestureCounts: [RPSHandPose: Int] = [:]
-        for detection in recentDetections where detection.isConfident && detection.pose != .unknown {
-            gestureCounts[detection.pose, default: 0] += 1
-        }
-        
-        // Return most frequent confident gesture
-        return gestureCounts.max(by: { $0.value < $1.value })?.key ?? .unknown
-    }
-    
-    private func getStableGestureFromWindow() -> (gesture: RPSHandPose, confidence: Float)? {
-        // Get detections within confidence window
-        let cutoff = Date().addingTimeInterval(-gestureConfidenceWindow)
-        let windowDetections = recentDetections.filter { $0.timestamp >= cutoff && $0.isConfident }
-        
-        guard !windowDetections.isEmpty else { return nil }
-        
-        // Count gestures and calculate average confidence
-        var gestureStats: [RPSHandPose: (count: Int, totalConfidence: Float)] = [:]
-        
-        for detection in windowDetections where detection.pose != .unknown {
-            let current = gestureStats[detection.pose, default: (0, 0)]
-            gestureStats[detection.pose] = (current.count + 1, current.totalConfidence + detection.confidence)
-        }
-        
-        // Find most stable gesture (highest occurrence with good average confidence)
-        var bestGesture: RPSHandPose?
-        var bestScore: Float = 0
-        
-        for (gesture, stats) in gestureStats where gesture != .unknown {
-            let avgConfidence = stats.totalConfidence / Float(stats.count)
-            let occurrence = Float(stats.count) / Float(windowDetections.count)
-            let score = avgConfidence * occurrence  // Combined score
-            
-            if score > bestScore {
-                bestScore = score
-                bestGesture = gesture
-            }
-        }
-        
-        if let gesture = bestGesture {
-            let stats = gestureStats[gesture]!
-            let avgConfidence = stats.totalConfidence / Float(stats.count)
-            return (gesture, avgConfidence)
-        }
-        
-        return nil
-    }
-    
-    private func updateStableGesture() {
-        // Calculate most common gesture in recent detections
-        guard !recentDetections.isEmpty else {
-            currentGesture = .unknown
-            gestureConfidence = 0.0
-            return
-        }
-        
-        // Count confident detections by gesture
-        var gestureCounts: [RPSHandPose: Int] = [:]
-        var totalConfident = 0
-        
-        print("[RPS] UpdateStableGesture - Total detections: \(recentDetections.count)")
-        
-        for detection in recentDetections {
-            print("[RPS] Detection: \(detection.pose), confidence: \(detection.confidence), isConfident: \(detection.isConfident)")
-            if detection.isConfident && detection.pose != .unknown {
-                gestureCounts[detection.pose, default: 0] += 1
-                totalConfident += 1
-            }
-        }
-        
-        // Find most common gesture
-        if let (gesture, count) = gestureCounts.max(by: { $0.value < $1.value }) {
-            currentGesture = gesture
-            gestureConfidence = Float(count) / Float(max(recentDetections.count, 1))
-            
-            // Update last known good gesture if this is a confident detection
-            if gesture != .unknown && gestureConfidence > 0.5 {
-                lastKnownGoodGesture = gesture
-                lastKnownGoodTimestamp = Date()
-            }
-        } else {
-            currentGesture = .unknown
-            gestureConfidence = 0.0
-        }
-    }
+    // Removed all complex locking functions - we don't need them anymore
     
     // MARK: - AI Methods
     
@@ -552,12 +409,23 @@ final class RockPaperScissorsViewModel {
     
     func resetToWaiting() {
         roundPhase = .waiting
+        // Reset lock state
+        isGestureLocked = false
+        lockCandidateGesture = nil
+        lockCandidateFrameCount = 0
+        // Don't reset gestures - keep showing what we have
     }
     
     // MARK: - Cleanup
     
-    deinit {
+    func cleanup() {
         countdownTimer?.cancel()
+        countdownTimer = nil
         gestureStabilityTimer?.cancel()
+        gestureStabilityTimer = nil
+    }
+    
+    deinit {
+        cleanup()
     }
 }

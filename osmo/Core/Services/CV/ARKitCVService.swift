@@ -126,6 +126,11 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
         }
     }
     
+    func eventStream(gameId: String, events: [CVEventType], configuration: [String: Any]) -> AsyncStream<CVEvent> {
+        // For ARKit, we just use the regular event stream (configuration not needed yet)
+        return eventStream(gameId: gameId, events: events)
+    }
+    
     // MARK: - AR Setup
     private func setupARSession() {
         arSession = ARSession()

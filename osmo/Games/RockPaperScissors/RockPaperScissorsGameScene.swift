@@ -46,9 +46,12 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
     
     private var backgroundNode: SKSpriteNode!
     private var scoreLabel: SKLabelNode!
-    private var roundLabel: SKLabelNode!
     private var countdownLabel: SKLabelNode!
     private var instructionLabel: SKLabelNode!
+    
+    // Exit button (moved from GameHost)
+    private var exitButton: SKShapeNode!
+    private var exitButtonIcon: SKLabelNode!
     
     // Gesture display
     private var playerGestureNode: SKSpriteNode!
@@ -120,21 +123,25 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         // Score display with modern styling
         scoreLabel = createLabel(
             text: "Player 0 - 0 AI",
-            fontSize: 22,
-            fontWeight: .semibold
-        )
-        
-        // Round display - acts as title
-        roundLabel = createLabel(
-            text: "Round 1 of 5",
-            fontSize: 28,
+            fontSize: 24,
             fontWeight: .bold
         )
+        
+        // Exit button
+        exitButton = SKShapeNode(circleOfRadius: 20)
+        exitButton.fillColor = UIColor.black.withAlphaComponent(0.5)
+        exitButton.strokeColor = UIColor.white.withAlphaComponent(0.8)
+        exitButton.lineWidth = 2
+        exitButton.name = "exitButton"
+        
+        exitButtonIcon = createLabel(text: "✕", fontSize: 20, fontWeight: .bold)
+        exitButtonIcon.verticalAlignmentMode = .center
+        exitButton.addChild(exitButtonIcon)
         
         // Countdown with larger size
         countdownLabel = createLabel(
             text: "",
-            fontSize: 150,
+            fontSize: 120,
             fontWeight: .heavy
         )
         
@@ -216,34 +223,42 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         confidenceBar.addChild(confidenceFill)
         
         // Add all nodes
-        [scoreLabel, roundLabel, countdownLabel, instructionLabel,
+        [scoreLabel, countdownLabel, instructionLabel,
          playerGestureNode, aiGestureNode, playerLabel, aiLabel,
-         resultLabel, playAgainButton, startButton, handIndicator, confidenceBar, 
-         gestureDebugBackground, gestureGuideBackground].forEach {
+         resultLabel, playAgainButton, startButton, handIndicator, exitButton,
+         confidenceBar, gestureDebugBackground, gestureGuideBackground].forEach {
             addChild($0)
         }
     }
     
     private func layoutNodes() {
         let center = CGPoint(x: size.width / 2, y: size.height / 2)
-        let safeTop = size.height - 50 // Account for safe area
+        let safeTop = size.height - 60 // Account for safe area
         
-        // UI Layout from top to bottom:
-        // 1. Title/Round info (top)
-        // 2. Gesture guide (below title)
-        // 3. Score display (below guide)
-        // 4. Game area (center)
-        // 5. Instructions/buttons (below game)
-        // 6. Debug info (bottom)
+        // UI Layout:
+        // 1. Top bar: hand indicator (left), score (center), exit button (right)
+        // 2. Gesture guide (below top bar)
+        // 3. Game area (center)
+        // 4. Instructions/buttons (below game)
+        // 5. Debug info (bottom)
         
-        // Top section - Title and round info
-        roundLabel.position = CGPoint(x: center.x, y: safeTop - 20)
+        // TOP BAR - Single row with three elements
+        let topBarY = safeTop
         
-        // Score - right below round label
-        scoreLabel.position = CGPoint(x: center.x, y: safeTop - 50)
+        // Hand tracking indicator (left)
+        handIndicator.position = CGPoint(x: 30, y: topBarY)
         
-        // Gesture guide - below score
-        gestureGuideBackground.position = CGPoint(x: center.x, y: safeTop - 110)
+        // Score (center)
+        scoreLabel.position = CGPoint(x: center.x, y: topBarY)
+        
+        // Exit button (right)
+        exitButton.position = CGPoint(x: size.width - 30, y: topBarY)
+        
+        // Confidence bar (hidden - not needed in new design)
+        confidenceBar.isHidden = true
+        
+        // Gesture guide - below top bar
+        gestureGuideBackground.position = CGPoint(x: center.x, y: topBarY - 60)
         
         // Game area - centered
         // Countdown in the middle
@@ -251,7 +266,7 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         
         // Gesture nodes side by side with proper spacing
         let gestureY = center.y
-        let gestureSpacing: CGFloat = 120 // Reduced from 150 to keep on screen
+        let gestureSpacing: CGFloat = 120
         playerGestureNode.position = CGPoint(x: center.x - gestureSpacing, y: gestureY)
         aiGestureNode.position = CGPoint(x: center.x + gestureSpacing, y: gestureY)
         
@@ -259,19 +274,13 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         playerLabel.position = CGPoint(x: playerGestureNode.position.x, y: gestureY - 75)
         aiLabel.position = CGPoint(x: aiGestureNode.position.x, y: gestureY - 75)
         
-        // Result above gestures
-        resultLabel.position = CGPoint(x: center.x, y: gestureY + 100)
+        // Result - positioned to avoid cutoff
+        resultLabel.position = CGPoint(x: center.x, y: gestureY + 80)
         
         // Instructions/Play button area - below game area
         instructionLabel.position = CGPoint(x: center.x, y: center.y - 150)
         startButton.position = CGPoint(x: center.x, y: center.y - 200)
         playAgainButton.position = CGPoint(x: center.x, y: center.y - 200)
-        
-        // Hand tracking indicator (top right corner)
-        handIndicator.position = CGPoint(x: size.width - 25, y: safeTop - 25)
-        
-        // Confidence bar (below hand indicator)
-        confidenceBar.position = CGPoint(x: size.width - 120, y: safeTop - 55)
         
         // Gesture debug display (bottom)
         gestureDebugBackground.position = CGPoint(x: center.x, y: 80)
@@ -345,30 +354,45 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
             print("[RPS] Hand detected: \(handId), chirality: \(chirality)")
             
         case .fingerCountDetected(let count):
-            print("[RPS] Finger count detected: \(count), confidence: \(event.confidence)")
+            // Extract enhanced metadata from CV processor
+            var handOpenness: Float = 0.5
+            var inferredGesture: RPSHandPose = .unknown
+            var gestureConfidence: Float = event.confidence
             
-            // Extract hand openness from metadata if available
-            let handOpenness: Float = {
-                if let metadata = event.metadata,
-                   let openness = metadata.additionalProperties["hand_openness"] as? Float {
-                    return openness
-                } else {
-                    // Fallback to simple calculation if not available
-                    return Float(count) / 5.0
+            if let metadata = event.metadata {
+                handOpenness = metadata.additionalProperties["hand_openness"] as? Float ?? 0.5
+                
+                // Get the validated gesture from CV processor
+                if let gestureString = metadata.additionalProperties["inferred_gesture"] as? String {
+                    inferredGesture = RPSHandPose(rawValue: gestureString) ?? .unknown
                 }
-            }()
+                
+                // Use smoothed confidence if available
+                if let smoothedConf = metadata.additionalProperties["smoothed_confidence"] as? Float {
+                    gestureConfidence = smoothedConf
+                }
+                
+                // Debug: log raw vs smoothed
+                if let rawGesture = metadata.additionalProperties["raw_gesture"] as? String {
+                    print("[RPS-Scene] Raw: \(rawGesture), Smoothed: \(inferredGesture), Confidence: \(String(format: "%.2f", gestureConfidence))")
+                }
+            }
             
-            print("[RPS] Hand openness: \(handOpenness)")
-            
-            // Convert finger count to hand metrics
+            // Create metrics with all the data
             let metrics = HandMetrics(
                 fingerCount: count,
                 handOpenness: handOpenness,
-                stability: event.confidence,
+                stability: gestureConfidence,
                 position: CGPoint(x: size.width / 2, y: size.height / 2)
             )
+            
             viewModel.processHandMetrics(metrics)
-            updateGestureDebugDisplay(fingerCount: count, confidence: event.confidence, handOpenness: handOpenness)
+            updateGestureDebugDisplay(
+                fingerCount: count,
+                confidence: gestureConfidence,
+                handOpenness: handOpenness,
+                gesture: inferredGesture
+            )
             updateConfidenceBar()
             
         case .handLost(let handId):
@@ -383,12 +407,12 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         }
     }
     
-    private func updateGestureDebugDisplay(fingerCount: Int, confidence: Float, handOpenness: Float) {
-        let gesture = HandMetrics(fingerCount: fingerCount, handOpenness: handOpenness, stability: confidence, position: .zero).inferredPose
+    private func updateGestureDebugDisplay(fingerCount: Int, confidence: Float, handOpenness: Float, gesture: RPSHandPose? = nil) {
+        let displayGesture = gesture ?? HandMetrics(fingerCount: fingerCount, handOpenness: handOpenness, stability: confidence, position: .zero).inferredPose
         let confidencePercent = Int(confidence * 100)
         let opennessPercent = Int(handOpenness * 100)
         
-        gestureDebugLabel.text = "Detected: \(gesture.emoji) \(gesture.displayName) (\(confidencePercent)%) Open: \(opennessPercent)%"
+        gestureDebugLabel.text = "Detected: \(displayGesture.emoji) \(displayGesture.displayName) (\(confidencePercent)%) Open: \(opennessPercent)%"
         
         // Color based on confidence
         if confidence > 0.8 {
@@ -400,7 +424,7 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         }
         
         // Highlight the detected gesture in the guide
-        highlightDetectedGesture(gesture)
+        highlightDetectedGesture(displayGesture)
     }
     
     private func highlightDetectedGesture(_ gesture: RPSHandPose) {
@@ -541,8 +565,8 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
             // Match is complete
             playAgainLabel.text = "New Match"
             
-            // Show final score in result label
-            let winner = viewModel.matchState.playerScore > viewModel.matchState.aiScore ? "You Win the Match! 🎉" : "AI Wins the Match!"
+            // Show final score in result label with better positioning
+            let winner = viewModel.matchState.playerScore > viewModel.matchState.aiScore ? "You Win! 🎉" : "AI Wins!"
             if viewModel.matchState.playerScore == viewModel.matchState.aiScore {
                 resultLabel.text = "Match Tied!"
                 resultLabel.fontColor = .systemYellow
@@ -550,6 +574,9 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
                 resultLabel.text = winner
                 resultLabel.fontColor = viewModel.matchState.playerScore > viewModel.matchState.aiScore ? .systemGreen : .systemRed
             }
+            
+            // Adjust font size for match result to ensure it fits
+            resultLabel.fontSize = 42
             
             // Hide instruction label for cleaner look
             instructionLabel.isHidden = true
@@ -588,7 +615,6 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
     
     private func updateScoreDisplay() {
         scoreLabel.text = "Player \(viewModel.matchState.playerScore) - \(viewModel.matchState.aiScore) AI"
-        roundLabel.text = "Round \(viewModel.matchState.currentRound) of 5"
     }
     
     private func updateConfidenceBar() {
@@ -614,8 +640,7 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         
         // Update instruction based on gesture during countdown
         if viewModel.isHandDetected && viewModel.roundPhase.isActive {
-            let gesture = viewModel.currentGesture
-            if gesture != RPSHandPose.unknown {
+            if let gesture = viewModel.currentGesture {
                 instructionLabel.text = "Detecting: \(gesture.emoji) \(gesture.displayName)"
                 instructionLabel.fontColor = .systemGreen
             } else {
@@ -702,8 +727,10 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
     private func animateCountdown(_ value: Int) {
         if value > 0 {
             countdownLabel.text = "\(value)"
+            countdownLabel.fontSize = 120
         } else {
             countdownLabel.text = "SHOOT!"
+            countdownLabel.fontSize = 80  // Smaller for SHOOT
         }
         
         // Modern spring animation
@@ -781,6 +808,9 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
                 startButton.removeAllActions()
                 startRound()
             }
+        } else if node.name == "exitButton" || node.parent?.name == "exitButton" {
+            // Exit the game by notifying the game context
+            NotificationCenter.default.post(name: Notification.Name("ExitGame"), object: nil)
         }
     }
     
@@ -790,7 +820,7 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         
         // Observe countdown changes
         Task { @MainActor in
-            var lastCountdownValue = 3
+            var lastCountdownValue = -1  // Start with -1 so first value always shows
             var hasShownShoot = false
             
             while true {
@@ -846,6 +876,11 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
     
     override func willMove(from view: SKView) {
         super.willMove(from: view)
+        // Cancel CV task immediately to prevent any further events
         cvTask?.cancel()
+        cvTask = nil
+        
+        // Cancel any active timers in view model
+        viewModel.cleanup()
     }
 }

@@ -16,6 +16,13 @@ enum CVEventType: Equatable {
     case gestureRecognized(type: GestureType)
     case fingerCountDetected(count: Int) // For our mock game
     
+    // Rectangle/quadrilateral detection
+    case rectangleDetected(rectangles: [CVRectangle])
+    case rectangleLost
+    
+    // Text detection
+    case textDetected(text: String, boundingBox: CGRect)
+    
     // Sudoku-specific events
     case sudokuGridDetected(gridId: UUID, corners: [CGPoint])
     case sudokuCellWritten(gridId: UUID, row: Int, col: Int, digit: Int)
@@ -98,5 +105,21 @@ struct CVMetadata {
         self.boundingBox = boundingBox
         self.rotation = rotation
         self.additionalProperties = additionalProperties
+    }
+}
+
+// MARK: - CV Rectangle
+struct CVRectangle: Equatable {
+    let topLeft: CGPoint
+    let topRight: CGPoint
+    let bottomLeft: CGPoint
+    let bottomRight: CGPoint
+    let confidence: Float
+    
+    var center: CGPoint {
+        CGPoint(
+            x: (topLeft.x + topRight.x + bottomLeft.x + bottomRight.x) / 4,
+            y: (topLeft.y + topRight.y + bottomLeft.y + bottomRight.y) / 4
+        )
     }
 }

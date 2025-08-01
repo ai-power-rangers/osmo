@@ -11,8 +11,9 @@ import CoreGraphics
 // MARK: - Finger Detector
 final class FingerDetector {
     
-    // Thresholds for finger detection
-    private let extendedThreshold: Float = 0.8  // How straight the finger needs to be
+    // Thresholds for finger detection - made more lenient
+    private let extendedThreshold: Float = 0.6  // Reduced from 0.8 for better detection
+    private let angleThreshold: CGFloat = 140  // Reduced from 150 degrees
     private let confidenceThreshold: Float = 0.7
     
     func detectRaisedFingers(from hand: HandObservation) -> FingerDetectionResult {
@@ -95,9 +96,11 @@ final class FingerDetector {
         
         // Check angle between joints (simplified)
         let angle = calculateAngle(p1: tip, p2: pip, p3: mcp)
-        let isStraight = angle > 150 // degrees
+        let isStraight = angle > angleThreshold
         
-        return isExtending && isStraight
+        // For rock-paper-scissors, we're more lenient
+        // If finger is extending OR reasonably straight, count it
+        return isExtending || (isStraight && tipToWrist > mcpToWrist * 1.2)
     }
     
     private func distance(from p1: CGPoint, to p2: CGPoint) -> CGFloat {
@@ -147,36 +150,90 @@ extension FingerDetector {
         return nil
     }
     
-    // Calculate hand openness based on finger spread
+    // Calculate hand openness based on finger spread and extension
     func calculateHandOpenness(from hand: HandObservation) -> Float {
         let tips = hand.landmarks.fingerTips
         guard tips.count >= 5 else { return 0.0 }
         
-        // Calculate average distance between adjacent fingertips
-        var totalDistance: CGFloat = 0
-        var measurementCount = 0
+        // Method 1: Average distance between fingertips (spread)
+        var totalSpread: CGFloat = 0
+        var spreadCount = 0
         
         // Distance between thumb and index
-        totalDistance += distance(from: tips[0], to: tips[1])
-        measurementCount += 1
+        totalSpread += distance(from: tips[0], to: tips[1])
+        spreadCount += 1
         
         // Distance between consecutive fingers
         for index in 1..<(tips.count - 1) {
-            totalDistance += distance(from: tips[index], to: tips[index + 1])
-            measurementCount += 1
+            totalSpread += distance(from: tips[index], to: tips[index + 1])
+            spreadCount += 1
         }
         
-        // Calculate average distance
-        let avgDistance = totalDistance / CGFloat(measurementCount)
-        
-        // Normalize based on hand size (using wrist to middle finger MCP as reference)
+        let avgSpread = totalSpread / CGFloat(spreadCount)
         let handSize = distance(from: hand.landmarks.wrist, to: hand.landmarks.middleMCP)
-        let normalizedSpread = avgDistance / handSize
+        let normalizedSpread = avgSpread / handSize
         
-        // Convert to 0-1 range
-        // Typical values: closed hand ~0.2, open hand ~0.8-1.0
-        let openness = min(max((normalizedSpread - 0.2) / 0.6, 0), 1)
+        // Method 2: Average finger extension (how far tips are from palm)
+        let palmCenter = CGPoint(
+            x: (hand.landmarks.indexMCP.x + hand.landmarks.middleMCP.x + hand.landmarks.ringMCP.x + hand.landmarks.littleMCP.x) / 4,
+            y: (hand.landmarks.indexMCP.y + hand.landmarks.middleMCP.y + hand.landmarks.ringMCP.y + hand.landmarks.littleMCP.y) / 4
+        )
         
-        return Float(openness)
+        var totalExtension: CGFloat = 0
+        for tip in tips {
+            totalExtension += distance(from: tip, to: palmCenter)
+        }
+        let avgExtension = totalExtension / CGFloat(tips.count)
+        let normalizedExtension = avgExtension / handSize
+        
+        // Method 3: Finger curl detection
+        let fingersCurled = detectCurledFingers(from: hand)
+        let curlFactor = 1.0 - (Float(fingersCurled) / 5.0)
+        
+        // Combine all methods with weights
+        let spreadWeight: Float = 0.3
+        let extensionWeight: Float = 0.4
+        let curlWeight: Float = 0.3
+        
+        let combinedOpenness = (Float(normalizedSpread) * spreadWeight +
+                               Float(normalizedExtension) * extensionWeight +
+                               curlFactor * curlWeight)
+        
+        // Normalize to 0-1 range with adjusted thresholds
+        // Closed fist: ~0.1-0.2, Scissors: ~0.4-0.6, Open hand: ~0.7-1.0
+        let adjustedOpenness = min(max((combinedOpenness - 0.1) * 1.2, 0), 1)
+        
+        return adjustedOpenness
+    }
+    
+    private func detectCurledFingers(from hand: HandObservation) -> Int {
+        var curledCount = 0
+        
+        // Check each finger for curl by comparing tip to DIP distance vs DIP to MCP
+        let fingers = [
+            (hand.landmarks.indexTip, hand.landmarks.indexDIP, hand.landmarks.indexMCP),
+            (hand.landmarks.middleTip, hand.landmarks.middleDIP, hand.landmarks.middleMCP),
+            (hand.landmarks.ringTip, hand.landmarks.ringDIP, hand.landmarks.ringMCP),
+            (hand.landmarks.littleTip, hand.landmarks.littleDIP, hand.landmarks.littleMCP)
+        ]
+        
+        for (tip, dip, mcp) in fingers {
+            let tipToDip = distance(from: tip, to: dip)
+            let dipToMcp = distance(from: dip, to: mcp)
+            
+            // If tip is closer to DIP than DIP is to MCP, finger is likely curled
+            if tipToDip < dipToMcp * 0.7 {
+                curledCount += 1
+            }
+        }
+        
+        // Special handling for thumb
+        let thumbTipToIP = distance(from: hand.landmarks.thumbTip, to: hand.landmarks.thumbIP)
+        let thumbIPToMP = distance(from: hand.landmarks.thumbIP, to: hand.landmarks.thumbMP)
+        if thumbTipToIP < thumbIPToMP * 0.7 {
+            curledCount += 1
+        }
+        
+        return curledCount
     }
 }

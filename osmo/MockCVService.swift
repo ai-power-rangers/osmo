@@ -59,6 +59,11 @@ final class MockCVService: CVServiceProtocol, ServiceLifecycle {
         }
     }
     
+    func eventStream(gameId: String, events: [CVEventType], configuration: [String: Any]) -> AsyncStream<CVEvent> {
+        // Mock service ignores configuration
+        return eventStream(gameId: gameId, events: events)
+    }
+    
     // MARK: - Mock Event Generation
     private func startMockEventGeneration() {
         eventTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in

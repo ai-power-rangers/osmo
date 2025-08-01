@@ -220,13 +220,20 @@ final class SwiftDataService: PersistenceServiceProtocol {
     }
     
     // MARK: - Analytics Support
+    @MainActor
     func saveAnalyticsEvent(_ event: AnalyticsEvent) async throws {
+        
         let sdEvent = SDAnalyticsEvent(event: event)
         modelContext.insert(sdEvent)
         
         // Save in batches for performance
         if Int.random(in: 0..<10) == 0 { // 10% chance to save
-            try modelContext.save()
+            do {
+                try modelContext.save()
+            } catch {
+                // Silently fail if context is invalid
+                print("[SwiftData] Failed to save analytics: \(error)")
+            }
         }
     }
     

@@ -33,11 +33,11 @@ struct LobbyView: View {
         GameInfo(
             gameId: "sudoku",
             displayName: "Sudoku",
-            description: "Coming Soon - Solve puzzles with CV assistance!",
+            description: "Place tiles to complete the grid - supports 4x4 and 9x9!",
             iconName: "square.grid.3x3",
             minAge: 8,
             category: .problemSolving,
-            isLocked: true
+            isLocked: false
         )
     ]
     

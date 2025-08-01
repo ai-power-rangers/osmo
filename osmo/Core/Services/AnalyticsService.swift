@@ -153,9 +153,14 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
         eventQueue.append(event)
         currentSession?.events.append(event)
         
-        // Save to SwiftData
+        // Save to SwiftData with error handling
         if let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self) as? SwiftDataService {
-            try? await persistence.saveAnalyticsEvent(event)
+            do {
+                try await persistence.saveAnalyticsEvent(event)
+            } catch {
+                // Ignore errors during shutdown
+                print("[Analytics] Failed to persist event: \(error)")
+            }
         }
         
         // Flush if queue is full
