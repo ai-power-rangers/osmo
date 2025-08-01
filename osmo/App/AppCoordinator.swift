@@ -23,10 +23,6 @@ final class AppCoordinator: CoordinatorProtocol, ObservableObject {
         navigationPath.append(destination)
     }
     
-    func navigate(to destination: NavigationDestination) {
-        navigateTo(destination)
-    }
-    
     func navigateBack() {
         if !navigationPath.isEmpty {
             navigationPath.removeLast()
@@ -52,7 +48,6 @@ final class AppCoordinator: CoordinatorProtocol, ObservableObject {
         // Navigate
         navigateTo(.game(gameId: gameId))
     }
-    
 }
 
 // MARK: - Environment Key

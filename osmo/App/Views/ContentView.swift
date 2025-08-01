@@ -36,12 +36,6 @@ struct ContentView: View {
                         CVTestView()
                     case .tangramPuzzleSelect:
                         TangramPuzzleSelectView()
-                    case .gridEditor:
-                        GridEditorSelectionView()
-                    case .gridEditorSelection:
-                        GridEditorSelectionView()
-                    case .gridEditorForGame(let gameType):
-                        GridEditorHostView(gameType: gameType)
                     }
                 }
         }

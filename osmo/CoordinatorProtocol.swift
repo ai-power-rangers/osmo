@@ -15,6 +15,9 @@ enum NavigationDestination: Hashable {
     case parentGate
     case cvTest
     case tangramPuzzleSelect
+    case gridEditor
+    case gridEditorSelection
+    case gridEditorForGame(gameType: String)
 }
 
 // MARK: - Coordinator Protocol

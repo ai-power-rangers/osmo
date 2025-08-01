@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import os.log
 
 enum TestMode: String, CaseIterable {
     case fingers = "Finger Detection"
@@ -18,6 +19,8 @@ struct CVTestView: View {
     @State private var cvService: CVServiceProtocol?
     @State private var isSessionActive = false
     @State private var lastFingerCount: Int?
+    
+    private let logger = Logger(subsystem: "com.osmoapp", category: "CVTest")
     @State private var eventCount = 0
     @State private var permissionStatus = CameraPermissionManager.shared.status
     @State private var errorMessage: String?
@@ -187,7 +190,7 @@ struct CVTestView: View {
                 // Enable debug mode for more logging
                 if let cameraService = cvService as? CameraVisionService {
                     cameraService.debugMode = true
-                    print("[CVTest] Debug mode enabled for CameraVisionService")
+                    logger.info("[CVTest] Debug mode enabled for CameraVisionService")
                     
                     // Get camera session for preview
                     await MainActor.run {
@@ -195,13 +198,13 @@ struct CVTestView: View {
                     }
                 } else if let arKitService = cvService as? ARKitCVService {
                     arKitService.debugMode = true
-                    print("[CVTest] Debug mode enabled for ARKitCVService")
+                    logger.info("[CVTest] Debug mode enabled for ARKitCVService")
                     // ARKit doesn't provide direct camera session access
                 }
                 
                 // Start CV session
                 try await cvService?.startSession()
-                print("[CVTest] Session started successfully")
+                logger.info("[CVTest] Session started successfully")
                 
                 // Get the camera session after starting
                 if let cameraService = cvService as? CameraVisionService {
@@ -212,7 +215,7 @@ struct CVTestView: View {
                 
                 // Subscribe to events
                 await subscribeToEvents()
-                print("[CVTest] Event subscription active")
+                logger.info("[CVTest] Event subscription active")
                 
                 await MainActor.run {
                     isSessionActive = true
@@ -221,7 +224,7 @@ struct CVTestView: View {
             } catch {
                 await MainActor.run {
                     errorMessage = "Failed to start: \(error.localizedDescription)"
-                    print("[CVTest] Error starting session: \(error)")
+                    logger.error("[CVTest] Error starting session: \(error)")
                 }
             }
         }
@@ -245,17 +248,16 @@ struct CVTestView: View {
             events: [] // Subscribe to all events for debugging
         )
         
-        Task {
-            for await event in stream {
-                await MainActor.run {
+        for await event in stream {
                     eventCount += 1
                     
                     // Debug print
-                    print("[CVTest] Received event: \(event.type)")
+                    // Commented out due to complex type interpolation
+                    // logger.debug("[CVTest] Received event")
                     
                     switch event.type {
                     case .fingerCountDetected(let count):
-                        print("[CVTest] Finger count detected: \(count)")
+                        logger.info("[CVTest] Finger count detected: \(count)")
                         lastFingerCount = count
                         
                         // Update overlay if in finger mode
@@ -291,19 +293,19 @@ struct CVTestView: View {
                         }
                         
                     case .handDetected(let handId, let chirality):
-                        print("[CVTest] Hand detected: \(handId), chirality: \(chirality)")
+                        logger.info("[CVTest] Hand detected: \(handId), chirality: \(chirality.rawValue)")
                         
                     case .handLost(let handId):
-                        print("[CVTest] Hand lost: \(handId)")
+                        logger.info("[CVTest] Hand lost: \(handId)")
                         if testMode == .fingers {
                             overlayViewModel.clearHands()
                         }
                         
                     case .handPoseChanged(let handId, let pose):
-                        print("[CVTest] Hand pose changed: \(handId) -> \(pose)")
+                        logger.info("[CVTest] Hand pose changed: \(handId) -> \(pose.rawValue)")
                         
                     case .sudokuGridDetected(let gridId, let corners):
-                        print("[CVTest] Rectangle detected: \(gridId), corners: \(corners.count)")
+                        logger.info("[CVTest] Rectangle detected: \(gridId), corners: \(corners.count)")
                         rectangleDetected = true
                         
                         // Update overlay if in rectangle mode
@@ -312,17 +314,15 @@ struct CVTestView: View {
                         }
                         
                     case .sudokuGridLost(let gridId):
-                        print("[CVTest] Rectangle lost: \(gridId)")
+                        logger.info("[CVTest] Rectangle lost: \(gridId)")
                         rectangleDetected = false
                         if testMode == .sudoku {
                             overlayViewModel.clearRectangles()
                         }
                         
                     default:
-                        print("[CVTest] Other event: \(event.type)")
+                        logger.debug("[CVTest] Other event type detected")
                     }
-                }
-            }
         }
     }
 }
