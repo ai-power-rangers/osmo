@@ -105,9 +105,8 @@ struct SudokuPlayView: View {
                         
                         // Timer
                         Text(viewModel.formattedTime)
-                            .font(.caption)
-                            .fontFamily(.monospaced)
-                            .foregroundColor(.secondary)
+                            .font(.caption.monospaced())
+                            .foregroundColor(Color.secondary)
                         
                         // Move count
                         Text("\(viewModel.moveCount) moves")
@@ -235,12 +234,12 @@ struct SudokuPlayView: View {
     
     private func difficultyColor(_ difficulty: PuzzleDifficulty) -> Color {
         switch difficulty {
-        case .tutorial: return .blue
+        case .beginner: return .blue
         case .easy: return .green
         case .medium: return .orange
         case .hard: return .red
         case .expert: return .purple
-        case .custom: return .gray
+        case .master: return .gray
         }
     }
 }

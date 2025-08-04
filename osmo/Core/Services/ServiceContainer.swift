@@ -73,7 +73,14 @@ final class ServiceContainer: GameContext {
         return service
     }
     
-    private(set) var storage: PuzzleStorageProtocol = UniversalPuzzleStorage.shared
+    private var _storage: PuzzleStorageProtocol?
+    
+    var storage: PuzzleStorageProtocol {
+        guard let service = _storage else {
+            fatalError("ServiceContainer not initialized. Call initialize() first.")
+        }
+        return service
+    }
     private(set) var gridEditor: GridEditorServiceProtocol?
     
     // MARK: - Initialization
@@ -105,7 +112,11 @@ final class ServiceContainer: GameContext {
             updateProgress(0.7, "Initializing computer vision...")
             self._cv = await initializeCV(analytics: analytics)
             
-            // 5. Grid Editor Service (depends on persistence and analytics)
+            // 5. Storage Service (no dependencies)
+            updateProgress(0.85, "Initializing storage...")
+            self._storage = SimplePuzzleStorage()
+            
+            // 6. Grid Editor Service (depends on persistence and analytics)
             updateProgress(0.9, "Initializing grid editor...")
             let gridEditorService = await initializeGridEditor(
                 persistence: persistence,

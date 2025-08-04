@@ -64,27 +64,6 @@ public enum GameStateChange {
     case redoPerformed
 }
 
-/// Memento pattern for state capture/restore
-public struct GameStateMemento {
-    public let pieces: [PieceState]
-    public let score: Int
-    public let moveCount: Int
-    public let timestamp: Date
-    public let source: InputSource
-    
-    public init(pieces: [PieceState],
-                score: Int,
-                moveCount: Int,
-                timestamp: Date = Date(),
-                source: InputSource) {
-        self.pieces = pieces
-        self.score = score
-        self.moveCount = moveCount
-        self.timestamp = timestamp
-        self.source = source
-    }
-}
-
 /// Generic piece state representation
 public struct PieceState: Hashable, Codable {
     public let id: String
@@ -104,22 +83,6 @@ public struct PieceState: Hashable, Codable {
         self.isLocked = isLocked
         self.metadata = metadata
     }
-}
-
-/// Protocol for state reconciliation (current: undo/redo, future: physical sync)
-public protocol StateReconciliation {
-    /// Capture current state for undo/redo
-    func captureState() -> GameStateMemento
-    
-    /// Restore a previous state
-    func restoreState(_ memento: GameStateMemento)
-    
-    /// Validate if a state transition is legal
-    func validateTransition(from: GameStateMemento, to: GameStateMemento) -> Bool
-    
-    // MARK: - Future CV Extensions
-    // func reconcileWithPhysicalState(_ detected: PhysicalState)
-    // func resolveConflict(digital: GameStateMemento, physical: PhysicalState) -> GameStateMemento
 }
 
 /// Extension for convenient state snapshot creation

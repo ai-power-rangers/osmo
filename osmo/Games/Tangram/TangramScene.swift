@@ -311,9 +311,9 @@ class TangramScene: BaseGameScene {
     private func updateTargetOverlay() {
         targetOverlay.removeAllChildren()
         
-        guard let viewModel = viewModel,
-              let puzzle = viewModel.currentPuzzle,
-              viewModel.showTargetOverlay else {
+        guard let vm = tangramViewModel,
+              let puzzle = vm.currentPuzzle,
+              vm.showTargetOverlay else {
             return
         }
         

@@ -303,6 +303,11 @@ class BaseGameScene: SKScene, SceneUpdateReceiver {
             }
         }
         
+        // Unregister from ViewModel to prevent retain cycles
+        if let updateProvider = viewModel as? SceneUpdateProvider {
+            updateProvider.registerSceneReceiver(nil)
+        }
+        
         // Clear references
         gameContext = nil
         viewModel = nil

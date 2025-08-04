@@ -1,0 +1,1058 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmo-master.dia",
+    "emit-module-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmo-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmo-master-emit-module.dia",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmo-master.swiftdeps"
+  },
+  "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/Views/ContentView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/Views/LaunchScreen.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LaunchScreen~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/Views/LobbyView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/LobbyView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/Views/ParentGate.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ParentGate~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/Views/RootView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RootView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/Views/SettingsView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/App/osmoApp.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/osmoApp~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Models/CVEvent.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVEvent~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Testing/MockCVService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/MockCVService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Views/CVDetectionOverlayView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVDetectionOverlayView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Views/CVTestView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVTestView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Views/CameraPermissionView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Views/CameraPreviewView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPreviewView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/CV/Views/CameraUnavailableView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraUnavailableView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Models/EditorMode.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EditorMode~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Models/GamePuzzleProtocol.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GamePuzzleProtocol~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Models/GameState.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameState~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Models/PuzzleDifficulty.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleDifficulty~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Scenes/BaseGameScene.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameScene~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Scenes/GameSceneProtocol.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSceneProtocol~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Storage/BasePuzzleStorage.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasePuzzleStorage~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Storage/PuzzleStorageProtocol.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleStorageProtocol~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Storage/UniversalPuzzleStorage.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UniversalPuzzleStorage~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/ViewModels/BaseGameViewModel.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BaseGameViewModel~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/ViewModels/GameViewModelProtocol.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameViewModelProtocol~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Views/CommonGameViews.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CommonGameViews~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameBase/Views/PuzzleCardView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleCardView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GameHost/GameHost.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameHost~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Abstractions/AnchorManager.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnchorManager~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Abstractions/ConstraintValidator.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ConstraintValidator~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Abstractions/GridEditorProtocols.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorProtocols~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Abstractions/PoseSource.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PoseSource~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Abstractions/WinConditionEngine.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/WinConditionEngine~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Geometry/ShapeGeometry.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ShapeGeometry~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/GridEditorHostView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorHostView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/GridEditorSelectionView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorSelectionView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Models/GridArrangement.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridArrangement~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Services/BasicConstraintValidator.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BasicConstraintValidator~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Services/GridEditorService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GridEditorService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Services/TouchPoseSource.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchPoseSource~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/GridEditor/Utils/CoordinateSystem.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CoordinateSystem~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Input/CVInputProcessor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CVInputProcessor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Input/TouchInputProcessor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TouchInputProcessor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Models/GameStateSnapshot.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameStateSnapshot~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Models/PuzzleType.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PuzzleType~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Models/SwiftDataModels.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataModels~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Navigation/AppRoute.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AppRoute~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Navigation/NavigationState.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/NavigationState~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Protocols/GameActionHandler.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameActionHandler~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Protocols/GameInfo.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameInfo~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Protocols/GameModule.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameModule~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Protocols/GameSettingsProtocol.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsProtocol~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Protocols/SceneUpdateProtocol.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SceneUpdateProtocol~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Protocols/StateReconciliation.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/StateReconciliation~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/AnalyticsService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AnalyticsService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/AudioEngineService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/AudioEngineService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/ARKitCVService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ARKitCVService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/CameraVisionService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraVisionService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/FingerDetector.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/FingerDetector~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/GameCVProcessor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameCVProcessor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CV/HandDetection.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/HandDetection~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/CameraPermissionManager.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/CameraPermissionManager~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/EnvironmentServices.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/EnvironmentServices~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/GameSettingsRegistry.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GameSettingsRegistry~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/ServiceBoundary.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceBoundary~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/ServiceContainer.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceContainer~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/ServiceModels.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceModels~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/ServiceProtocols.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/ServiceProtocols~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/SimplePuzzleStorage.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SimplePuzzleStorage~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/Services/SwiftDataService.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SwiftDataService~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Core/UI/UIConstants.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/UIConstants~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/RockPaperScissors/CV/GestureSmoothing.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/GestureSmoothing~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/RockPaperScissors/CV/RPSHandProcessor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSHandProcessor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/RockPaperScissors/Models/RPSModels.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RPSModels~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/RockPaperScissors/RockPaperScissorsGameModule.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameModule~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/RockPaperScissors/RockPaperScissorsGameScene.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsGameScene~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/RockPaperScissors/RockPaperScissorsViewModel.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/RockPaperScissorsViewModel~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/CV/SudokuBoardDetector.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardDetector~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/CV/SudokuBoardProcessor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoardProcessor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/CV/SudokuNumberRecognizer.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuNumberRecognizer~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/Models/SudokuBoard.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuBoard~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/Models/SudokuModels.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuModels~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/Models/SudokuPuzzle.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzle~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/Models/SudokuStorage.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuStorage~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/SudokuEditor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuEditor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/SudokuGameModule.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuGameModule~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/SudokuPlayView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPlayView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/SudokuScene.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuScene~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/SudokuSettingsProvider.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuSettingsProvider~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/SudokuViewModel.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuViewModel~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Sudoku/Views/SudokuPuzzleSelector.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/SudokuPuzzleSelector~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/Models/BlueprintStore.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/BlueprintStore~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/Models/PieceDefinitionExtension.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PieceDefinitionExtension~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/Models/PlacementValidator.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/PlacementValidator~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/Models/TangramLayoutConfig.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramLayoutConfig~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/Models/TangramModels.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramModels~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/Models/TangramPuzzleModel.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPuzzleModel~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/TangramEditor.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramEditor~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/TangramGameModule.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramGameModule~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/TangramPlayView.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramPlayView~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/TangramScene.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramScene~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/TangramSettingsProvider.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramSettingsProvider~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/Games/Tangram/TangramViewModel.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TangramViewModel~partial.swiftmodule"
+  },
+  "/Users/mitchellwhite/Code/osmo/osmo/TestUtilities/TestUtilities.swift" : {
+    "const-values" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.swiftconstvalues",
+    "dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.d",
+    "diagnostics" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.dia",
+    "index-unit-output-path" : "/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.o",
+    "llvm-bc" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.bc",
+    "object" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.o",
+    "swift-dependencies" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities.swiftdeps",
+    "swiftmodule" : "/Users/mitchellwhite/Code/osmo/build/Build/Intermediates.noindex/osmo.build/Debug-iphonesimulator/osmo.build/Objects-normal/arm64/TestUtilities~partial.swiftmodule"
+  }
+}

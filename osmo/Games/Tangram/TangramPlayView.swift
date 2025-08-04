@@ -101,7 +101,7 @@ struct TangramPlayView: View {
                         // Difficulty
                         Label(puzzle.difficulty.rawValue, systemImage: "star.fill")
                             .font(.caption)
-                            .foregroundColor(Color(puzzle.difficulty.color))
+                            .foregroundColor(Color(puzzle.difficulty.colorName))
                         
                         // Progress
                         Text("\(viewModel.currentState.pieces.count)/7")

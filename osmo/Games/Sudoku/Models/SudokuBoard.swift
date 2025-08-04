@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct SudokuBoard: Codable, Hashable {
-    let size: GridSize
-    var grid: [[Int?]]  // Made public for editor
-    private(set) var isLocked: [[Bool]]  // Original tiles that can't be moved
+public struct SudokuBoard: Codable, Hashable {
+    public let size: GridSize
+    public var grid: [[Int?]]  // Made public for editor
+    public private(set) var isLocked: [[Bool]]  // Original tiles that can't be moved
     
     // MARK: - Initialization
     
-    init(size: GridSize) {
+    public init(size: GridSize) {
         self.size = size
         let dimension = size.rawValue
         self.grid = Array(repeating: Array(repeating: nil, count: dimension), count: dimension)
@@ -22,7 +22,7 @@ struct SudokuBoard: Codable, Hashable {
     }
     
     // Convenience initializer for creating board from existing grid
-    init(grid: [[Int?]], size: GridSize) {
+    public init(grid: [[Int?]], size: GridSize) {
         self.size = size
         self.grid = grid
         let dimension = size.rawValue

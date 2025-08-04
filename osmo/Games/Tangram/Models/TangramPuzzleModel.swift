@@ -10,14 +10,14 @@ import CoreGraphics
 
 // MARK: - Tangram Piece
 
-struct TangramPiece: Codable, Identifiable, Equatable, Hashable {
-    let id: UUID
-    let shape: TangramShape
-    var position: CGPoint
-    var rotation: Double  // Radians
-    var isFlipped: Bool
+public struct TangramPiece: Codable, Identifiable, Equatable, Hashable {
+    public let id: UUID
+    public let shape: TangramShape
+    public var position: CGPoint
+    public var rotation: Double  // Radians
+    public var isFlipped: Bool
     
-    init(id: UUID = UUID(), 
+    public init(id: UUID = UUID(), 
          shape: TangramShape, 
          position: CGPoint = .zero, 
          rotation: Double = 0, 
@@ -30,21 +30,21 @@ struct TangramPiece: Codable, Identifiable, Equatable, Hashable {
     }
     
     /// Create a copy with new position
-    func moved(to position: CGPoint) -> TangramPiece {
+    public func moved(to position: CGPoint) -> TangramPiece {
         var copy = self
         copy.position = position
         return copy
     }
     
     /// Create a copy with new rotation
-    func rotated(to rotation: Double) -> TangramPiece {
+    public func rotated(to rotation: Double) -> TangramPiece {
         var copy = self
         copy.rotation = rotation
         return copy
     }
     
     /// Create a flipped copy
-    func flipped() -> TangramPiece {
+    public func flipped() -> TangramPiece {
         var copy = self
         copy.isFlipped.toggle()
         return copy
@@ -53,26 +53,26 @@ struct TangramPiece: Codable, Identifiable, Equatable, Hashable {
 
 // MARK: - Tangram State
 
-struct TangramState: Codable, Equatable, Hashable {
-    var pieces: [TangramPiece]
+public struct TangramState: Codable, Equatable, Hashable {
+    public var pieces: [TangramPiece]
     
-    init(pieces: [TangramPiece] = []) {
+    public init(pieces: [TangramPiece] = []) {
         self.pieces = pieces
     }
     
     /// Check if state contains all standard Tangram pieces
-    var isComplete: Bool {
+    public var isComplete: Bool {
         let shapes = Set(pieces.map { $0.shape })
         return shapes.count == 7 && shapes.isSubset(of: Set(TangramShape.allCases))
     }
     
     /// Get piece by ID
-    func piece(withId id: UUID) -> TangramPiece? {
+    public func piece(withId id: UUID) -> TangramPiece? {
         pieces.first { $0.id == id }
     }
     
     /// Update or add a piece
-    mutating func updatePiece(_ piece: TangramPiece) {
+    public mutating func updatePiece(_ piece: TangramPiece) {
         if let index = pieces.firstIndex(where: { $0.id == piece.id }) {
             pieces[index] = piece
         } else {
@@ -81,47 +81,47 @@ struct TangramState: Codable, Equatable, Hashable {
     }
     
     /// Remove a piece
-    mutating func removePiece(withId id: UUID) {
+    public mutating func removePiece(withId id: UUID) {
         pieces.removeAll { $0.id == id }
     }
 }
 
 // MARK: - Tangram Puzzle
 
-struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
-    let id: String
-    var name: String
-    var difficulty: PuzzleDifficulty
-    let createdAt: Date
-    var updatedAt: Date
+public struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
+    public let id: String
+    public var name: String
+    public var difficulty: PuzzleDifficulty
+    public let createdAt: Date
+    public var updatedAt: Date
     
     // MARK: - GamePuzzleProtocol Implementation
     
-    typealias PieceType = TangramPiece
-    typealias StateType = TangramState
+    public typealias PieceType = TangramPiece
+    public typealias StateType = TangramState
     
-    var initialState: TangramState
-    var targetState: TangramState
-    var currentState: TangramState
+    public var initialState: TangramState
+    public var targetState: TangramState
+    public var currentState: TangramState
     
-    var pieces: [TangramPiece] {
+    public var pieces: [TangramPiece] {
         get { currentState.pieces }
         set { currentState.pieces = newValue }
     }
-    var previewImageData: Data?
-    var tags: Set<String>
-    var author: String?
-    var puzzleDescription: String?
-    let version: Int = 1
-    var playCount: Int = 0
-    var bestTime: TimeInterval?
-    var averageTime: TimeInterval?
-    var completionCount: Int = 0
+    public var previewImageData: Data?
+    public var tags: Set<String>
+    public var author: String?
+    public var puzzleDescription: String?
+    public let version: Int = 1
+    public var playCount: Int = 0
+    public var bestTime: TimeInterval?
+    public var averageTime: TimeInterval?
+    public var completionCount: Int = 0
     
     /// Optional hint image name
     var hintImageName: String?
     
-    init(name: String, difficulty: PuzzleDifficulty) {
+    public init(name: String, difficulty: PuzzleDifficulty) {
         self.id = UUID().uuidString
         self.name = name
         self.difficulty = difficulty
@@ -137,7 +137,7 @@ struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
     }
     
     // Custom initializer for creating puzzles with full configuration
-    init(id: String = UUID().uuidString,
+    public init(id: String = UUID().uuidString,
          name: String,
          difficulty: PuzzleDifficulty = .medium,
          author: String? = nil,
@@ -159,7 +159,7 @@ struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
         self.previewImageData = nil
     }
     
-    func validate() -> [String] {
+    public func validate() -> [String] {
         var errors: [String] = []
         
         // Check target state has all pieces
@@ -184,25 +184,25 @@ struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
     
     // MARK: - GamePuzzleProtocol Methods
     
-    func isValid() -> Bool {
+    public func isValid() -> Bool {
         return validate().isEmpty
     }
     
-    func isCompleted() -> Bool {
+    public func isCompleted() -> Bool {
         return checkSolution(currentState)
     }
     
-    mutating func reset() {
+    public mutating func reset() {
         currentState = initialState
         touch()
     }
     
-    func copy() -> TangramPuzzle {
+    public func copy() -> TangramPuzzle {
         return self // Struct copy semantics
     }
     
     /// Check if current state matches target (with tolerance)
-    func checkSolution(_ currentState: TangramState, tolerance: CGFloat = 0.2) -> Bool {
+    public func checkSolution(_ currentState: TangramState, tolerance: CGFloat = 0.2) -> Bool {
         // Must have same number of pieces
         guard currentState.pieces.count == targetState.pieces.count else {
             return false
@@ -231,12 +231,12 @@ struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
         return lhs.id == rhs.id
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
     /// Create an empty puzzle for editing
-    static func empty() -> TangramPuzzle {
+    public static func empty() -> TangramPuzzle {
         TangramPuzzle(
             name: "New Puzzle",
             initialState: TangramState(),

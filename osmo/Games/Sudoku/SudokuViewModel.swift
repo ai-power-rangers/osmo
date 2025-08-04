@@ -61,25 +61,17 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
     
     // MARK: - Initialization
     
-    override init() {
-        super.init()
-        // Set up Sudoku-specific storage
-        self.storageService = storage
-        
-        // Configure default settings
-        self.gridSize = .nine
+    override convenience init(services: ServiceContainer) {
+        self.init(puzzle: nil, editorMode: nil, services: services)
     }
     
-    init(puzzle: SudokuPuzzle? = nil, editorMode: EditorMode? = nil) {
+    init(puzzle: SudokuPuzzle? = nil, editorMode: EditorMode? = nil, services: ServiceContainer) {
         // Initialize gridSize first
-        let gridSizeValue = puzzle?.gridSize ?? .nine
+        let gridSizeValue = puzzle?.gridSize ?? .nineByNine
         self.gridSize = gridSizeValue
         self.editorMode = editorMode
         
-        super.init()
-        
-        // Set up Sudoku-specific storage
-        self.storageService = storage
+        super.init(services: services)
         
         if let puzzle = puzzle {
             loadPuzzle(puzzle)
@@ -159,9 +151,9 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         // Update the appropriate state based on editor mode
         switch editorMode {
         case .initial:
-            puzzle.initialBoard = currentBoard
+            puzzle.initialState.grid = currentBoard
         case .target:
-            puzzle.solution = currentBoard
+            puzzle.targetState.grid = currentBoard
         case .testing, nil:
             break
         }
@@ -173,23 +165,27 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
             return
         }
         
-        do {
-            try storage.save(puzzle)
-            currentPuzzle = puzzle
-            gameContext?.audioService.playSound("save_success")
-        } catch {
-            print("[SudokuViewModel] Failed to save puzzle: \(error)")
+        Task {
+            do {
+                try await storage.save(puzzle)
+                currentPuzzle = puzzle
+                services.audioService.playSound("save_success")
+            } catch {
+                print("[SudokuViewModel] Failed to save puzzle: \(error)")
+            }
         }
     }
     
     func deletePuzzle(_ puzzle: SudokuPuzzle) {
-        do {
-            try storage.delete(id: puzzle.id)
-            if currentPuzzle?.id == puzzle.id {
-                loadFirstPuzzle()
+        Task {
+            do {
+                try await storage.delete(id: puzzle.id)
+                if currentPuzzle?.id == puzzle.id {
+                    loadFirstPuzzle()
+                }
+            } catch {
+                print("[SudokuViewModel] Failed to delete puzzle: \(error)")
             }
-        } catch {
-            print("[SudokuViewModel] Failed to delete puzzle: \(error)")
         }
     }
     
@@ -222,11 +218,11 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         }
         
         // Update board
-        currentBoard[position.row][position.col] = number
+        currentPuzzle?.currentState.grid[position.row][position.col] = number
         
         // Update initial board if in initial editor mode
         if editorMode == .initial && number != nil {
-            initialBoard[position.row][position.col] = number
+            currentPuzzle?.initialState.grid[position.row][position.col] = number
         }
         
         // Validate and check completion
@@ -234,7 +230,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         updateAvailableNumbers()
         checkCompletion()
         
-        gameContext?.audioService.playSound("piece_place")
+        services.audioService.playSound("piece_place")
         notifySceneUpdate()
     }
     
@@ -245,17 +241,17 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
     func selectCell(_ position: Position) {
         selectedCell = position
         highlightedNumber = currentBoard[position.row][position.col]
-        gameContext?.audioService.playSound("cell_select")
+        services.audioService.playSound("cell_select")
         notifySceneUpdate()
     }
     
     func toggleInitialCell(at position: Position) {
         guard editorMode == .initial else { return }
         
-        if initialBoard[position.row][position.col] != nil {
-            initialBoard[position.row][position.col] = nil
-        } else if let value = currentBoard[position.row][position.col] {
-            initialBoard[position.row][position.col] = value
+        if currentPuzzle?.initialState.grid[position.row][position.col] != nil {
+            currentPuzzle?.initialState.grid[position.row][position.col] = nil
+        } else if let value = currentPuzzle?.currentState.grid[position.row][position.col] {
+            currentPuzzle?.initialState.grid[position.row][position.col] = value
         }
     }
     
@@ -365,13 +361,13 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
             isSolved = true
             isComplete = true
             // Timer is managed by BaseGameViewModel
-            gameContext?.audioService.playSound("puzzle_complete")
+            services.audioService.playSound("puzzle_complete")
         }
     }
     
     func resetToInitial() {
         guard let puzzle = currentPuzzle else { return }
-        currentBoard = puzzle.initialBoard
+        currentPuzzle?.currentState.grid = puzzle.initialBoard
         isComplete = false
         isSolved = false
         selectedCell = nil
@@ -391,16 +387,16 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         
         switch mode {
         case .initial:
-            currentBoard = puzzle.initialBoard
+            currentPuzzle?.currentState.grid = puzzle.initialBoard
             showTargetOverlay = true
         case .target:
-            currentBoard = puzzle.solution
+            currentPuzzle?.currentState.grid = puzzle.solution
             showTargetOverlay = false
         case .testing:
-            currentBoard = puzzle.initialBoard
+            currentPuzzle?.currentState.grid = puzzle.initialBoard
             showTargetOverlay = false
         case nil:
-            currentBoard = puzzle.initialBoard
+            currentPuzzle?.currentState.grid = puzzle.initialBoard
             showTargetOverlay = false
         }
         
@@ -410,12 +406,16 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
     
     func clearBoard() {
         let dimension = gridSize.rawValue
-        currentBoard = Array(repeating: Array(repeating: nil, count: dimension), count: dimension)
+        currentPuzzle?.currentState.grid = Array(repeating: Array(repeating: nil, count: dimension), count: dimension)
         
         if editorMode == .initial {
-            initialBoard = currentBoard
+            if let grid = currentPuzzle?.currentState.grid {
+                currentPuzzle?.initialState.grid = grid
+            }
         } else if editorMode == .target {
-            targetBoard = currentBoard
+            if let grid = currentPuzzle?.currentState.grid {
+                currentPuzzle?.targetState.grid = grid
+            }
         }
         
         validateBoard()
@@ -428,7 +428,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         
         // Simple valid 9x9 pattern
         if gridSize == .nineByNine {
-            targetBoard = [
+            currentPuzzle?.targetState.grid = [
                 [5, 3, 4, 6, 7, 8, 9, 1, 2],
                 [6, 7, 2, 1, 9, 5, 3, 4, 8],
                 [1, 9, 8, 3, 4, 2, 5, 6, 7],
@@ -439,7 +439,9 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
                 [2, 8, 7, 4, 1, 9, 6, 3, 5],
                 [3, 4, 5, 2, 8, 6, 1, 7, 9]
             ]
-            currentBoard = targetBoard
+            if let grid = currentPuzzle?.targetState.grid {
+                currentPuzzle?.currentState.grid = grid
+            }
         }
     }
     
@@ -454,7 +456,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
                 if currentBoard[row][col] == nil {
                     if let solutionValue = targetBoard[row][col] {
                         placeNumber(solutionValue, at: Position(row: row, col: col))
-                        gameContext?.audioService.playSound("hint")
+                        services.audioService.playSound("hint")
                         return
                     }
                 }
@@ -466,7 +468,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         guard let lastMove = moveHistory.popLast() else { return }
         
         // Restore previous value
-        currentBoard[lastMove.position.row][lastMove.position.col] = lastMove.oldValue
+        currentPuzzle?.currentState.grid[lastMove.position.row][lastMove.position.col] = lastMove.oldValue
         
         // Add to redo stack
         redoStack.append(lastMove)
@@ -475,7 +477,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         validateBoard()
         updateAvailableNumbers()
         checkSolution()
-        gameContext?.audioService.playSound("undo")
+        services.audioService.playSound("undo")
         notifySceneUpdate()
     }
     
@@ -483,7 +485,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         guard let redoMove = redoStack.popLast() else { return }
         
         // Restore the move
-        currentBoard[redoMove.position.row][redoMove.position.col] = redoMove.newValue
+        currentPuzzle?.currentState.grid[redoMove.position.row][redoMove.position.col] = redoMove.newValue
         
         // Add back to history
         moveHistory.append(redoMove)
@@ -492,7 +494,7 @@ final class SudokuViewModel: BaseGameViewModel<SudokuPuzzle> {
         validateBoard()
         updateAvailableNumbers()
         checkSolution()
-        gameContext?.audioService.playSound("redo")
+        services.audioService.playSound("redo")
         notifySceneUpdate()
     }
     

@@ -55,22 +55,13 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
     
     // MARK: - Initialization
     
-    override init() {
-        super.init()
-        // Set up Tangram-specific storage
-        self.storageService = storage
-        
-        // Configure default UI settings
-        self.showGrid = false
-        self.snapToGrid = true
+    override convenience init(services: ServiceContainer) {
+        self.init(puzzle: nil, editorMode: nil, services: services)
     }
     
-    init(puzzle: TangramPuzzle? = nil, editorMode: EditorMode? = nil) {
+    init(puzzle: TangramPuzzle? = nil, editorMode: EditorMode? = nil, services: ServiceContainer) {
         self.editorMode = editorMode
-        super.init()
-        
-        // Set up Tangram-specific storage
-        self.storageService = storage
+        super.init(services: services)
         
         if let puzzle = puzzle {
             loadPuzzle(puzzle)
@@ -156,7 +147,7 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
                     currentPuzzle = puzzle
                     showingSaveDialog = false
                     puzzleName = ""
-                    gameContext?.audioService.playSound("save_success")
+                    services.audioService.playSound("save_success")
                 }
             } catch {
                 print("[TangramViewModel] Save failed: \(error)")
@@ -203,7 +194,7 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
             currentPuzzle = puzzle
         }
         selectedPieceId = piece.id
-        gameContext?.audioService.playSound("piece_add")
+        services.audioService.playSound("piece_add")
         notifySceneUpdate()
         print("[TangramViewModel] Added piece: \(shape) at \(position), total pieces: \(currentState.pieces.count)")
     }
@@ -238,7 +229,7 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
             puzzle.currentState.updatePiece(piece)
             currentPuzzle = puzzle
         }
-        gameContext?.audioService.playSound("piece_rotate")
+        services.audioService.playSound("piece_rotate")
         notifySceneUpdate()
     }
     
@@ -250,7 +241,7 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
             puzzle.currentState.updatePiece(piece)
             currentPuzzle = puzzle
         }
-        gameContext?.audioService.playSound("piece_flip")
+        services.audioService.playSound("piece_flip")
         notifySceneUpdate()
     }
     
@@ -262,14 +253,14 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
         if selectedPieceId == id {
             selectedPieceId = nil
         }
-        gameContext?.audioService.playSound("piece_delete")
+        services.audioService.playSound("piece_delete")
         notifySceneUpdate()
     }
     
     func selectPiece(_ id: UUID?) {
         selectedPieceId = id
         if id != nil {
-            gameContext?.audioService.playSound("piece_select")
+            services.audioService.playSound("piece_select")
         }
         notifySceneUpdate()
     }
@@ -309,7 +300,7 @@ final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
         if puzzle.checkSolution(currentState) {
             if !isComplete {
                 isComplete = true
-                gameContext?.audioService.playSound("puzzle_complete")
+                services.audioService.playSound("puzzle_complete")
             }
         } else {
             isComplete = false

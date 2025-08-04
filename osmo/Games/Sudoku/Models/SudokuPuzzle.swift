@@ -8,35 +8,35 @@
 import Foundation
 
 /// Represents a complete Sudoku puzzle with initial state and solution
-struct SudokuPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
-    let id: String
-    var name: String
-    var difficulty: PuzzleDifficulty
-    let createdAt: Date
-    var updatedAt: Date
+public struct SudokuPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
+    public let id: String
+    public var name: String
+    public var difficulty: PuzzleDifficulty
+    public let createdAt: Date
+    public var updatedAt: Date
     
     // MARK: - GamePuzzleProtocol Implementation
     
-    typealias PieceType = Int // Sudoku numbers 1-9
-    typealias StateType = SudokuBoard
+    public typealias PieceType = Int // Sudoku numbers 1-9
+    public typealias StateType = SudokuBoard
     
-    var initialState: SudokuBoard
-    var targetState: SudokuBoard  // The complete solution
-    var currentState: SudokuBoard
+    public var initialState: SudokuBoard
+    public var targetState: SudokuBoard  // The complete solution
+    public var currentState: SudokuBoard
     
-    var pieces: [Int] {
+    public var pieces: [Int] {
         get { Array(1...gridSize.rawValue) } // Available numbers for this grid size
         set { /* Sudoku pieces are fixed, no-op */ }
     }
-    var previewImageData: Data?
-    var tags: Set<String>
-    var author: String?
-    var puzzleDescription: String?
-    let version: Int = 1
-    var playCount: Int = 0
-    var bestTime: TimeInterval?
-    var averageTime: TimeInterval?
-    var completionCount: Int = 0
+    public var previewImageData: Data?
+    public var tags: Set<String>
+    public var author: String?
+    public var puzzleDescription: String?
+    public let version: Int = 1
+    public var playCount: Int = 0
+    public var bestTime: TimeInterval?
+    public var averageTime: TimeInterval?
+    public var completionCount: Int = 0
     
     // MARK: - Sudoku-Specific Properties
     
@@ -48,7 +48,7 @@ struct SudokuPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
     
     // MARK: - Required GamePuzzleProtocol Initializer
     
-    init(name: String, difficulty: PuzzleDifficulty) {
+    public init(name: String, difficulty: PuzzleDifficulty) {
         self.id = UUID().uuidString
         self.name = name
         self.difficulty = difficulty
@@ -65,7 +65,7 @@ struct SudokuPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
     }
     
     // Custom initializer for creating puzzles with full configuration
-    init(id: String = UUID().uuidString,
+    public init(id: String = UUID().uuidString,
          name: String,
          gridSize: GridSize,
          initialBoard: [[Int?]],
@@ -105,30 +105,30 @@ struct SudokuPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable {
     
     // MARK: - GamePuzzleProtocol Methods
     
-    func isValid() -> Bool {
+    public func isValid() -> Bool {
         // Check that both initial and target states are valid Sudoku boards
         return initialState.grid.count == gridSize.rawValue &&
                targetState.grid.count == gridSize.rawValue &&
                !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
-    func isCompleted() -> Bool {
+    public func isCompleted() -> Bool {
         // Check if current state matches the target solution
         return currentState.grid == targetState.grid && 
                currentState.isComplete
     }
     
-    mutating func reset() {
+    public mutating func reset() {
         currentState = initialState
         touch()
     }
     
-    func copy() -> SudokuPuzzle {
+    public func copy() -> SudokuPuzzle {
         return self // Struct copy semantics
     }
     
     /// Validate that the puzzle is properly formed
-    func validate() -> [String] {
+    public func validate() -> [String] {
         var errors: [String] = []
         let dimension = gridSize.rawValue
         

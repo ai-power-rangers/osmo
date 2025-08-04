@@ -6,7 +6,7 @@ import CoreGraphics
 /// Generic over PuzzleType to ensure type safety while sharing common logic
 @MainActor
 @Observable
-open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvider, GameActionHandler {
+open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvider, GameActionHandler, StateReconciliation {
     
     // MARK: - Observable Properties
     
@@ -56,11 +56,8 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
     
     // MARK: - Dependencies
     
-    /// Storage service for saving/loading puzzles
-    public var storageService: (any PuzzleStorageProtocol)?
-    
-    /// Game context for accessing services
-    public weak var gameContext: GameContext?
+    /// Service container providing all services
+    public let services: ServiceContainer
     
     /// Scene receiver for explicit updates
     public weak var sceneReceiver: SceneUpdateReceiver?
@@ -75,15 +72,13 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
     
     // MARK: - Initialization
     
-    public init() {
-        // No-op - bindings removed due to @Observable
+    public init(services: ServiceContainer) {
+        self.services = services
     }
     
-    public init(puzzle: PuzzleType, gameContext: GameContext? = nil) {
+    public init(puzzle: PuzzleType, services: ServiceContainer) {
         self.currentPuzzle = puzzle
-        self.gameContext = gameContext
-        self.storageService = gameContext?.storageService
-        // No-op - bindings removed due to @Observable
+        self.services = services
     }
     
     // deinit handled automatically by @MainActor
@@ -118,6 +113,12 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
     
     /// Notify the registered scene of state changes
     public func notifySceneUpdate() {
+        #if DEBUG
+        if sceneReceiver == nil {
+            print("[WARNING] notifySceneUpdate called but sceneReceiver is nil")
+        }
+        #endif
+        
         guard let scene = sceneReceiver else { return }
         let snapshot = createStateSnapshot()
         scene.updateDisplay(with: snapshot)
@@ -361,8 +362,7 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
     
     /// Saves the current puzzle state
     public func savePuzzle() async throws {
-        guard let puzzle = currentPuzzle,
-              let storage = storageService else {
+        guard let puzzle = currentPuzzle else {
             throw GameViewModelError.missingDependencies
         }
         
@@ -370,14 +370,12 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
             throw GameViewModelError.cannotSave
         }
         
-        try await storage.save(puzzle)
+        try await services.storageService.save(puzzle)
     }
     
     /// Loads a puzzle by ID
     public func loadPuzzle(id: String) async throws {
-        guard let storage = storageService else {
-            throw GameViewModelError.missingDependencies
-        }
+        let storage = services.storageService
         
         guard let puzzle: PuzzleType = try await storage.load(id: id) else {
             throw GameViewModelError.puzzleNotFound(id)
@@ -400,8 +398,7 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
     
     private func updateCanSave() {
         canSave = currentPuzzle != nil && 
-                  gameState.acceptsInput && 
-                  storageService != nil
+                  gameState.acceptsInput
     }
     
     // MARK: - Validation
@@ -481,6 +478,94 @@ open class BaseGameViewModel<PuzzleType: GamePuzzleProtocol>: SceneUpdateProvide
     /// Calculates final score - override in subclasses
     open func calculateFinalScore() -> Int {
         return score
+    }
+}
+
+// MARK: - StateReconciliation Implementation
+
+extension BaseGameViewModel {
+    public typealias StateType = PuzzleType.StateType
+    
+    /// Capture current state as a memento
+    public func captureState() -> GameStateMemento<StateType> {
+        let state = currentPuzzle?.currentState ?? PuzzleType.StateType()
+        return GameStateMemento(
+            state: state,
+            source: lastInputSource,
+            metadata: [
+                "gameState": gameState.rawValue,
+                "moveCount": "\(moveCount)",
+                "elapsedTime": "\(elapsedTime)"
+            ]
+        )
+    }
+    
+    /// Restore state from a memento
+    public func restoreState(_ memento: GameStateMemento<StateType>) {
+        guard memento.isValid() else {
+            print("[BaseGameViewModel] Invalid memento checksum")
+            return
+        }
+        
+        if var puzzle = currentPuzzle {
+            puzzle.currentState = memento.state
+            currentPuzzle = puzzle
+            notifySceneUpdate()
+        }
+    }
+    
+    /// Validate a state
+    public func validateState(_ state: StateType) -> StateValidation {
+        // Default validation - override in subclasses for game-specific rules
+        if let puzzle = currentPuzzle {
+            let errors = puzzle.validate()
+            if !errors.isEmpty {
+                return StateValidation(
+                    isValid: false,
+                    errors: errors.map { StateValidationError(code: "puzzle_error", message: $0) }
+                )
+            }
+        }
+        return .valid
+    }
+    
+    /// Calculate difference between two states
+    public func calculateStateDiff(_ from: StateType, _ to: StateType) -> StateDiff {
+        // This is a simple implementation
+        // Subclasses should override for game-specific diff calculation
+        
+        // Try to get piece counts if available
+        let fromPieces = (from as? any Collection)?.count ?? 0
+        let toPieces = (to as? any Collection)?.count ?? 0
+        
+        if fromPieces != toPieces {
+            return StateDiff(
+                additions: fromPieces < toPieces ? ["pieces_added"] : [],
+                removals: fromPieces > toPieces ? ["pieces_removed"] : [],
+                modifications: fromPieces == toPieces ? ["pieces_modified"] : []
+            )
+        }
+        
+        return StateDiff(unchanged: ["no_changes"])
+    }
+    
+    /// Reconcile with physical state (future CV support)
+    public func reconcileWithPhysicalState(_ detected: PhysicalGameState) -> StateType {
+        // Default implementation - will be overridden when CV is integrated
+        print("[BaseGameViewModel] Physical state reconciliation not yet implemented")
+        return captureState().state
+    }
+    
+    /// Resolve conflicts between digital and physical states
+    public func resolveConflicts(_ digital: StateType, _ physical: PhysicalGameState) -> ConflictResolution<StateType> {
+        // For now, always trust digital state
+        // When CV is integrated, this will have sophisticated conflict resolution
+        return ConflictResolution(
+            resolvedState: digital,
+            strategy: .trustDigital,
+            conflicts: [],
+            confidence: 1.0
+        )
     }
 }
 

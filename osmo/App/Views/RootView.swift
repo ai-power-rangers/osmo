@@ -9,24 +9,24 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(ServiceContainer.self) private var services
-    
-    @State private var navigationPath = NavigationPath()
+    @State private var navigation = NavigationState()
     @State private var selectedGame: String?
     @State private var showingGameView = false
     
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack(path: $navigation.navigationPath) {
             LobbyView(
-                navigationPath: $navigationPath,
+                navigationPath: $navigation.navigationPath,
                 onGameSelected: { gameId in
                     selectedGame = gameId
                     showingGameView = true
                 }
             )
-            .navigationDestination(for: AppRoute.self) { route in
+            .navigationDestination(for: NavigationState.Route.self) { route in
                 destinationView(for: route)
             }
         }
+        .environment(navigation)
         .fullScreenCover(isPresented: $showingGameView) {
             if let gameId = selectedGame {
                 GameHost(gameId: gameId) {
@@ -39,46 +39,48 @@ struct RootView: View {
     }
     
     @ViewBuilder
-    private func destinationView(for route: AppRoute) -> some View {
+    private func destinationView(for route: NavigationState.Route) -> some View {
         switch route {
+        case .home:
+            LobbyView(
+                navigationPath: $navigation.navigationPath,
+                onGameSelected: { gameId in
+                    selectedGame = gameId
+                    showingGameView = true
+                }
+            )
+            
+        case .lobby:
+            LobbyView(
+                navigationPath: $navigation.navigationPath,
+                onGameSelected: { gameId in
+                    selectedGame = gameId
+                    showingGameView = true
+                }
+            )
+            
+        case .game(let gameInfo):
+            GameHost(gameId: gameInfo.id) {
+                navigation.goBack()
+            }
+            .injectServices(from: services)
+            
         case .settings:
             SettingsView()
                 .injectServices(from: services)
             
-        case .cvTest:
-            CVTestView()
-                .injectServices(from: services)
-            
-        case .gameSettings:
-            Text("Game Settings")
-                .injectServices(from: services)
-            
-        case .tangramEditor(let puzzleId):
-            TangramEditor()
-                .injectServices(from: services)
-            
-        case .tangramPuzzleSelect:
-            TangramPlayView()
-                .injectServices(from: services)
-            
-        case .sudokuEditor(let puzzleId):
-            SudokuEditorLauncher()
-                .injectServices(from: services)
-            
-        case .sudokuPuzzleSelect:
-            SudokuPuzzleSelector(onGameSelected: { gameId, puzzleId in
-                selectedGame = gameId
-                showingGameView = true
-            })
-            .injectServices(from: services)
-                
-        case .gridEditor(let gameType):
-            GridEditorHostView(gameType: gameType)
-                .injectServices(from: services)
-            
-        case .game(let gameId, let puzzleId):
-            // This shouldn't be reached since games use fullScreenCover
-            EmptyView()
+        case .editor(let gameInfo, let mode):
+            Group {
+                if gameInfo.id == "tangram" {
+                    TangramEditor()
+                        .injectServices(from: services)
+                } else if gameInfo.id == "sudoku" {
+                    SudokuEditorLauncher()
+                        .injectServices(from: services)
+                } else {
+                    Text("Editor not available for \(gameInfo.name)")
+                }
+            }
         }
     }
 }
