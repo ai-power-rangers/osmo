@@ -3,7 +3,7 @@ import CoreGraphics
 
 /// Represents a placed element in the grid
 public struct PlacedElement: Codable, Identifiable {
-    public let id: String = UUID().uuidString
+    public let id: String
     public let elementId: String           // Unique identifier for this instance
     public let elementType: String         // References canonical geometry (e.g., "largeTriangle1")
     public let rotationIndex: Int          // Discrete rotation (0-7 for 45° steps)
@@ -11,7 +11,8 @@ public struct PlacedElement: Codable, Identifiable {
     public let position: CGPoint           // Unit space (Tangram units), authoring/preview only
                                           // Runtime validation ignores absolute positions
     
-    public init(elementId: String, elementType: String, rotationIndex: Int, mirrored: Bool, position: CGPoint) {
+    public init(id: String? = nil, elementId: String, elementType: String, rotationIndex: Int, mirrored: Bool, position: CGPoint) {
+        self.id = id ?? UUID().uuidString
         self.elementId = elementId
         self.elementType = elementType
         self.rotationIndex = rotationIndex

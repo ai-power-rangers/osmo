@@ -32,8 +32,15 @@ final class CameraPermissionManager {
     
     private(set) var status: CameraPermissionStatus = .notDetermined
     
+    // Service dependencies
+    private weak var analyticsService: AnalyticsServiceProtocol?
+    
     private init() {
         checkCurrentStatus()
+    }
+    
+    func setAnalyticsService(_ service: AnalyticsServiceProtocol) {
+        self.analyticsService = service
     }
     
     // MARK: - Status Check
@@ -75,8 +82,7 @@ final class CameraPermissionManager {
         }
         
         // Log analytics
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("camera_permission_result", parameters: [
+        analyticsService?.logEvent("camera_permission_result", parameters: [
             "granted": granted
         ])
         
@@ -87,7 +93,6 @@ final class CameraPermissionManager {
     func openSettings() {
         // Pure SwiftUI approach - we'll handle URL opening in the view layer
         // This avoids UIKit dependency
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("camera_settings_requested", parameters: [:])
+        analyticsService?.logEvent("camera_settings_requested", parameters: [:])
     }
 }

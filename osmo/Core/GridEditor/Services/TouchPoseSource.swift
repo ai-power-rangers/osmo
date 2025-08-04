@@ -117,7 +117,7 @@ public final class SKTouchPoseSource: TouchPoseSource {
     /// Update poses from current node positions
     public func updateFromNodes() {
         for (pieceId, node) in pieceNodes {
-            let unitPos = coordinateSystem.toUnit(node.position)
+            _ = coordinateSystem.toUnit(node.position)
             updatePose(
                 for: pieceId,
                 position: node.position,

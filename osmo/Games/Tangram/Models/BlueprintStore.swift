@@ -3,11 +3,15 @@ import SwiftUI
 import os.log
 
 /// Manages loading and caching of Tangram puzzle blueprints
+/// Uses modern @Observable pattern (iOS 17+)
 @MainActor
-final class BlueprintStore: ObservableObject {
-    @Published private(set) var puzzles: [Puzzle] = []
-    @Published private(set) var isLoading = false
-    @Published private(set) var error: Error?
+@Observable
+final class BlueprintStore {
+    private(set) var puzzles: [Puzzle] = []
+    private(set) var builtInPuzzles: [Puzzle] = []
+    private(set) var customPuzzles: [Puzzle] = []
+    private(set) var isLoading = false
+    private(set) var error: Error?
     
     private let decoder = JSONDecoder()
     private let logger = Logger(subsystem: "com.osmoapp", category: "BlueprintStore")
@@ -19,47 +23,80 @@ final class BlueprintStore: ObservableObject {
         isLoading = true
         error = nil
         puzzles = []
+        builtInPuzzles = []
+        customPuzzles = []
+        
+        // Load built-in puzzles
+        loadBuiltInPuzzles()
+        
+        // Load custom puzzles
+        loadCustomPuzzles()
+        
+        // Combine all puzzles
+        puzzles = builtInPuzzles + customPuzzles
+        isLoading = false
+    }
+    
+    private func loadBuiltInPuzzles() {
+        print("[BlueprintStore] Loading built-in puzzles...")
         
         // Get the bundle path for puzzle files
         guard let puzzlesURL = Bundle.main.url(forResource: "Puzzles", withExtension: nil) else {
+            print("[BlueprintStore] Puzzles resource not found, trying alternate path")
             // Try alternate path structure
-            loadFromAlternatePath()
+            loadBuiltInFromAlternatePath()
             return
         }
         
-        loadPuzzlesFrom(directory: puzzlesURL)
+        builtInPuzzles = loadPuzzlesFrom(directory: puzzlesURL)
+        print("[BlueprintStore] Loaded \(builtInPuzzles.count) built-in puzzles")
     }
     
-    private func loadFromAlternatePath() {
-        // For development, look in the game module directory
-        let gameModulePath = "Games/Tangram/Puzzles"
+    private func loadCustomPuzzles() {
+        // Load from custom puzzles directory
+        let fileManager = FileManager.default
+        let projectPath = fileManager.currentDirectoryPath
+        let customPuzzlesURL = URL(fileURLWithPath: projectPath)
+            .appendingPathComponent("osmo")
+            .appendingPathComponent("Games")
+            .appendingPathComponent("Tangram")
+            .appendingPathComponent("Puzzles")
+            .appendingPathComponent("Custom")
         
-        do {
-            // Get all JSON files in the puzzles directory
-            let fileManager = FileManager.default
-            
-            // Try to find the puzzles in the main bundle
-            if let bundlePath = Bundle.main.resourcePath {
-                let puzzlesPath = (bundlePath as NSString).appendingPathComponent(gameModulePath)
-                
-                if fileManager.fileExists(atPath: puzzlesPath) {
-                    let puzzleURL = URL(fileURLWithPath: puzzlesPath)
-                    loadPuzzlesFrom(directory: puzzleURL)
-                    return
+        if fileManager.fileExists(atPath: customPuzzlesURL.path) {
+            customPuzzles = loadPuzzlesFrom(directory: customPuzzlesURL)
+                .filter { puzzle in
+                    // Filter out editor save files (with UUIDs)
+                    !puzzle.id.contains("-")
                 }
-            }
-            
-            // If not found in bundle, create a default puzzle for testing
-            loadDefaultPuzzles()
-            
-        } catch {
-            self.error = error
-            self.isLoading = false
-            logger.error("Error loading puzzles: \(error)")
         }
     }
     
-    private func loadPuzzlesFrom(directory: URL) {
+    private func loadBuiltInFromAlternatePath() {
+        print("[BlueprintStore] Loading from alternate path...")
+        
+        // For now, hardcode the cat puzzle since we know it exists
+        let catPuzzle = Puzzle(
+            id: "cat",
+            name: "Cat",
+            imageName: "cat_icon",
+            pieces: [
+                PieceDefinition(pieceId: "square", targetPosition: SIMD2(3.2, 5.5), targetRotation: 0.785398, isMirrored: false),
+                PieceDefinition(pieceId: "smallTriangle1", targetPosition: SIMD2(2.8, 6.5), targetRotation: 2.356194, isMirrored: false),
+                PieceDefinition(pieceId: "smallTriangle2", targetPosition: SIMD2(3.6, 6.5), targetRotation: 0.785398, isMirrored: false),
+                PieceDefinition(pieceId: "largeTriangle1", targetPosition: SIMD2(3.2, 3.5), targetRotation: 3.926991, isMirrored: false),
+                PieceDefinition(pieceId: "mediumTriangle", targetPosition: SIMD2(2.0, 3.5), targetRotation: 4.712389, isMirrored: false),
+                PieceDefinition(pieceId: "largeTriangle2", targetPosition: SIMD2(4.4, 2.5), targetRotation: 1.570796, isMirrored: false),
+                PieceDefinition(pieceId: "parallelogram", targetPosition: SIMD2(5.8, 2.5), targetRotation: 0.000000, isMirrored: true)
+            ],
+            difficulty: "easy"
+        )
+        
+        builtInPuzzles = [catPuzzle]
+        print("[BlueprintStore] Loaded hardcoded cat puzzle")
+    }
+    
+    private func loadPuzzlesFrom(directory: URL) -> [Puzzle] {
         do {
             let fileManager = FileManager.default
             let contents = try fileManager.contentsOfDirectory(at: directory, 
@@ -80,16 +117,11 @@ final class BlueprintStore: ObservableObject {
                 }
             }
             
-            self.puzzles = loadedPuzzles.sorted { $0.name < $1.name }
-            self.isLoading = false
+            return loadedPuzzles.sorted { $0.name < $1.name }
             
         } catch {
-            self.error = error
-            self.isLoading = false
             logger.error("Error reading puzzles directory: \(error)")
-            
-            // Fallback to default puzzles
-            loadDefaultPuzzles()
+            return []
         }
     }
     
@@ -100,8 +132,7 @@ final class BlueprintStore: ObservableObject {
             do {
                 let data = try Data(contentsOf: catURL)
                 let puzzle = try decoder.decode(Puzzle.self, from: data)
-                self.puzzles = [puzzle]
-                self.isLoading = false
+                self.builtInPuzzles = [puzzle]
                 return
             } catch {
                 logger.error("Failed to load cat.json: \(error)")
@@ -165,13 +196,11 @@ final class BlueprintStore: ObservableObject {
         do {
             let data = catPuzzleJSON.data(using: .utf8)!
             let puzzle = try decoder.decode(Puzzle.self, from: data)
-            self.puzzles = [puzzle]
+            self.builtInPuzzles = [puzzle]
         } catch {
             logger.error("Failed to parse embedded cat puzzle: \(error)")
-            self.puzzles = []
+            self.builtInPuzzles = []
         }
-        
-        self.isLoading = false
     }
     
     /// Get a specific puzzle by ID

@@ -3,7 +3,7 @@ import simd
 import SpriteKit
 
 // MARK: - Shape Types
-enum TangramShape: String, Codable, CaseIterable {
+public enum TangramShape: String, Codable, CaseIterable {
     case largeTriangle1, largeTriangle2
     case mediumTriangle  // No suffix - matches "mediumTriangle" in JSON
     case smallTriangle1, smallTriangle2
@@ -12,11 +12,11 @@ enum TangramShape: String, Codable, CaseIterable {
 }
 
 // MARK: - Piece Definition
-struct PieceDefinition: Codable {
-    let pieceId: String  // String to match JSON exactly
-    let targetPosition: SIMD2<Double>   // Unit grid 0-8, using SIMD for performance
-    let targetRotation: Double          // Radians, multiples of π/4
-    let isMirrored: Bool?               // Only for parallelogram
+public struct PieceDefinition: Codable {
+    public let pieceId: String  // String to match JSON exactly
+    public let targetPosition: SIMD2<Double>   // Unit grid 0-8, using SIMD for performance
+    public let targetRotation: Double          // Radians, multiples of π/4
+    public let isMirrored: Bool?               // Only for parallelogram
     
     // Custom decoding to handle x,y structure from JSON
     private enum CodingKeys: String, CodingKey {
@@ -29,7 +29,7 @@ struct PieceDefinition: Codable {
         let y: Double
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         pieceId = try container.decode(String.self, forKey: .pieceId)
         let pos = try container.decode(Position.self, forKey: .targetPosition)
@@ -38,7 +38,7 @@ struct PieceDefinition: Codable {
         isMirrored = try container.decodeIfPresent(Bool.self, forKey: .isMirrored)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(pieceId, forKey: .pieceId)
         let pos = Position(x: targetPosition.x, y: targetPosition.y)
@@ -49,17 +49,25 @@ struct PieceDefinition: Codable {
 }
 
 // MARK: - Puzzle Model
-struct Puzzle: Codable, Identifiable {
-    let id: String
-    let name: String
-    let imageName: String
-    let pieces: [PieceDefinition]
+public struct Puzzle: Codable, Identifiable {
+    public let id: String
+    public let name: String
+    public let imageName: String
+    public let pieces: [PieceDefinition]
     
     // Optional fields that might be in JSON
-    let difficulty: String?
+    public let difficulty: String?
     
     private enum CodingKeys: String, CodingKey {
         case id, name, imageName, pieces, difficulty
+    }
+    
+    public init(id: String, name: String, imageName: String, pieces: [PieceDefinition], difficulty: String? = nil) {
+        self.id = id
+        self.name = name
+        self.imageName = imageName
+        self.pieces = pieces
+        self.difficulty = difficulty
     }
 }
 
@@ -88,7 +96,7 @@ extension CGFloat {
 }
 
 // MARK: - Grid System Constants
-struct GridConstants {
+struct TangramGridConstants {
     static let resolution: CGFloat = 0.1
     static let playAreaSize: CGFloat = 8.0
     
@@ -102,9 +110,9 @@ struct GridConstants {
 }
 
 // MARK: - Shape Vertices
-struct TangramShapeData {
+public struct TangramShapeData {
     // All vertices start at origin (0,0) bottom-left
-    static let shapes: [TangramShape: [CGPoint]] = [
+    public static let shapes: [TangramShape: [CGPoint]] = [
         // Small Triangles (1×1 right triangles)
         .smallTriangle1: [
             CGPoint(x: 0, y: 0),
@@ -154,7 +162,7 @@ struct TangramShapeData {
     ]
     
     // Piece colors from spec
-    static let colors: [TangramShape: SKColor] = [
+    public static let colors: [TangramShape: SKColor] = [
         .largeTriangle1: .systemBlue,
         .largeTriangle2: .systemRed,
         .mediumTriangle: .systemGreen,

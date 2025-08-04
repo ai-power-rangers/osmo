@@ -8,217 +8,204 @@
 import SwiftUI
 
 struct LobbyView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var selectedCategory: GameCategory?
+    @Binding var navigationPath: NavigationPath
+    let onGameSelected: (String) -> Void
     
-    // Our three games
-    let mockGames = [
-        GameInfo(
-            gameId: "rock-paper-scissors",
-            displayName: "Rock Paper Scissors",
-            description: "Classic hand gesture game - beat the AI!",
+    @State private var showingParentGate = false
+    @State private var pendingAction: (() -> Void)?
+    
+    // App icons including games and settings
+    let appIcons = [
+        AppIcon(
+            id: "rock-paper-scissors",
+            displayName: "Rock Paper",
             iconName: "hand.raised",
-            minAge: 4,
-            category: .problemSolving
+            backgroundColor: .blue,
+            action: .game("rock-paper-scissors")
         ),
-        GameInfo(
-            gameId: "tic-tac-toe",
+        AppIcon(
+            id: "sudoku",
+            displayName: "Sudoku",
+            iconName: "square.grid.3x3",
+            backgroundColor: .green,
+            action: .game("sudoku")
+        ),
+        AppIcon(
+            id: "tangram",
+            displayName: "Tangram",
+            iconName: "square.on.square",
+            backgroundColor: .orange,
+            action: .game("tangram")
+        ),
+        AppIcon(
+            id: "tic-tac-toe",
             displayName: "Tic-Tac-Toe",
-            description: "Coming Soon - Play on paper against AI!",
             iconName: "grid",
-            minAge: 5,
-            category: .problemSolving,
+            backgroundColor: .gray,
+            action: .game("tic-tac-toe"),
             isLocked: true
         ),
-        GameInfo(
-            gameId: "sudoku",
-            displayName: "Sudoku",
-            description: "Place tiles to complete the grid - supports 4x4 and 9x9!",
-            iconName: "square.grid.3x3",
-            minAge: 8,
-            category: .problemSolving,
-            isLocked: false
-        ),
-        GameInfo(
-            gameId: "tangram",
-            displayName: "Tangram Puzzles",
-            description: "Classic shape puzzles - arrange colorful pieces to match the target",
-            iconName: "square.on.square",
-            minAge: 5,
-            category: .spatialReasoning,
-            isLocked: false
+        AppIcon(
+            id: "settings",
+            displayName: "Settings",
+            iconName: "gearshape.fill",
+            backgroundColor: Color(uiColor: .systemGray),
+            action: .settings
         )
     ]
     
     let columns = [
-        GridItem(.adaptive(minimum: 200, maximum: 250), spacing: 20)
+        GridItem(.adaptive(minimum: 85, maximum: 95), spacing: 20)
     ]
     
     var body: some View {
-        ZStack {
-            // Background
-            Color(uiColor: .systemGroupedBackground)
-                .ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                // Category Filter
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
-                        CategoryChip(
-                            category: nil,
-                            isSelected: selectedCategory == nil,
-                            action: { selectedCategory = nil }
-                        )
-                        
-                        ForEach(GameCategory.allCases, id: \.self) { category in
-                            CategoryChip(
-                                category: category,
-                                isSelected: selectedCategory == category,
-                                action: { selectedCategory = category }
-                            )
-                        }
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: Spacing.l) {
+                ForEach(appIcons) { icon in
+                    AppIconView(icon: icon) {
+                        handleIconTap(icon)
                     }
-                    .padding(.horizontal)
-                }
-                .padding(.vertical)
-                
-                // Games Grid
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(filteredGames) { game in
-                            GameCard(gameInfo: game) {
-                                if !game.isLocked {
-                                    if game.gameId == "tangram" {
-                                        // Navigate to puzzle selection for Tangram
-                                        coordinator.navigateTo(.tangramPuzzleSelect)
-                                    } else {
-                                        coordinator.launchGame(game.gameId)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .padding()
                 }
             }
+            .padding(.horizontal, Spacing.m)
+            .padding(.vertical, Spacing.m)
         }
-        .navigationTitle("Choose a Game")
+        .navigationTitle("Osmo")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    coordinator.navigateTo(.settings)
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .font(.title2)
-                }
-            }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(uiColor: .systemBackground),
+                    Color(uiColor: .systemGray6)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
+        .parentGateAlert(isPresented: $showingParentGate) {
+            // Execute the pending action after successful parent gate
+            pendingAction?()
+            pendingAction = nil
         }
     }
     
-    private var filteredGames: [GameInfo] {
-        guard let category = selectedCategory else { return mockGames }
-        return mockGames.filter { $0.category == category }
-    }
-}
-
-// MARK: - Category Chip
-struct CategoryChip: View {
-    let category: GameCategory?
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                if let category = category {
-                    Image(systemName: category.iconName)
-                    Text(category.displayName)
-                } else {
-                    Image(systemName: "square.grid.2x2")
-                    Text("All Games")
-                }
+    private func handleIconTap(_ icon: AppIcon) {
+        if icon.isLocked {
+            return
+        }
+        
+        switch icon.action {
+        case .game(let gameId):
+            onGameSelected(gameId)
+        case .settings:
+            // Show parent gate for settings access
+            pendingAction = {
+                navigationPath.append(AppRoute.settings)
             }
-            .font(.system(.subheadline, design: .rounded, weight: .medium))
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
-            .background(isSelected ? Color.blue : Color(uiColor: .systemGray5))
-            .foregroundColor(isSelected ? .white : .primary)
-            .clipShape(Capsule())
+            showingParentGate = true
         }
     }
 }
 
-// MARK: - Game Card
-struct GameCard: View {
-    let gameInfo: GameInfo
+// MARK: - App Icon Model
+struct AppIcon: Identifiable {
+    enum Action {
+        case game(String)
+        case settings
+    }
+    
+    let id: String
+    let displayName: String
+    let iconName: String
+    let backgroundColor: Color
+    let action: Action
+    let isLocked: Bool
+    
+    init(id: String,
+         displayName: String,
+         iconName: String,
+         backgroundColor: Color,
+         action: Action,
+         isLocked: Bool = false) {
+        self.id = id
+        self.displayName = displayName
+        self.iconName = iconName
+        self.backgroundColor = backgroundColor
+        self.action = action
+        self.isLocked = isLocked
+    }
+}
+
+// MARK: - App Icon View
+struct AppIconView: View {
+    let icon: AppIcon
     let action: () -> Void
     
+    @State private var isPressed = false
+    
     var body: some View {
-        Button(action: action) {
-            VStack(spacing: 12) {
-                // Icon
+        VStack(spacing: 8) {
+            // Icon button
+            Button(action: action) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(gameInfo.isLocked ? Color.gray.opacity(0.3) : Color.blue)
-                        .overlay(
-                            gameInfo.isLocked ? 
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.gray, lineWidth: 2) : nil
+                    // App icon background
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(icon.isLocked ? Color.gray.opacity(0.5) : icon.backgroundColor)
+                        .frame(width: 70, height: 70)
+                        .shadow(
+                            color: icon.isLocked ? .clear : icon.backgroundColor.opacity(0.3),
+                            radius: isPressed ? 2 : 5,
+                            y: isPressed ? 1 : 3
                         )
-                        .frame(height: 150)
                     
-                    Image(systemName: gameInfo.iconName)
-                        .font(.system(size: 60))
-                        .foregroundColor(gameInfo.isLocked ? .gray : .white)
+                    // Icon
+                    Image(systemName: icon.iconName)
+                        .font(.system(size: 32, weight: .medium))
+                        .foregroundColor(.white)
                     
-                    if gameInfo.isLocked {
-                        VStack(spacing: 4) {
-                            Image(systemName: "clock.fill")
-                                .font(.title2)
-                            Text("COMING SOON")
-                                .font(.system(size: 10, weight: .bold, design: .rounded))
+                    // Coming soon overlay
+                    if icon.isLocked {
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.black.opacity(0.6))
+                            .frame(width: 70, height: 70)
+                        
+                        VStack(spacing: 2) {
+                            Image(systemName: "clock")
+                                .font(.system(size: 20))
+                            Text("SOON")
+                                .font(.system(size: 9, weight: .bold))
                         }
                         .foregroundColor(.white)
-                        .padding(8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.black.opacity(0.7))
-                        )
                     }
                 }
-                
-                // Title
-                Text(gameInfo.displayName)
-                    .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
-                
-                // Description
-                Text(gameInfo.description)
-                    .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                
-                // Age badge
-                HStack {
-                    Image(systemName: "person.fill")
-                        .font(.caption2)
-                    Text("\(gameInfo.minAge)+")
-                        .font(.system(.caption2, design: .rounded, weight: .medium))
-                }
-                .foregroundColor(.secondary)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(Color(uiColor: .systemGray6))
-                .clipShape(Capsule())
+                .scaleEffect(isPressed ? 0.95 : 1.0)
             }
-            .padding()
-            .background(Color(uiColor: .systemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(color: .black.opacity(0.1), radius: 5, y: 2)
+            .disabled(icon.isLocked)
+            .buttonStyle(PlainButtonStyle())
+            .onLongPressGesture(minimumDuration: 0, maximumDistance: .infinity,
+                              pressing: { pressing in
+                                withAnimation(.easeInOut(duration: 0.1)) {
+                                    isPressed = pressing
+                                }
+                              }, perform: {})
+            
+            // App name
+            Text(icon.displayName)
+                .font(.system(size: 13, weight: .regular))
+                .foregroundColor(.primary)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .frame(width: 70)
         }
-        .disabled(gameInfo.isLocked)
+    }
+}
+
+#Preview {
+    NavigationStack {
+        LobbyView(
+            navigationPath: .constant(NavigationPath()),
+            onGameSelected: { _ in }
+        )
     }
 }

@@ -1,180 +1,386 @@
-import Foundation
-import Observation
+//
+//  TangramViewModel.swift
+//  osmo
+//
+//  Refactored ViewModel with initial/target state management
+//
 
-@Observable
-final class TangramViewModel {
-    // MARK: - Game State
-    private(set) var gamePhase: GamePhase = .waiting
-    private(set) var currentPuzzle: Puzzle?
-    private(set) var placedPieces: Set<String> = []  // pieceIds
-    private(set) var piecesPlaced: Int = 0
-    private(set) var totalPieces: Int = 7
-    private(set) var isComplete = false
+import SwiftUI
+import CoreGraphics
+
+@MainActor
+final class TangramViewModel: BaseGameViewModel<TangramPuzzle> {
     
-    // MARK: - Timer State
-    private(set) var elapsedTime: TimeInterval = 0
-    private(set) var timerActive = false
-    private var timerTask: Task<Void, Never>?
+    // MARK: - Tangram-Specific Properties
     
-    // MARK: - Feedback State
-    private(set) var lastHint: HintType?
-    private(set) var attemptCount: [String: Int] = [:]  // pieceId -> attempts
+    var selectedPieceId: UUID?
     
-    // MARK: - Dependencies
-    private let context: GameContext?
-    private var audioService: AudioServiceProtocol? { context?.audioService }
-    private var analyticsService: AnalyticsServiceProtocol? { context?.analyticsService }
-    private var persistenceService: PersistenceServiceProtocol? { context?.persistenceService }
+    // Editor mode
+    var editorMode: EditorMode?
+    var showTargetOverlay: Bool = false
     
-    // MARK: - Types
-    enum GamePhase {
-        case waiting
-        case playing
-        case completed
-        case paused
+    // UI Settings
+    var showGrid: Bool = true
+    var snapToGrid: Bool = true
+    
+    // UI State
+    var showingSaveDialog = false
+    var showingLoadDialog = false
+    var puzzleName = ""
+    
+    // MARK: - Services
+    
+    private let storage = TangramPuzzleStorage.shared
+    
+    // MARK: - Computed Properties
+    
+    var selectedPiece: TangramPiece? {
+        guard let id = selectedPieceId else { return nil }
+        return currentPuzzle?.currentState.piece(withId: id)
     }
     
-    enum HintType {
-        case needsRotation
-        case wrongPiece
-        case almostThere
+    // Computed access to current state for convenience
+    var currentState: TangramState {
+        return currentPuzzle?.currentState ?? TangramState()
+    }
+    
+    var availableShapes: [TangramShape] {
+        let usedShapes = Set(currentState.pieces.map { $0.shape })
+        return TangramShape.allCases.filter { !usedShapes.contains($0) }
+    }
+    
+    var isEditMode: Bool {
+        editorMode != nil
     }
     
     // MARK: - Initialization
-    init(context: GameContext?) {
-        self.context = context
-    }
     
-    // MARK: - Game Management
-    func loadPuzzle(_ puzzle: Puzzle) {
-        self.currentPuzzle = puzzle
-        self.totalPieces = puzzle.pieces.count
-        self.placedPieces.removeAll()
-        self.piecesPlaced = 0
-        self.attemptCount.removeAll()
-        self.gamePhase = .waiting
+    override init() {
+        super.init()
+        // Set up Tangram-specific storage
+        self.storageService = storage
         
-        // Analytics
-        analyticsService?.logEvent("tangram_puzzle_loaded", parameters: [
-            "puzzle_id": puzzle.id,
-            "puzzle_name": puzzle.name
-        ])
+        // Configure default UI settings
+        self.showGrid = false
+        self.snapToGrid = true
     }
     
-    func startGame() {
-        guard gamePhase == .waiting else { return }
-        gamePhase = .playing
-        startTimer()
+    init(puzzle: TangramPuzzle? = nil, editorMode: EditorMode? = nil) {
+        self.editorMode = editorMode
+        super.init()
         
-        analyticsService?.logEvent("tangram_game_started", parameters: [
-            "puzzle_id": currentPuzzle?.id ?? "unknown"
-        ])
-    }
-    
-    func pauseGame() {
-        guard gamePhase == .playing else { return }
-        gamePhase = .paused
-        pauseTimer()
-    }
-    
-    func resumeGame() {
-        guard gamePhase == .paused else { return }
-        gamePhase = .playing
-        resumeTimer()
-    }
-    
-    // MARK: - Timer Management
-    private func startTimer() {
-        guard !timerActive else { return }
-        timerActive = true
+        // Set up Tangram-specific storage
+        self.storageService = storage
         
-        timerTask = Task { [weak self] in
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(0.1))
-                await MainActor.run { [weak self] in
-                    self?.elapsedTime += 0.1
+        if let puzzle = puzzle {
+            loadPuzzle(puzzle)
+        } else if editorMode != nil {
+            // Start with empty puzzle in editor
+            currentPuzzle = TangramPuzzle.empty()
+        } else {
+            // Load first available puzzle for play mode
+            loadFirstPuzzle()
+        }
+        
+        // Configure based on mode
+        if editorMode != nil {
+            showGrid = true
+            snapToGrid = true
+        } else {
+            showGrid = false
+            snapToGrid = true
+        }
+    }
+    
+    // MARK: - Puzzle Management
+    
+    func loadPuzzle(_ puzzle: TangramPuzzle) {
+        var mutablePuzzle = puzzle
+        
+        switch editorMode {
+        case .initial:
+            mutablePuzzle.currentState = puzzle.initialState
+        case .target:
+            mutablePuzzle.currentState = puzzle.targetState
+        case .testing, nil:
+            mutablePuzzle.currentState = puzzle.initialState
+        }
+        
+        // Use inherited startGame method
+        startGame(with: mutablePuzzle)
+        selectedPieceId = nil
+    }
+    
+    func loadFirstPuzzle() {
+        Task {
+            do {
+                let puzzles: [TangramPuzzle] = try await storage.loadAll()
+                if let first = puzzles.first {
+                    await MainActor.run {
+                        loadPuzzle(first)
+                    }
                 }
+            } catch {
+                print("Failed to load puzzles: \(error)")
             }
         }
     }
     
-    private func pauseTimer() {
-        timerTask?.cancel()
-        timerTask = nil
-        timerActive = false
-    }
-    
-    private func resumeTimer() {
-        startTimer()
-    }
-    
-    func stopTimer() {
-        pauseTimer()
-    }
-    
-    // MARK: - Piece Placement
-    func recordSuccessfulPlacement(pieceId: String) {
-        placedPieces.insert(pieceId)
-        piecesPlaced = placedPieces.count
+    func savePuzzle(name: String) {
+        guard var puzzle = currentPuzzle else { return }
         
-        analyticsService?.logEvent("tangram_piece_placed", parameters: [
-            "piece": pieceId,
-            "attempts": attemptCount[pieceId] ?? 1,
-            "time_elapsed": elapsedTime
-        ])
+        puzzle.name = name
+        puzzle.updatedAt = Date()
         
-        // Check completion
-        if piecesPlaced == totalPieces {
-            completeGame()
+        // Update the appropriate state based on editor mode
+        switch editorMode {
+        case .initial:
+            puzzle.initialState = currentState
+        case .target:
+            puzzle.targetState = currentState
+        case .testing, nil:
+            break
+        }
+        
+        // Validate before saving
+        let errors = puzzle.validate()
+        if !errors.isEmpty {
+            print("[TangramViewModel] Validation errors: \(errors)")
+            return
+        }
+        
+        Task {
+            do {
+                try await storage.save(puzzle)
+                await MainActor.run {
+                    currentPuzzle = puzzle
+                    showingSaveDialog = false
+                    puzzleName = ""
+                    gameContext?.audioService.playSound("save_success")
+                }
+            } catch {
+                print("[TangramViewModel] Save failed: \(error)")
+            }
         }
     }
     
-    func recordFailedAttempt(pieceId: String) {
-        attemptCount[pieceId, default: 0] += 1
+    func deletePuzzle(_ puzzle: TangramPuzzle) {
+        Task {
+            do {
+                try await storage.delete(id: puzzle.id)
+                if currentPuzzle?.id == puzzle.id {
+                    loadFirstPuzzle()
+                }
+            } catch {
+                print("[TangramViewModel] Delete failed: \(error)")
+            }
+        }
     }
     
-    // MARK: - Game Completion
-    private func completeGame() {
-        gamePhase = .completed
-        stopTimer()
-        isComplete = true
+    func getAllPuzzles() -> [TangramPuzzle] {
+        // Note: This is a synchronous wrapper - ideally should be async
+        // For now, return cached puzzles or empty array
+        var puzzles: [TangramPuzzle] = []
+        Task {
+            do {
+                puzzles = try await storage.loadAll()
+            } catch {
+                print("[TangramViewModel] Failed to get puzzles: \(error)")
+            }
+        }
+        return puzzles
+    }
+    
+    // MARK: - Piece Management
+    
+    func addPiece(_ shape: TangramShape, at position: CGPoint = .zero) {
+        let piece = TangramPiece(
+            shape: shape,
+            position: position
+        )
+        if var puzzle = currentPuzzle {
+            puzzle.currentState.updatePiece(piece)
+            currentPuzzle = puzzle
+        }
+        selectedPieceId = piece.id
+        gameContext?.audioService.playSound("piece_add")
+        notifySceneUpdate()
+        print("[TangramViewModel] Added piece: \(shape) at \(position), total pieces: \(currentState.pieces.count)")
+    }
+    
+    func movePiece(_ id: UUID, to position: CGPoint) {
+        guard var piece = currentState.piece(withId: id) else { return }
         
-        // Save best time
-        Task { [weak self] in
-            guard let self, let puzzleId = currentPuzzle?.id else { return }
-            await self.saveBestTime(for: puzzleId, time: self.elapsedTime)
+        var finalPosition = position
+        if snapToGrid {
+            // Snap to 0.1 unit grid as per math spec (not 0.25)
+            let gridSize: CGFloat = 0.1
+            finalPosition.x = round(finalPosition.x / gridSize) * gridSize
+            finalPosition.y = round(finalPosition.y / gridSize) * gridSize
         }
         
-        analyticsService?.logEvent("tangram_puzzle_completed", parameters: [
-            "puzzle_id": currentPuzzle?.id ?? "unknown",
-            "time": elapsedTime,
-            "total_attempts": attemptCount.values.reduce(0, +)
-        ])
+        piece.position = finalPosition
+        if var puzzle = currentPuzzle {
+            puzzle.currentState.updatePiece(piece)
+            currentPuzzle = puzzle
+        }
+        notifySceneUpdate()
     }
     
-    // MARK: - Persistence
-    private func saveBestTime(for puzzleId: String, time: TimeInterval) async {
-        // Save to persistence service
-        var progress = GameProgress(gameId: "tangram")
-        progress.levelsCompleted.insert(puzzleId)
-        progress.totalPlayTime = time
-        progress.lastPlayed = Date()
+    func rotatePiece(_ id: UUID) {
+        guard var piece = currentState.piece(withId: id) else { return }
         
-        try? await persistenceService?.saveGameProgress(progress)
+        // Rotate by 45 degrees
+        let newRotation = piece.rotation + Double.pi / 4
+        piece.rotation = newRotation.truncatingRemainder(dividingBy: 2 * Double.pi)
+        
+        if var puzzle = currentPuzzle {
+            puzzle.currentState.updatePiece(piece)
+            currentPuzzle = puzzle
+        }
+        gameContext?.audioService.playSound("piece_rotate")
+        notifySceneUpdate()
     }
     
-    // MARK: - Reset
-    func resetPuzzle() {
-        placedPieces.removeAll()
-        piecesPlaced = 0
-        attemptCount.removeAll()
-        elapsedTime = 0
+    func flipPiece(_ id: UUID) {
+        guard var piece = currentState.piece(withId: id) else { return }
+        
+        piece.isFlipped.toggle()
+        if var puzzle = currentPuzzle {
+            puzzle.currentState.updatePiece(piece)
+            currentPuzzle = puzzle
+        }
+        gameContext?.audioService.playSound("piece_flip")
+        notifySceneUpdate()
+    }
+    
+    func deletePiece(_ id: UUID) {
+        if var puzzle = currentPuzzle {
+            puzzle.currentState.removePiece(withId: id)
+            currentPuzzle = puzzle
+        }
+        if selectedPieceId == id {
+            selectedPieceId = nil
+        }
+        gameContext?.audioService.playSound("piece_delete")
+        notifySceneUpdate()
+    }
+    
+    func selectPiece(_ id: UUID?) {
+        selectedPieceId = id
+        if id != nil {
+            gameContext?.audioService.playSound("piece_select")
+        }
+        notifySceneUpdate()
+    }
+    
+    func clearAll() {
+        if var puzzle = currentPuzzle {
+            puzzle.currentState = TangramState()
+            currentPuzzle = puzzle
+        }
+        selectedPieceId = nil
         isComplete = false
-        gamePhase = .waiting
-        lastHint = nil
+        notifySceneUpdate()
+    }
+    
+    // MARK: - GameActionHandler Override
+    
+    override func handleMove(from: CGPoint, to: CGPoint, source: InputSource) {
+        super.handleMove(from: from, to: to, source: source)
         
-        analyticsService?.logEvent("tangram_puzzle_reset", parameters: [
-            "puzzle_id": currentPuzzle?.id ?? "unknown"
-        ])
+        // Move selected piece if any
+        if let selectedId = selectedPieceId {
+            movePiece(selectedId, to: to)
+        }
+    }
+    
+    override func handleSelection(at point: CGPoint, source: InputSource) {
+        super.handleSelection(at: point, source: source)
+        // Selection is handled by the scene finding the piece
+    }
+    
+    // MARK: - Game Logic
+    
+    func checkSolution() {
+        guard let puzzle = currentPuzzle,
+              editorMode == nil else { return }
+        
+        if puzzle.checkSolution(currentState) {
+            if !isComplete {
+                isComplete = true
+                gameContext?.audioService.playSound("puzzle_complete")
+            }
+        } else {
+            isComplete = false
+        }
+    }
+    
+    func resetToInitial() {
+        guard var puzzle = currentPuzzle else { return }
+        puzzle.currentState = puzzle.initialState
+        currentPuzzle = puzzle
+        isComplete = false
+        selectedPieceId = nil
+    }
+    
+    // MARK: - Editor Mode Management
+    
+    func switchEditorMode(_ mode: EditorMode?) {
+        editorMode = mode
+        
+        guard var puzzle = currentPuzzle else { return }
+        
+        switch mode {
+        case .initial:
+            puzzle.currentState = puzzle.initialState
+            showGrid = true
+            showTargetOverlay = true
+        case .target:
+            puzzle.currentState = puzzle.targetState
+            showGrid = true
+            showTargetOverlay = false
+        case .testing:
+            puzzle.currentState = puzzle.initialState
+            showGrid = false
+            showTargetOverlay = false
+        case nil:
+            puzzle.currentState = puzzle.initialState
+            showGrid = false
+            showTargetOverlay = false
+        }
+        
+        currentPuzzle = puzzle
+        notifySceneUpdate()
+    }
+    
+    func toggleTargetOverlay() {
+        showTargetOverlay.toggle()
+        notifySceneUpdate()
+    }
+    
+    // MARK: - Piece Palette (for editor)
+    
+    func addAllRemainingPieces() {
+        print("[TangramViewModel] Adding all remaining pieces. Available: \(availableShapes)")
+        
+        let positions: [TangramShape: CGPoint] = [
+            .largeTriangle1: CGPoint(x: -3, y: -3),
+            .largeTriangle2: CGPoint(x: 0, y: -3),
+            .mediumTriangle: CGPoint(x: 3, y: -3),
+            .smallTriangle1: CGPoint(x: -3, y: 0),
+            .smallTriangle2: CGPoint(x: -1, y: 0),
+            .square: CGPoint(x: 1, y: 0),
+            .parallelogram: CGPoint(x: 3, y: 0)
+        ]
+        
+        for shape in TangramShape.allCases {
+            if !currentState.pieces.contains(where: { $0.shape == shape }) {
+                let position = positions[shape] ?? CGPoint(x: 0, y: -3)
+                addPiece(shape, at: position)
+            }
+        }
+        
+        print("[TangramViewModel] After adding all, total pieces: \(currentState.pieces.count)")
     }
 }

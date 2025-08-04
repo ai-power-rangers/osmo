@@ -1,11 +1,26 @@
-import UIKit
 import CoreGraphics
+
+/// Device type for layout calculations
+enum DeviceType {
+    case phone
+    case pad
+}
+
+/// Interface orientation for layout
+enum InterfaceOrientation {
+    case portrait
+    case landscape
+    
+    var isLandscape: Bool {
+        self == .landscape
+    }
+}
 
 /// Responsive layout configuration for different device sizes
 struct TangramLayoutConfig {
     let screenSize: CGSize
-    let deviceType: UIUserInterfaceIdiom
-    let orientation: UIInterfaceOrientation
+    let deviceType: DeviceType
+    let orientation: InterfaceOrientation
     
     // Computed layout properties
     var boardSize: CGSize {

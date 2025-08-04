@@ -129,8 +129,8 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         
         // Exit button
         exitButton = SKShapeNode(circleOfRadius: 20)
-        exitButton.fillColor = UIColor.black.withAlphaComponent(0.5)
-        exitButton.strokeColor = UIColor.white.withAlphaComponent(0.8)
+        exitButton.fillColor = SKColor.black.withAlphaComponent(0.5)
+        exitButton.strokeColor = SKColor.white.withAlphaComponent(0.8)
         exitButton.lineWidth = 2
         exitButton.name = "exitButton"
         
@@ -187,8 +187,8 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
         
         // Gesture debug display
         gestureDebugBackground = SKShapeNode(rectOf: CGSize(width: 320, height: 60), cornerRadius: 30)
-        gestureDebugBackground.fillColor = UIColor.black.withAlphaComponent(0.8)
-        gestureDebugBackground.strokeColor = UIColor.white.withAlphaComponent(0.3)
+        gestureDebugBackground.fillColor = SKColor.black.withAlphaComponent(0.8)
+        gestureDebugBackground.strokeColor = SKColor.white.withAlphaComponent(0.3)
         gestureDebugBackground.lineWidth = 1
         
         gestureDebugLabel = createLabel(
@@ -653,13 +653,13 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
     private func getGestureTexture(_ pose: RPSHandPose) -> SKTexture? {
         // Create modern card-like background
         let bgNode = SKShapeNode(rectOf: CGSize(width: 100, height: 100), cornerRadius: 25)
-        bgNode.fillColor = UIColor.white.withAlphaComponent(0.95)
-        bgNode.strokeColor = UIColor.white
+        bgNode.fillColor = SKColor.white.withAlphaComponent(0.95)
+        bgNode.strokeColor = SKColor.white
         bgNode.lineWidth = 2
         
         // Add subtle shadow effect
         let shadowNode = SKShapeNode(rectOf: CGSize(width: 100, height: 100), cornerRadius: 25)
-        shadowNode.fillColor = UIColor.black.withAlphaComponent(0.3)
+        shadowNode.fillColor = SKColor.black.withAlphaComponent(0.3)
         shadowNode.position = CGPoint(x: 2, y: -2)
         shadowNode.zPosition = -1
         
@@ -680,8 +680,8 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
     private func createGestureGuide() {
         // Background for guide
         gestureGuideBackground = SKShapeNode(rectOf: CGSize(width: 340, height: 90), cornerRadius: 20)
-        gestureGuideBackground.fillColor = UIColor.black.withAlphaComponent(0.7)
-        gestureGuideBackground.strokeColor = UIColor.white.withAlphaComponent(0.3)
+        gestureGuideBackground.fillColor = SKColor.black.withAlphaComponent(0.7)
+        gestureGuideBackground.strokeColor = SKColor.white.withAlphaComponent(0.3)
         gestureGuideBackground.lineWidth = 1
         
         // No title needed - gestures are self-explanatory
@@ -713,7 +713,7 @@ final class RockPaperScissorsGameScene: SKScene, GameSceneProtocol {
             
             // Fingers - smaller and dimmer
             let fingersLabel = createLabel(text: gesture.fingers, fontSize: 11, fontWeight: .regular)
-            fingersLabel.fontColor = UIColor.systemGray.withAlphaComponent(0.8)
+            fingersLabel.fontColor = SKColor.systemGray.withAlphaComponent(0.8)
             fingersLabel.position = CGPoint(x: 0, y: -35)
             container.addChild(fingersLabel)
             

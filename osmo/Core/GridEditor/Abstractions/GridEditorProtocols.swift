@@ -1,6 +1,50 @@
 import Foundation
 import SwiftUI
 
+/// Grid editor errors
+public enum GridEditorError: LocalizedError {
+    case serviceUnavailable
+    case saveFailed(String)
+    case loadFailed(String)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .serviceUnavailable:
+            return "Grid editor service is not available"
+        case .saveFailed(let reason):
+            return "Failed to save arrangement: \(reason)"
+        case .loadFailed(let reason):
+            return "Failed to load arrangement: \(reason)"
+        }
+    }
+}
+
+/// Game types supported by the grid editor
+public enum GameType: String, Codable, CaseIterable {
+    case tangram = "tangram"
+    case sudoku = "sudoku"
+    case wordGame = "wordGame"
+    case mathPuzzle = "mathPuzzle"
+    
+    public var displayName: String {
+        switch self {
+        case .tangram: return "Tangram"
+        case .sudoku: return "Sudoku"
+        case .wordGame: return "Word Game"
+        case .mathPuzzle: return "Math Puzzle"
+        }
+    }
+    
+    public var icon: String {
+        switch self {
+        case .tangram: return "square.on.square"
+        case .sudoku: return "grid"
+        case .wordGame: return "textformat"
+        case .mathPuzzle: return "function"
+        }
+    }
+}
+
 /// Configuration for a grid editor
 public protocol GridConfiguration {
     var gridStep: Double { get }           // Grid snapping resolution

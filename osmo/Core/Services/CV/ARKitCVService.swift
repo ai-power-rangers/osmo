@@ -42,6 +42,9 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
     // Finger detection
     private let fingerDetector = FingerDetector()
     
+    // Service dependencies
+    private weak var analyticsService: AnalyticsServiceProtocol?
+    
     override init() {
         super.init()
         setupVisionRequests()
@@ -51,6 +54,14 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
     func initialize() async throws {
         logger.info("[ARKitCV] Service initialized")
         // ARKit service has no dependencies to initialize
+    }
+    
+    func cleanup() async {
+        stopSession()
+    }
+    
+    func setAnalyticsService(_ service: AnalyticsServiceProtocol) {
+        self.analyticsService = service
     }
     
     // MARK: - Session Management
@@ -79,8 +90,7 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
         logger.info("[CVService] Session started")
         
         // Log analytics
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("cv_session_started", parameters: [:])
+        analyticsService?.logEvent("cv_session_started", parameters: [:])
     }
     
     func stopSession() {
@@ -103,8 +113,7 @@ final class ARKitCVService: NSObject, CVServiceProtocol, ServiceLifecycle, @unch
         logger.info("[CVService] Session stopped")
         
         // Log analytics
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("cv_session_stopped", parameters: [:])
+        analyticsService?.logEvent("cv_session_stopped", parameters: [:])
     }
     
     // MARK: - Event Stream
@@ -511,8 +520,7 @@ extension ARKitCVService: ARSessionDelegate {
         logger.error("[CVService] AR session failed: \(error)")
         
         let cvError = CVError.sessionFailure(error)
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logError(cvError, context: "ar_session")
+        analyticsService?.logError(cvError, context: "ar_session")
     }
 }
 

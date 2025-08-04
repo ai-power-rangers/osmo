@@ -29,6 +29,9 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
     private(set) var isSessionActive = false
     var debugMode = false
     
+    // Service dependencies
+    private weak var analyticsService: AnalyticsServiceProtocol?
+    
     // Public access to camera session for preview
     var cameraSession: AVCaptureSession? {
         captureSession
@@ -48,6 +51,17 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
         logger.info("[CameraVision] Service initialized")
     }
     
+    func cleanup() async {
+        stopSession()
+    }
+    
+    func setAnalyticsService(_ service: AnalyticsServiceProtocol) {
+        self.analyticsService = service
+        
+        // Also inject into CameraPermissionManager
+        CameraPermissionManager.shared.setAnalyticsService(service)
+    }
+    
     // MARK: - CVServiceProtocol
     func startSession() async throws {
         guard !isSessionActive else { return }
@@ -59,8 +73,7 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
             logger.info("[CameraVision] Session started with front camera")
             
             // Analytics
-            let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-            analytics.logEvent("cv_session_started", parameters: [:])
+            analyticsService?.logEvent("cv_session_started", parameters: [:])
         } catch {
             logger.error("[CameraVision] Failed to start session: \(error)")
             throw CVError.sessionFailure(error)
@@ -77,8 +90,7 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
         
         logger.info("[CameraVision] Session stopped")
         
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("cv_session_stopped", parameters: [:])
+        analyticsService?.logEvent("cv_session_stopped", parameters: [:])
     }
     
     func eventStream(gameId: String, events: [CVEventType]) -> AsyncStream<CVEvent> {

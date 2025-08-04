@@ -2,120 +2,74 @@
 //  osmoApp.swift
 //  osmo
 //
-//  Created by Mitchell White on 7/30/25.
+//  Main app entry point - Refactored with proper service architecture
 //
 
 import SwiftUI
-import SwiftData
 import os.log
 
 @main
-struct OsmoApp: App {
-    @State private var coordinator = AppCoordinator()
-    @State private var isLoading = true
-    @Environment(\.scenePhase) var scenePhase
+struct osmoApp: App {
+    private let logger = Logger(subsystem: "com.osmoapp", category: "App")
     
-    let modelContainer: ModelContainer
-    private let logger = Logger(subsystem: "com.osmoapp", category: "app")
+    // MARK: - State
+    @State private var services = ServiceContainer()
+    @State private var showLaunchScreen = true
     
-    init() {
-        // Setup SwiftData
-        do {
-            let schema = Schema([
-                SDGameProgress.self,
-                SDUserSettings.self,
-                SDAnalyticsEvent.self,
-                SDGameSession.self
-            ])
-            
-            let modelConfiguration = ModelConfiguration(
-                schema: schema,
-                isStoredInMemoryOnly: false
-            )
-            
-            modelContainer = try ModelContainer(
-                for: schema,
-                configurations: [modelConfiguration]
-            )
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-        
-        setupServices()
-    }
-    
+    // MARK: - Scene
     var body: some Scene {
         WindowGroup {
             Group {
-                if isLoading {
+                if showLaunchScreen {
                     LaunchScreen()
-                        .onAppear {
-                            Task {
-                                await initializeApp()
-                                isLoading = false
-                            }
-                        }
+                        .transition(.opacity)
                 } else {
-                    ContentView()
-                        .environment(coordinator)
+                    RootView()
+                        .serviceBoundary()
+                        .injectServices(from: services)
                 }
             }
-            .preferredColorScheme(.light)
-            .modelContainer(modelContainer)
-            .onChange(of: scenePhase) { _, newPhase in
-                // Guard against accessing services before initialization
-                guard ServiceLocator.shared.isInitialized else { return }
-                
-                if let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self) as? AnalyticsService {
-                    analytics.handleScenePhaseChange(newPhase)
-                }
+            .animation(.easeInOut(duration: 0.5), value: showLaunchScreen)
+            .task {
+                await initializeApp()
             }
+            .environment(services)
         }
+
     }
     
-    private func setupServices() {
-        // CRITICAL: Services must be registered in dependency order
-        
-        // 1. Persistence - No dependencies
-        do {
-            let swiftDataService = try SwiftDataService()
-            ServiceLocator.shared.register(swiftDataService, for: PersistenceServiceProtocol.self)
-        } catch {
-            fatalError("Failed to create SwiftData service: \(error)")
-        }
-        
-        // 2. Analytics - Depends on Persistence
-        ServiceLocator.shared.register(AnalyticsService(), for: AnalyticsServiceProtocol.self)
-        
-        // 3. Audio - Depends on Persistence
-        ServiceLocator.shared.register(AudioEngineService(), for: AudioServiceProtocol.self)
-        
-        // 4. CV - Depends on Analytics
-        ServiceLocator.shared.register(CameraVisionService(), for: CVServiceProtocol.self)
-        
-        logger.info("[App] All services registered")
-        
-        #if DEBUG
-        ServiceLocator.validateServices()
-        #endif
-    }
+    // MARK: - Initialization
     
-    @MainActor
     private func initializeApp() async {
-        // Initialize all services properly
-        do {
-            try await ServiceLocator.shared.initializeServices()
-        } catch {
-            logger.error("[App] Failed to initialize services: \(error)")
-        }
+        logger.info("[App] Starting initialization...")
         
-        // Preload common sounds after initialization
-        let audio = ServiceLocator.shared.resolve(AudioServiceProtocol.self)
-        if let audioService = audio as? AudioEngineService {
-            audioService.preloadCommonSounds()
-        }
+        // Initialize services
+        await services.initialize()
         
-        // Minimum loading time for smooth UX
-        try? await Task.sleep(for: .seconds(1.5))
+        // Check if initialization succeeded
+        if services.isInitialized {
+            logger.info("[App] Services initialized successfully")
+            
+            // Migration removed in simplification
+            
+            // Wait for smooth transition
+            try? await Task.sleep(nanoseconds: 1_500_000_000) // 1.5 seconds
+            
+            // Hide launch screen
+            await MainActor.run {
+                withAnimation {
+                    self.showLaunchScreen = false
+                }
+            }
+        } else if let error = services.initializationError {
+            logger.error("[App] Service initialization failed: \(error)")
+            // The ServiceBoundary will show the error UI
+            await MainActor.run {
+                self.showLaunchScreen = false
+            }
+        }
     }
 }
+
+// MARK: - App Environment
+

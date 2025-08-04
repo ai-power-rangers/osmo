@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct SudokuBoard {
+struct SudokuBoard: Codable, Hashable {
     let size: GridSize
-    private(set) var grid: [[Int?]]
+    var grid: [[Int?]]  // Made public for editor
     private(set) var isLocked: [[Bool]]  // Original tiles that can't be moved
     
     // MARK: - Initialization
@@ -19,6 +19,33 @@ struct SudokuBoard {
         let dimension = size.rawValue
         self.grid = Array(repeating: Array(repeating: nil, count: dimension), count: dimension)
         self.isLocked = Array(repeating: Array(repeating: false, count: dimension), count: dimension)
+    }
+    
+    // Convenience initializer for creating board from existing grid
+    init(grid: [[Int?]], size: GridSize) {
+        self.size = size
+        self.grid = grid
+        let dimension = size.rawValue
+        // Mark non-nil cells as locked (original puzzle cells)
+        self.isLocked = grid.map { row in
+            row.map { cell in
+                cell != nil
+            }
+        }
+    }
+    
+    // MARK: - Computed Properties
+    
+    /// Check if the board is completely filled
+    var isComplete: Bool {
+        for row in grid {
+            for cell in row {
+                if cell == nil {
+                    return false
+                }
+            }
+        }
+        return true
     }
     
     // MARK: - Public Methods
@@ -35,7 +62,7 @@ struct SudokuBoard {
         }
         
         // Check if already filled
-        if let existing = grid[position.row][position.col], existing != nil && number != nil {
+        if grid[position.row][position.col] != nil && number != nil {
             return .alreadyFilled
         }
         
@@ -75,7 +102,7 @@ struct SudokuBoard {
         }
     }
     
-    func validate(number: Int, at position: Position) -> ValidationResult {
+    func validate(number: Int, at position: Position) -> SudokuValidationResult {
         // Check row
         for col in 0..<size.rawValue {
             if col != position.col && grid[position.row][col] == number {

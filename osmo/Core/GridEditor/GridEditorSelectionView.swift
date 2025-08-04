@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct GridEditorSelectionView: View {
-    @Environment(AppCoordinator.self) var coordinator
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -21,8 +20,8 @@ struct GridEditorSelectionView: View {
             
             VStack(spacing: 16) {
                 ForEach(GameType.allCases, id: \.self) { gameType in
-                    GameTypeButton(gameType: gameType) {
-                        coordinator.navigateTo(.gridEditorForGame(gameType: gameType.rawValue))
+                    NavigationLink(value: AppRoute.gridEditor(gameType: gameType.rawValue)) {
+                        GameTypeButton(gameType: gameType) {}
                     }
                     .disabled(gameType != .tangram) // Only tangram is implemented for now
                 }
@@ -49,7 +48,7 @@ struct GameTypeButton: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Image(systemName: gameType.iconName)
+                Image(systemName: gameType.icon)
                     .font(.title2)
                     .frame(width: 40)
                 
@@ -71,7 +70,7 @@ struct GameTypeButton: View {
                     .foregroundColor(.secondary)
             }
             .padding()
-            .background(Color(UIColor.secondarySystemBackground))
+            .background(Color.gray.opacity(0.1))
             .cornerRadius(12)
         }
         .buttonStyle(PlainButtonStyle())
@@ -82,6 +81,6 @@ struct GameTypeButton: View {
 #Preview {
     NavigationStack {
         GridEditorSelectionView()
-            .environment(AppCoordinator())
+            // Removed deprecated AppCoordinator
     }
 }

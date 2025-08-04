@@ -38,6 +38,9 @@ final class AudioEngineService: AudioServiceProtocol, ServiceLifecycle {
     var musicEnabled = true
     var hapticEnabled = true
     
+    // Service dependencies
+    private weak var persistenceService: PersistenceServiceProtocol?
+    
     init() {
         mainMixer = audioEngine.mainMixerNode
         setupAudioEngine()
@@ -292,12 +295,27 @@ final class AudioEngineService: AudioServiceProtocol, ServiceLifecycle {
     
     // MARK: - ServiceLifecycle
     func initialize() async throws {
-        await loadSettings()
+        // Service will be injected after initialization
+    }
+    
+    func cleanup() async {
+        // Stop audio engine
+        audioEngine.stop()
+        try? await hapticEngine?.stop()
+    }
+    
+    func setPersistenceService(_ service: PersistenceServiceProtocol) {
+        self.persistenceService = service
+        
+        // Load user settings
+        Task {
+            await loadSettings()
+        }
     }
     
     // MARK: - Settings
     private func loadSettings() async {
-        let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
+        guard let persistence = persistenceService else { return }
         let settings = await persistence.loadUserSettings()
         soundEnabled = settings.soundEnabled
         musicEnabled = settings.musicEnabled

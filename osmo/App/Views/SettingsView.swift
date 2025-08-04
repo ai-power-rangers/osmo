@@ -2,14 +2,17 @@
 //  SettingsView.swift
 //  osmo
 //
-//  Created by Phase 1 Implementation
+//  Settings view - Refactored with proper service injection
 //
 
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.persistenceService) private var persistenceService
+    @Environment(\.analyticsService) private var analyticsService
+    @Environment(\.audioService) private var audioService
+    
     @State private var userSettings = UserSettings()
     @State private var isLoading = true
     @State private var hasChanges = false
@@ -36,6 +39,20 @@ struct SettingsView: View {
                     }
             }
             
+            Section("Games") {
+                ForEach(GameSettingsRegistry.shared.allProviders(), id: \.gameId) { provider in
+                    NavigationLink(destination: provider.createSettingsView()) {
+                        Label(provider.displayName, systemImage: provider.iconName)
+                    }
+                }
+                
+                if GameSettingsRegistry.shared.allProviders().isEmpty {
+                    Text("No game settings available")
+                        .foregroundColor(.secondary)
+                        .font(.caption)
+                }
+            }
+            
             Section("Developer") {
                 Toggle("CV Debug Mode", isOn: $userSettings.cvDebugMode)
                     .onChange(of: userSettings.cvDebugMode) { _, _ in
@@ -52,13 +69,7 @@ struct SettingsView: View {
                     testHaptic()
                 }
                 
-                Button("Test Computer Vision") {
-                    dismiss()
-                    // Small delay to ensure dismiss completes before navigation
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        coordinator.navigateTo(.cvTest)
-                    }
-                }
+                NavigationLink("Test Computer Vision", value: AppRoute.cvTest)
                 .foregroundColor(.blue)
             }
             
@@ -84,23 +95,12 @@ struct SettingsView: View {
         .toolbar {
             if hasChanges {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        Task {
-                            // Reload original settings
-                            await loadSettings()
-                            dismiss()
-                        }
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         Task {
                             await saveSettings()
                             dismiss()
                         }
                     }
-                    .fontWeight(.semibold)
                 }
             }
         }
@@ -119,25 +119,23 @@ struct SettingsView: View {
     }
     
     // MARK: - Data Operations
+    
     private func loadSettings() async {
-        guard ServiceLocator.shared.isInitialized else { return }
+        guard let persistence = persistenceService else { return }
         
-        let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
         userSettings = await persistence.loadUserSettings()
         hasChanges = false
     }
     
     private func saveSettings() async {
-        guard ServiceLocator.shared.isInitialized else { return }
+        guard let persistence = persistenceService else { return }
         
-        let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
         do {
             try await persistence.saveUserSettings(userSettings)
             hasChanges = false
             
             // Log settings change
-            let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-            analytics.logEvent("settings_updated", parameters: [
+            analyticsService?.logEvent("settings_updated", parameters: [
                 "sound_enabled": String(userSettings.soundEnabled),
                 "music_enabled": String(userSettings.musicEnabled),
                 "haptic_enabled": String(userSettings.hapticEnabled),
@@ -150,43 +148,34 @@ struct SettingsView: View {
     }
     
     // MARK: - Service Updates
+    
     private func updateAudioService() {
-        guard ServiceLocator.shared.isInitialized,
-              let audioService = ServiceLocator.shared.resolve(AudioServiceProtocol.self) as? AudioEngineService else {
-            return
-        }
+        guard let audio = audioService as? AudioEngineService else { return }
         
-        audioService.updateSettings(userSettings)
+        audio.updateSettings(userSettings)
     }
     
     // MARK: - Test Actions
+    
     private func testSound() {
-        guard ServiceLocator.shared.isInitialized else { return }
-        
-        let audio = ServiceLocator.shared.resolve(AudioServiceProtocol.self)
-        audio.playSound("button_tap")
+        audioService?.playSound("button_tap")
         
         // Log test action
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("debug_test_sound", parameters: [:])
+        analyticsService?.logEvent("debug_test_sound", parameters: [:])
     }
     
     private func testHaptic() {
-        guard ServiceLocator.shared.isInitialized else { return }
-        
-        let audio = ServiceLocator.shared.resolve(AudioServiceProtocol.self)
-        audio.playHaptic(.medium)
+        audioService?.playHaptic(.medium)
         
         // Log test action
-        let analytics = ServiceLocator.shared.resolve(AnalyticsServiceProtocol.self)
-        analytics.logEvent("debug_test_haptic", parameters: [:])
+        analyticsService?.logEvent("debug_test_haptic", parameters: [:])
     }
 }
 
 // MARK: - Preview
+
 #Preview {
     NavigationStack {
         SettingsView()
-            .environment(AppCoordinator())
     }
 }

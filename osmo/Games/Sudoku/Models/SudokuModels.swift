@@ -11,7 +11,7 @@ import SwiftUI
 
 // MARK: - Game Types
 
-enum GridSize: Int, CaseIterable {
+enum GridSize: Int, CaseIterable, Codable {
     case fourByFour = 4
     case nineByNine = 9
     
@@ -101,7 +101,7 @@ struct SudokuConfiguration {
 
 // MARK: - Validation Result
 
-enum ValidationResult {
+enum SudokuValidationResult {
     case valid
     case duplicateInRow(position: Position, number: Int)
     case duplicateInColumn(position: Position, number: Int)

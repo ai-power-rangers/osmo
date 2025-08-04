@@ -23,6 +23,9 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
     // Session tracking
     private var currentSession: GameSession?
     
+    // Service dependencies
+    private weak var persistenceService: PersistenceServiceProtocol?
+    
     init() {
         startFlushTask()
         observeAppLifecycle()
@@ -34,18 +37,31 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
     
     // MARK: - ServiceLifecycle
     func initialize() async throws {
+        // Service will be injected after initialization
+    }
+    
+    func cleanup() async {
+        // Flush any remaining events before cleanup
+        await flushEvents()
+        flushTask?.cancel()
+    }
+    
+    func setPersistenceService(_ service: PersistenceServiceProtocol) {
+        self.persistenceService = service
+        
         // Load any persisted session
-        let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
-        if let session = await persistence.loadCurrentSession() {
-            currentSession = GameSession(
-                sessionId: UUID(),
-                gameId: session.gameId,
-                startTime: session.startTime,
-                events: [],
-                cvEventCount: 0,
-                errorCount: 0
-            )
-            logger.info("[Analytics] Resumed session: \(session.gameId)")
+        Task {
+            if let session = await service.loadCurrentSession() {
+                currentSession = GameSession(
+                    sessionId: UUID(),
+                    gameId: session.gameId,
+                    startTime: session.startTime,
+                    events: [],
+                    cvEventCount: 0,
+                    errorCount: 0
+                )
+                logger.info("[Analytics] Resumed session: \(session.gameId)")
+            }
         }
     }
     
@@ -95,8 +111,7 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
         
         // Update persistence
         Task {
-            let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
-            try? await persistence.saveCurrentSession(gameId: gameId, sessionStart: Date())
+            try? await persistenceService?.saveCurrentSession(gameId: gameId, sessionStart: Date())
         }
     }
     
@@ -123,11 +138,10 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
         // Update game progress
         if success {
             Task {
-                let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
-                try? await persistence.saveLevel(gameId: gameId, level: level, completed: true)
+                try? await persistenceService?.saveLevel(gameId: gameId, level: level, completed: true)
                 
                 if let score = score {
-                    try? await persistence.saveHighScore(gameId: gameId, level: level, score: score)
+                    try? await persistenceService?.saveHighScore(gameId: gameId, level: level, score: score)
                 }
             }
         }
@@ -154,7 +168,7 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
         currentSession?.events.append(event)
         
         // Save to SwiftData with error handling
-        if let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self) as? SwiftDataService {
+        if let persistence = persistenceService as? SwiftDataService {
             do {
                 try await persistence.saveAnalyticsEvent(event)
             } catch {
@@ -233,7 +247,6 @@ final class AnalyticsService: AnalyticsServiceProtocol, ServiceLifecycle {
         currentSession = nil
         
         // Clear session from persistence
-        let persistence = ServiceLocator.shared.resolve(PersistenceServiceProtocol.self)
-        try? await persistence.clearCurrentSession()
+        try? await persistenceService?.clearCurrentSession()
     }
 }

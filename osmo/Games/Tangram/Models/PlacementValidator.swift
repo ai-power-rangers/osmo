@@ -4,7 +4,6 @@ import SpriteKit
 /// Validates piece placement against puzzle targets
 class PlacementValidator {
     let puzzle: Puzzle
-    let coordinateSystem: CoordinateSystem
     let screenUnit: CGFloat
     
     enum PlacementError {
@@ -13,19 +12,21 @@ class PlacementValidator {
         case needsRotation
     }
     
-    init(puzzle: Puzzle, coordinateSystem: CoordinateSystem, screenUnit: CGFloat) {
+    init(puzzle: Puzzle, screenUnit: CGFloat) {
         self.puzzle = puzzle
-        self.coordinateSystem = coordinateSystem
         self.screenUnit = screenUnit
     }
     
     func validatePlacement(piece: TangramPiece, at position: CGPoint, rotation: CGFloat) -> (Bool, PlacementError?) {
-        guard let targetPiece = puzzle.pieces.first(where: { $0.pieceId == piece.pieceId }) else {
+        guard let targetPiece = puzzle.pieces.first(where: { $0.pieceId == piece.shape.rawValue }) else {
             return (false, .wrongPiece)
         }
         
-        // Convert screen position to unit coordinates
-        let unitPos = coordinateSystem.toUnit(position)
+        // Simple unit conversion
+        let unitPos = CGPoint(
+            x: position.x / screenUnit,
+            y: position.y / screenUnit
+        )
         let targetPos = CGPoint(
             x: CGFloat(targetPiece.targetPosition.x),
             y: CGFloat(targetPiece.targetPosition.y)
@@ -33,7 +34,7 @@ class PlacementValidator {
         
         // Check distance
         let distance = hypot(unitPos.x - targetPos.x, unitPos.y - targetPos.y)
-        let tolerance = GridConstants.snapTolerance(for: screenUnit)
+        let tolerance = TangramGridConstants.snapTolerance(for: screenUnit)
         
         if distance > tolerance {
             return (false, .tooFar)
@@ -41,7 +42,8 @@ class PlacementValidator {
         
         // Check rotation (exact match after snapping)
         let targetRot = CGFloat(targetPiece.targetRotation)
-        let snappedRotation = rotation.snappedRotation()
+        // Snap rotation to 45-degree increments
+        let snappedRotation = round(rotation / (CGFloat.pi / 4)) * (CGFloat.pi / 4)
         
         // Allow for full rotation (handle 2π wrap-around)
         let rotationDiff = abs(snappedRotation - targetRot)
@@ -52,9 +54,9 @@ class PlacementValidator {
         }
         
         // Check mirroring for parallelogram
-        if piece.pieceId == "parallelogram" {
+        if piece.shape == .parallelogram {
             let targetMirrored = targetPiece.isMirrored ?? false
-            if piece.isMirrored != targetMirrored {
+            if piece.isFlipped != targetMirrored {
                 return (false, .needsRotation)  // Treat wrong mirror as rotation issue
             }
         }
@@ -71,7 +73,7 @@ class PlacementValidator {
         let (isValid, _) = validatePlacement(
             piece: piece,
             at: piece.position,
-            rotation: piece.zRotation
+            rotation: CGFloat(piece.rotation)
         )
         return isValid
     }

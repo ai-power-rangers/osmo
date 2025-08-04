@@ -9,7 +9,6 @@ import Foundation
 import Vision
 import AVFoundation
 import CoreGraphics
-import UIKit
 
 final class RPSHandProcessor: BaseGameCVProcessor {
     

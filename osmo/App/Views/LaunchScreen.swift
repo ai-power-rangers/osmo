@@ -21,20 +21,15 @@ struct LaunchScreen: View {
             )
             .ignoresSafeArea()
             
-            VStack(spacing: 40) {
-                // App logo placeholder
-                Image(systemName: "gamecontroller.fill")
-                    .font(.system(size: 100))
+            VStack(spacing: 30) {
+                Text("Osmo")
+                    .font(.system(size: 72, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
-                    .scaleEffect(isAnimating ? 1.1 : 1.0)
+                    .scaleEffect(isAnimating ? 1.05 : 1.0)
                     .animation(
-                        .easeInOut(duration: 1.5).repeatForever(autoreverses: true),
+                        .easeInOut(duration: 2).repeatForever(autoreverses: true),
                         value: isAnimating
                     )
-                
-                Text("OsmoApp")
-                    .font(.system(size: 48, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
                 
                 // Loading indicator
                 ProgressView(value: progress)
