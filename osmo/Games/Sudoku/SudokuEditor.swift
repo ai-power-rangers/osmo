@@ -9,7 +9,8 @@ import SwiftUI
 import SpriteKit
 
 struct SudokuEditor: View {
-    @State private var viewModel: SudokuViewModel
+    @Environment(ServiceContainer.self) private var services
+    @State private var vm: SudokuViewModel?
     @State private var showingSaveDialog = false
     @State private var puzzleName = ""
     @State private var selectedDifficulty: PuzzleDifficulty = .medium
@@ -17,27 +18,34 @@ struct SudokuEditor: View {
     @State private var tags: [String] = []
     @State private var newTag = ""
     
+    private let puzzle: SudokuPuzzle?
+    
     init(puzzle: SudokuPuzzle? = nil) {
-        let services = ServiceContainer.shared
+        self.puzzle = puzzle
         if let puzzle = puzzle {
-            _viewModel = State(initialValue: SudokuViewModel(puzzle: puzzle, editorMode: .initial, services: services))
             _puzzleName = State(initialValue: puzzle.name)
             _selectedDifficulty = State(initialValue: puzzle.difficulty)
             _tags = State(initialValue: Array(puzzle.tags))
         } else {
-            _viewModel = State(initialValue: SudokuViewModel(editorMode: .initial, services: services))
             _puzzleName = State(initialValue: "")
         }
     }
     
     var editorModeBinding: Binding<EditorMode> {
         Binding(
-            get: { viewModel.editorMode ?? .initial },
-            set: { viewModel.switchEditorMode($0) }
+            get: { viewModel?.editorMode ?? .initial },
+            set: { viewModel?.switchEditorMode($0) }
         )
     }
     
     var body: some View {
+        let vm = viewModel ?? {
+            let vm = SudokuViewModel(puzzle: puzzle, editorMode: .initial, services: services)
+            DispatchQueue.main.async {
+                self.viewModel = vm
+            }
+            return vm
+        }()
         VStack(spacing: 0) {
             // Editor Mode Selector
             Picker("Editor Mode", selection: editorModeBinding) {
@@ -94,7 +102,7 @@ struct SudokuEditor: View {
     @ViewBuilder
     private var modeDescription: some View {
         Group {
-            switch viewModel.editorMode {
+            switch vm.editorMode {
             case .initial:
                 HStack {
                     Image(systemName: "info.circle.fill")
@@ -131,11 +139,11 @@ struct SudokuEditor: View {
     @ViewBuilder
     private var controlPanel: some View {
         VStack(spacing: 15) {
-            if viewModel.editorMode != EditorMode.testing {
+            if vm.editorMode != EditorMode.testing {
                 // Editor controls
                 HStack(spacing: 20) {
                     Button(action: {
-                        viewModel.clearBoard()
+                        vm.clearBoard()
                     }) {
                         Label("Clear Board", systemImage: "trash")
                             .font(.caption)
@@ -143,9 +151,9 @@ struct SudokuEditor: View {
                     .buttonStyle(.bordered)
                     .tint(.red)
                     
-                    if viewModel.editorMode == .target {
+                    if vm.editorMode == .target {
                         Button(action: {
-                            viewModel.fillAllCells()
+                            vm.fillAllCells()
                         }) {
                             Label("Fill Solution", systemImage: "wand.and.stars")
                                 .font(.caption)
@@ -155,11 +163,11 @@ struct SudokuEditor: View {
                     }
                     
                     Button(action: {
-                        viewModel.showTargetOverlay.toggle()
+                        vm.showTargetOverlay.toggle()
                     }) {
                         Label(
-                            viewModel.showTargetOverlay ? "Hide Target" : "Show Target",
-                            systemImage: viewModel.showTargetOverlay ? "eye.slash" : "eye"
+                            vm.showTargetOverlay ? "Hide Target" : "Show Target",
+                            systemImage: vm.showTargetOverlay ? "eye.slash" : "eye"
                         )
                         .font(.caption)
                     }
@@ -169,7 +177,7 @@ struct SudokuEditor: View {
                 // Testing controls
                 HStack(spacing: 20) {
                     Button(action: {
-                        viewModel.resetToInitial()
+                        vm.resetToInitial()
                     }) {
                         Label("Reset", systemImage: "arrow.counterclockwise")
                             .font(.caption)
@@ -177,7 +185,7 @@ struct SudokuEditor: View {
                     .buttonStyle(.bordered)
                     
                     Button(action: {
-                        viewModel.provideHint()
+                        vm.provideHint()
                     }) {
                         Label("Hint", systemImage: "lightbulb")
                             .font(.caption)
@@ -185,7 +193,7 @@ struct SudokuEditor: View {
                     .buttonStyle(.bordered)
                     .tint(.yellow)
                     
-                    if viewModel.isComplete {
+                    if vm.isComplete {
                         Label("Complete!", systemImage: "checkmark.circle.fill")
                             .foregroundColor(.green)
                             .font(.caption.bold())
@@ -201,8 +209,8 @@ struct SudokuEditor: View {
                 
                 Spacer()
                 
-                if viewModel.conflicts.count > 0 {
-                    Label("\(viewModel.conflicts.count) conflicts", systemImage: "exclamationmark.triangle")
+                if vm.conflicts.count > 0 {
+                    Label("\(vm.conflicts.count) conflicts", systemImage: "exclamationmark.triangle")
                         .font(.caption2)
                         .foregroundColor(.red)
                 }
@@ -316,22 +324,22 @@ struct SudokuEditor: View {
     
     private func createScene(size: CGSize) -> SKScene {
         let scene = SudokuScene(size: size)
-        scene.viewModel = viewModel
+        scene.vm = vm
         scene.gameContext = nil  // No game context needed for editor
         scene.scaleMode = .aspectFill
         return scene
     }
     
     private func savePuzzle() {
-        viewModel.currentPuzzle?.name = puzzleName
-        viewModel.currentPuzzle?.difficulty = selectedDifficulty
-        viewModel.currentPuzzle?.tags = Set(tags)
-        viewModel.savePuzzle(name: puzzleName)
+        vm.currentPuzzle?.name = puzzleName
+        vm.currentPuzzle?.difficulty = selectedDifficulty
+        vm.currentPuzzle?.tags = Set(tags)
+        vm.savePuzzle(name: puzzleName)
         showingSaveDialog = false
     }
     
     private var validationErrors: [String]? {
-        guard let puzzle = viewModel.currentPuzzle else {
+        guard let puzzle = vm.currentPuzzle else {
             return ["No puzzle to validate"]
         }
         
@@ -340,11 +348,11 @@ struct SudokuEditor: View {
     }
     
     private var filledCellCount: Int {
-        viewModel.currentBoard.flatMap { $0 }.compactMap { $0 }.count
+        vm.currentBoard.flatMap { $0 }.compactMap { $0 }.count
     }
     
     private var totalCells: Int {
-        viewModel.gridSize.rawValue * viewModel.gridSize.rawValue
+        vm.gridSize.rawValue * vm.gridSize.rawValue
     }
 }
 
