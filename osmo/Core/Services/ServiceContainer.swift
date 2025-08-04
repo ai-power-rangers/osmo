@@ -31,7 +31,7 @@ enum ServiceError: LocalizedError {
 /// Uses modern @Observable pattern (iOS 17+)
 @MainActor
 @Observable
-final class ServiceContainer: GameContext {
+public final class ServiceContainer: GameContext {
     private static let logger = Logger(subsystem: "com.osmoapp", category: "ServiceContainer")
     
     // MARK: - Observable State
@@ -45,28 +45,28 @@ final class ServiceContainer: GameContext {
     private var _audio: AudioServiceProtocol?
     private var _cv: CVServiceProtocol?
     
-    var persistence: PersistenceServiceProtocol {
+    public var persistenceService: PersistenceServiceProtocol {
         guard let service = _persistence else {
             fatalError("ServiceContainer not initialized. Call initialize() first.")
         }
         return service
     }
     
-    var analytics: AnalyticsServiceProtocol {
+    public var analyticsService: AnalyticsServiceProtocol {
         guard let service = _analytics else {
             fatalError("ServiceContainer not initialized. Call initialize() first.")
         }
         return service
     }
     
-    var audio: AudioServiceProtocol {
+    public var audioService: AudioServiceProtocol {
         guard let service = _audio else {
             fatalError("ServiceContainer not initialized. Call initialize() first.")
         }
         return service
     }
     
-    var cv: CVServiceProtocol {
+    public var cvService: CVServiceProtocol {
         guard let service = _cv else {
             fatalError("ServiceContainer not initialized. Call initialize() first.")
         }
@@ -75,7 +75,7 @@ final class ServiceContainer: GameContext {
     
     private var _storage: PuzzleStorageProtocol?
     
-    var storage: PuzzleStorageProtocol {
+    public var storageService: PuzzleStorageProtocol {
         guard let service = _storage else {
             fatalError("ServiceContainer not initialized. Call initialize() first.")
         }
@@ -102,15 +102,15 @@ final class ServiceContainer: GameContext {
             
             // 2. Analytics Service (depends on persistence)
             updateProgress(0.3, "Initializing analytics...")
-            self._analytics = await initializeAnalytics(persistence: persistence)
+            self._analytics = await initializeAnalytics(persistence: persistenceService)
             
             // 3. Audio Service (depends on persistence)
             updateProgress(0.5, "Initializing audio...")
-            self._audio = await initializeAudio(persistence: persistence)
+            self._audio = await initializeAudio(persistence: persistenceService)
             
             // 4. CV Service (depends on analytics)
             updateProgress(0.7, "Initializing computer vision...")
-            self._cv = await initializeCV(analytics: analytics)
+            self._cv = await initializeCV(analytics: analyticsService)
             
             // 5. Storage Service (no dependencies)
             updateProgress(0.85, "Initializing storage...")
@@ -119,8 +119,8 @@ final class ServiceContainer: GameContext {
             // 6. Grid Editor Service (depends on persistence and analytics)
             updateProgress(0.9, "Initializing grid editor...")
             let gridEditorService = await initializeGridEditor(
-                persistence: persistence,
-                analytics: analytics
+                persistence: persistenceService,
+                analytics: analyticsService
             )
             self.gridEditor = gridEditorService
             
@@ -245,33 +245,4 @@ final class ServiceContainer: GameContext {
 }
 
 // MARK: - Service Access Extensions
-
-extension ServiceContainer {
-    /// Convenience properties for accessing services (all non-optional)
-    var analyticsService: AnalyticsServiceProtocol {
-        analytics
-    }
-    
-    var audioService: AudioServiceProtocol {
-        audio
-    }
-    
-    var cvService: CVServiceProtocol {
-        cv
-    }
-    
-    var persistenceService: PersistenceServiceProtocol {
-        persistence
-    }
-    
-    var storageService: PuzzleStorageProtocol {
-        storage
-    }
-    
-    var gridEditorService: GridEditorServiceProtocol? {
-        gridEditor
-    }
-    
-    // No need for require methods since services are always available
-    // They might be mocks, but they're never nil
-}
+// Service properties are now defined directly in the main class to conform to GameContext protocol

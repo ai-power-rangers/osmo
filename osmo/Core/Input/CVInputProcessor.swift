@@ -16,7 +16,7 @@ public final class CVInputProcessor: GameInputProcessor {
     
     private var lastDetectedPieces: [String: CGPoint] = [:]
     private var selectedPieceId: String?
-    private let confidenceThreshold: Float = 0.7
+    private var confidenceThreshold: Float = 0.7
     
     // MARK: - Initialization
     

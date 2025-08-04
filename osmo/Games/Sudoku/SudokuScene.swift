@@ -68,11 +68,8 @@ class SudokuScene: BaseGameScene {
         
         setupScene()
         
-        // Create view model if not set via gameContext
-        if sudokuViewModel == nil {
-            let sudokuVM = SudokuViewModel()
-            viewModel = sudokuVM
-        }
+        // View model will be set via gameContext
+        // Scene should not create its own view model
         
         // Initial update from view model if available
         if let vm = sudokuViewModel {

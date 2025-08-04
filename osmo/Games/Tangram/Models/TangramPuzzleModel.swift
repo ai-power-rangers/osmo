@@ -227,7 +227,7 @@ public struct TangramPuzzle: GamePuzzleProtocol, Codable, Identifiable, Hashable
     }
     
     // Hashable conformance
-    static func == (lhs: TangramPuzzle, rhs: TangramPuzzle) -> Bool {
+    public static func == (lhs: TangramPuzzle, rhs: TangramPuzzle) -> Bool {
         return lhs.id == rhs.id
     }
     

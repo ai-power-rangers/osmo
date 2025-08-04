@@ -488,7 +488,14 @@ extension BaseGameViewModel {
     
     /// Capture current state as a memento
     public func captureState() -> GameStateMemento<StateType> {
-        let state = currentPuzzle?.currentState ?? PuzzleType.StateType()
+        // If no puzzle loaded, create empty state memento
+        let state: StateType
+        if let currentState = currentPuzzle?.currentState {
+            state = currentState
+        } else {
+            // This will need to be overridden in subclasses to provide proper empty state
+            fatalError("captureState called without a puzzle loaded. Subclasses must override to provide empty state.")
+        }
         return GameStateMemento(
             state: state,
             source: lastInputSource,
@@ -518,11 +525,10 @@ extension BaseGameViewModel {
     public func validateState(_ state: StateType) -> StateValidation {
         // Default validation - override in subclasses for game-specific rules
         if let puzzle = currentPuzzle {
-            let errors = puzzle.validate()
-            if !errors.isEmpty {
+            if !puzzle.isValid() {
                 return StateValidation(
                     isValid: false,
-                    errors: errors.map { StateValidationError(code: "puzzle_error", message: $0) }
+                    errors: [StateValidationError(code: "puzzle_error", message: "Puzzle configuration is invalid")]
                 )
             }
         }

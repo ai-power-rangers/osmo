@@ -11,25 +11,25 @@ import SwiftUI
 
 // MARK: - Game Types
 
-enum GridSize: Int, CaseIterable, Codable {
+public enum GridSize: Int, CaseIterable, Codable {
     case fourByFour = 4
     case nineByNine = 9
     
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .fourByFour: return "4×4 Mini"
         case .nineByNine: return "9×9 Classic"
         }
     }
     
-    var boxSize: Int {
+    public var boxSize: Int {
         switch self {
         case .fourByFour: return 2
         case .nineByNine: return 3
         }
     }
     
-    var maxNumber: Int {
+    public var maxNumber: Int {
         return rawValue
     }
 }
@@ -47,11 +47,11 @@ enum PlacementResult {
     case originalTile
 }
 
-struct Position: Equatable, Hashable {
-    let row: Int
-    let col: Int
+public struct Position: Equatable, Hashable {
+    public let row: Int
+    public let col: Int
     
-    func box(for gridSize: GridSize) -> Int {
+    public func box(for gridSize: GridSize) -> Int {
         let boxSize = gridSize.boxSize
         let boxRow = row / boxSize
         let boxCol = col / boxSize

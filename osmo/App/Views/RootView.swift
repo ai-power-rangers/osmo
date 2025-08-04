@@ -77,7 +77,7 @@ struct RootView: View {
                 SudokuEditorLauncher()
                     .injectServices(from: services)
             } else {
-                Text("Editor not available for \(gameInfo.name)")
+                Text("Editor not available for \(gameInfo.displayName)")
             }
         }
     }

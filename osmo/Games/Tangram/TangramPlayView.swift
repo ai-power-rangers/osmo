@@ -9,20 +9,36 @@ import SwiftUI
 import SpriteKit
 
 struct TangramPlayView: View {
-    @State private var viewModel: TangramViewModel
+    @Environment(ServiceContainer.self) private var services
+    @State private var viewModel: TangramViewModel?
     @State private var showingPuzzleSelector = false
     @State private var showingHint = false
     
+    private let puzzle: TangramPuzzle?
+    
     init(puzzle: TangramPuzzle? = nil) {
-        let services = ServiceContainer.shared
-        _viewModel = State(initialValue: TangramViewModel(
-            puzzle: puzzle,
-            editorMode: nil,
-            services: services
-        ))
+        self.puzzle = puzzle
     }
     
     var body: some View {
+        Group {
+            if let vm = viewModel {
+                playContent(vm: vm)
+            } else {
+                ProgressView("Loading game...")
+                    .onAppear {
+                        viewModel = TangramViewModel(
+                            puzzle: puzzle,
+                            editorMode: nil,
+                            services: services
+                        )
+                    }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func playContent(vm: TangramViewModel) -> some View {
         ZStack {
             // Background
             AppColors.gameBackground
@@ -30,223 +46,138 @@ struct TangramPlayView: View {
             
             // Game scene
             GeometryReader { geometry in
-                SpriteView(scene: createScene(size: geometry.size))
-                    .ignoresSafeArea()
+                TangramGameHost(viewModel: vm, services: services)
             }
             
-            // Overlay UI
+            // Top controls
             VStack {
-                // Top bar
-                topBar
-                    .padding()
+                HStack {
+                    // Puzzle selector
+                    Button(action: { showingPuzzleSelector = true }) {
+                        Label("Puzzles", systemImage: "square.grid.2x2")
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.blue)
+                    
+                    Spacer()
+                    
+                    // Progress indicator
+                    if vm.isComplete {
+                        Text("✅ Complete!")
+                            .font(.headline)
+                            .foregroundColor(.green)
+                    }
+                    
+                    Spacer()
+                    
+                    // Hint button
+                    Button(action: { showingHint = true }) {
+                        Label("Hint", systemImage: "lightbulb")
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.orange)
+                }
+                .padding()
+                .background(Color.white.opacity(0.9))
                 
                 Spacer()
-                
-                // Bottom controls
-                bottomControls
-                    .padding()
-            }
-            
-            // Completion overlay
-            if viewModel.isComplete {
-                completionOverlay
             }
         }
-        .navigationTitle("Tangram")
+        .navigationTitle(vm.currentPuzzle?.name ?? "Tangram")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    Button(action: { showingPuzzleSelector = true }) {
-                        Label("Choose Puzzle", systemImage: "puzzlepiece")
-                    }
-                    
-                    Button(action: { viewModel.resetToInitial() }) {
-                        Label("Reset Puzzle", systemImage: "arrow.counterclockwise")
-                    }
-                    
-                    Divider()
-                    
-                    Toggle(isOn: $viewModel.showGrid) {
-                        Label("Show Grid", systemImage: "grid")
-                    }
-                    
-                    Toggle(isOn: $viewModel.snapToGrid) {
-                        Label("Snap to Grid", systemImage: "square.grid.3x3")
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                }
-            }
-        }
         .sheet(isPresented: $showingPuzzleSelector) {
-            PuzzleSelectorSheet(
-                puzzles: viewModel.getAllPuzzles(),
-                currentPuzzle: viewModel.currentPuzzle,
-                onSelect: { puzzle in
-                    viewModel.loadPuzzle(puzzle)
-                    showingPuzzleSelector = false
-                }
-            )
-        }
-    }
-    
-    private var topBar: some View {
-        HStack {
-            // Puzzle info
-            if let puzzle = viewModel.currentPuzzle {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(puzzle.name)
-                        .font(.headline)
-                    
-                    HStack(spacing: 8) {
-                        // Difficulty
-                        Label(puzzle.difficulty.rawValue, systemImage: "star.fill")
-                            .font(.caption)
-                            .foregroundColor(Color(puzzle.difficulty.colorName))
-                        
-                        // Progress
-                        Text("\(viewModel.currentState.pieces.count)/7")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-            
-            Spacer()
-            
-            // Hint button
-            if viewModel.currentPuzzle?.hintImageName != nil {
-                Button(action: { showingHint.toggle() }) {
-                    Image(systemName: showingHint ? "lightbulb.fill" : "lightbulb")
-                        .foregroundColor(.yellow)
-                }
+            TangramPuzzleSelector { selectedPuzzle in
+                vm.loadPuzzle(selectedPuzzle)
+                showingPuzzleSelector = false
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.1))
-                .shadow(radius: 2)
-        )
-    }
-    
-    private var bottomControls: some View {
-        HStack(spacing: 20) {
-            // Reset button
-            Button(action: {
-                viewModel.resetToInitial()
-            }) {
-                Image(systemName: "arrow.counterclockwise")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .frame(width: 50, height: 50)
-                    .background(Circle().fill(Color.orange))
-                    .shadow(radius: 2)
-            }
-            
-            Spacer()
-            
-            // Check solution button
-            Button(action: {
-                viewModel.checkSolution()
-            }) {
-                Image(systemName: "checkmark.circle")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .frame(width: 50, height: 50)
-                    .background(Circle().fill(Color.green))
-                    .shadow(radius: 2)
-            }
+        .sheet(isPresented: $showingHint) {
+            HintView(puzzle: vm.currentPuzzle)
         }
-    }
-    
-    private var completionOverlay: some View {
-        VStack(spacing: 20) {
-            Text("🎉")
-                .font(.system(size: 80))
-            
-            Text("Puzzle Complete!")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Text("Great job solving \(viewModel.currentPuzzle?.name ?? "the puzzle")!")
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-            
-            HStack(spacing: 20) {
-                Button(action: {
-                    viewModel.resetToInitial()
-                }) {
-                    Label("Play Again", systemImage: "arrow.counterclockwise")
-                        .padding()
-                        .background(Color.orange)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                
-                Button(action: {
-                    showingPuzzleSelector = true
-                }) {
-                    Label("New Puzzle", systemImage: "puzzlepiece")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
-        }
-        .padding(40)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white)
-                .shadow(radius: 10)
-        )
-        .transition(.scale.combined(with: .opacity))
-    }
-    
-    private func createScene(size: CGSize) -> TangramScene {
-        let scene = TangramScene(size: size)
-        scene.scaleMode = .resizeFill
-        scene.viewModel = viewModel
-        return scene
     }
 }
 
-// MARK: - Puzzle Selector
+// MARK: - Supporting Views
 
-struct PuzzleSelectorSheet: View {
-    let puzzles: [TangramPuzzle]
-    let currentPuzzle: TangramPuzzle?
+struct TangramPuzzleSelector: View {
     let onSelect: (TangramPuzzle) -> Void
+    @State private var puzzles: [TangramPuzzle] = []
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 16) {
-                    ForEach(puzzles) { puzzle in
-                        PuzzleCardView(
-                            puzzle: puzzle,
-                            onPlay: { selectedPuzzle in
-                                onSelect(selectedPuzzle)
+        NavigationView {
+            List(puzzles, id: \.id) { puzzle in
+                Button(action: { onSelect(puzzle) }) {
+                    VStack(alignment: .leading) {
+                        Text(puzzle.name)
+                            .font(.headline)
+                        HStack {
+                            Text("Difficulty: \(puzzle.difficulty.displayName)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            if puzzle.completionCount > 0 {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
                             }
-                        )
-                        .opacity(puzzle.id == currentPuzzle?.id ? 1.0 : 0.7)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: CornerRadius.medium)
-                                .stroke(puzzle.id == currentPuzzle?.id ? Color.blue : Color.clear, lineWidth: 3)
-                        )
+                        }
                     }
                 }
-                .padding()
             }
-            .navigationTitle("Choose Puzzle")
+            .navigationTitle("Select Puzzle")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+            }
+            .onAppear {
+                // Load puzzles
+                Task {
+                    do {
+                        puzzles = try await TangramPuzzleStorage.shared.loadAll()
+                    } catch {
+                        print("Failed to load puzzles: \(error)")
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct HintView: View {
+    let puzzle: TangramPuzzle?
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                if let targetState = puzzle?.targetState {
+                    Text("Target Shape")
+                        .font(.headline)
+                        .padding()
+                    
+                    // Show the target shape outline
+                    // This would be a visual representation of the target
+                    GeometryReader { geometry in
+                        // Placeholder for target shape visualization
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 2)
+                            .overlay(
+                                Text("Target shape visualization here")
+                                    .foregroundColor(.secondary)
+                            )
+                    }
+                    .aspectRatio(1, contentMode: .fit)
+                    .padding()
+                } else {
+                    Text("No hint available")
+                        .foregroundColor(.secondary)
+                }
+            }
+            .navigationTitle("Hint")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -256,13 +187,5 @@ struct PuzzleSelectorSheet: View {
                 }
             }
         }
-    }
-}
-
-// Removed duplicate PuzzleCard - now using unified PuzzleCardView from Core/GameBase/Views/
-
-#Preview {
-    NavigationStack {
-        TangramPlayView()
     }
 }

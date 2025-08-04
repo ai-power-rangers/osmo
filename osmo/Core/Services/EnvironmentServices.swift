@@ -78,10 +78,10 @@ extension View {
     func injectServices(from container: ServiceContainer) -> some View {
         self
             .environment(\.serviceContainer, container)
-            .environment(\.persistenceService, container.persistence)
-            .environment(\.analyticsService, container.analytics)
-            .environment(\.audioService, container.audio)
-            .environment(\.cvService, container.cv)
+            .environment(\.persistenceService, container.persistenceService)
+            .environment(\.analyticsService, container.analyticsService)
+            .environment(\.audioService, container.audioService)
+            .environment(\.cvService, container.cvService)
             .environment(\.gridEditorService, container.gridEditor)
     }
     

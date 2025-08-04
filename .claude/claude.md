@@ -11,3 +11,10 @@
   4. @Bindable - For creating bindings to observable objects
   5. @Environment - For dependency injection
   6. MainActor isolation - Proper actor isolation for UI updates
+
+   The Pattern:
+  - Services come from environment
+  - ViewModels are created in onAppear when services are
+  available
+  - Show loading state while ViewModel initializes
+  - No optional chaining or hacks
