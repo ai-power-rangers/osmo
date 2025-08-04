@@ -16,9 +16,11 @@ struct TangramEditor: View {
     @State private var showingNewPuzzleAlert = false
     
     init(puzzle: TangramPuzzle? = nil) {
+        let services = ServiceContainer.shared
         _viewModel = State(initialValue: TangramViewModel(
             puzzle: puzzle ?? TangramPuzzle.empty(),
-            editorMode: .target
+            editorMode: .target,
+            services: services
         ))
     }
     

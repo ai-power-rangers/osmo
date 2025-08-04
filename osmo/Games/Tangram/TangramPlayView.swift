@@ -14,9 +14,11 @@ struct TangramPlayView: View {
     @State private var showingHint = false
     
     init(puzzle: TangramPuzzle? = nil) {
+        let services = ServiceContainer.shared
         _viewModel = State(initialValue: TangramViewModel(
             puzzle: puzzle,
-            editorMode: nil
+            editorMode: nil,
+            services: services
         ))
     }
     

@@ -18,13 +18,14 @@ struct SudokuEditor: View {
     @State private var newTag = ""
     
     init(puzzle: SudokuPuzzle? = nil) {
+        let services = ServiceContainer.shared
         if let puzzle = puzzle {
-            _viewModel = State(initialValue: SudokuViewModel(puzzle: puzzle, editorMode: .initial))
+            _viewModel = State(initialValue: SudokuViewModel(puzzle: puzzle, editorMode: .initial, services: services))
             _puzzleName = State(initialValue: puzzle.name)
             _selectedDifficulty = State(initialValue: puzzle.difficulty)
             _tags = State(initialValue: Array(puzzle.tags))
         } else {
-            _viewModel = State(initialValue: SudokuViewModel(editorMode: .initial))
+            _viewModel = State(initialValue: SudokuViewModel(editorMode: .initial, services: services))
             _puzzleName = State(initialValue: "")
         }
     }

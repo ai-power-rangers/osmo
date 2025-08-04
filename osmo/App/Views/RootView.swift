@@ -70,16 +70,14 @@ struct RootView: View {
                 .injectServices(from: services)
             
         case .editor(let gameInfo, let mode):
-            Group {
-                if gameInfo.id == "tangram" {
-                    TangramEditor()
-                        .injectServices(from: services)
-                } else if gameInfo.id == "sudoku" {
-                    SudokuEditorLauncher()
-                        .injectServices(from: services)
-                } else {
-                    Text("Editor not available for \(gameInfo.name)")
-                }
+            if gameInfo.id == "tangram" {
+                TangramEditor()
+                    .injectServices(from: services)
+            } else if gameInfo.id == "sudoku" {
+                SudokuEditorLauncher()
+                    .injectServices(from: services)
+            } else {
+                Text("Editor not available for \(gameInfo.name)")
             }
         }
     }

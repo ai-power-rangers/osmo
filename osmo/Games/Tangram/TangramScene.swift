@@ -42,7 +42,7 @@ class TangramScene: BaseGameScene {
         
         // Create view model if not set via gameContext
         if tangramViewModel == nil {
-            let tangramVM = TangramViewModel()
+            let tangramVM = TangramViewModel(services: ServiceContainer.shared)
             viewModel = tangramVM
         }
         

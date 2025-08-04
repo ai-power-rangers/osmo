@@ -112,27 +112,4 @@ public enum PuzzleType: Codable {
     }
 }
 
-// MARK: - Storage Error
-
-public enum StorageError: LocalizedError {
-    case unsupportedType
-    case encodingFailed
-    case decodingFailed
-    case fileNotFound
-    case directoryNotFound
-    
-    public var errorDescription: String? {
-        switch self {
-        case .unsupportedType:
-            return "Unsupported puzzle type"
-        case .encodingFailed:
-            return "Failed to encode puzzle data"
-        case .decodingFailed:
-            return "Failed to decode puzzle data"
-        case .fileNotFound:
-            return "Puzzle file not found"
-        case .directoryNotFound:
-            return "Storage directory not found"
-        }
-    }
-}
+// StorageError is defined in SimplePuzzleStorage.swift
