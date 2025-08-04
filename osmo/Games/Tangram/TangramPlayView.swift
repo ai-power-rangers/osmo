@@ -9,44 +9,31 @@ import SwiftUI
 import SpriteKit
 
 struct TangramPlayView: View {
-    @Environment(ServiceContainer.self) private var services
-    @State private var viewModel: TangramViewModel?
+    @State private var currentPuzzle: TangramPuzzle?
     @State private var showingPuzzleSelector = false
     @State private var showingHint = false
+    @State private var isComplete = false
     
-    private let puzzle: TangramPuzzle?
+    private let initialPuzzle: TangramPuzzle?
     
     init(puzzle: TangramPuzzle? = nil) {
-        self.puzzle = puzzle
+        self.initialPuzzle = puzzle
     }
     
     var body: some View {
-        Group {
-            if let vm = viewModel {
-                playContent(vm: vm)
-            } else {
-                ProgressView("Loading game...")
-                    .onAppear {
-                        viewModel = TangramViewModel(
-                            puzzle: puzzle,
-                            editorMode: nil,
-                            services: services
-                        )
-                    }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func playContent(vm: TangramViewModel) -> some View {
         ZStack {
             // Background
-            AppColors.gameBackground
+            Color(.systemGray6)
                 .ignoresSafeArea()
             
             // Game scene
             GeometryReader { geometry in
-                TangramGameHost(viewModel: vm, services: services)
+                if let puzzle = currentPuzzle {
+                    TangramSceneView(puzzle: puzzle, isComplete: $isComplete)
+                } else {
+                    ProgressView("Loading puzzle...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
             
             // Top controls
@@ -62,7 +49,7 @@ struct TangramPlayView: View {
                     Spacer()
                     
                     // Progress indicator
-                    if vm.isComplete {
+                    if isComplete {
                         Text("✅ Complete!")
                             .font(.headline)
                             .foregroundColor(.green)
@@ -83,16 +70,39 @@ struct TangramPlayView: View {
                 Spacer()
             }
         }
-        .navigationTitle(vm.currentPuzzle?.name ?? "Tangram")
+        .navigationTitle(currentPuzzle?.name ?? "Tangram")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingPuzzleSelector) {
             TangramPuzzleSelector { selectedPuzzle in
-                vm.loadPuzzle(selectedPuzzle)
+                currentPuzzle = selectedPuzzle
+                isComplete = false
                 showingPuzzleSelector = false
             }
         }
         .sheet(isPresented: $showingHint) {
-            HintView(puzzle: vm.currentPuzzle)
+            HintView(puzzle: currentPuzzle)
+        }
+        .task {
+            if let puzzle = initialPuzzle {
+                currentPuzzle = puzzle
+            } else {
+                // Load a default puzzle or the last played one
+                await loadDefaultPuzzle()
+            }
+        }
+    }
+    
+    private func loadDefaultPuzzle() async {
+        // Try to load default puzzles
+        do {
+            let puzzles = try await SimplePuzzleStorage().loadAll()
+            if let firstPuzzle = puzzles.first {
+                await MainActor.run {
+                    currentPuzzle = firstPuzzle
+                }
+            }
+        } catch {
+            print("[TangramPlayView] Failed to load puzzles: \(error)")
         }
     }
 }
@@ -112,14 +122,10 @@ struct TangramPuzzleSelector: View {
                         Text(puzzle.name)
                             .font(.headline)
                         HStack {
-                            Text("Difficulty: \(puzzle.difficulty.displayName)")
+                            Text("Difficulty: \(puzzle.difficulty.rawValue)")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            if puzzle.completionCount > 0 {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                            }
                         }
                     }
                 }
@@ -133,14 +139,12 @@ struct TangramPuzzleSelector: View {
                     }
                 }
             }
-            .onAppear {
+            .task {
                 // Load puzzles
-                Task {
-                    do {
-                        puzzles = try await TangramPuzzleStorage.shared.loadAll()
-                    } catch {
-                        print("Failed to load puzzles: \(error)")
-                    }
+                do {
+                    puzzles = try await SimplePuzzleStorage().loadAll()
+                } catch {
+                    print("Failed to load puzzles: \(error)")
                 }
             }
         }
@@ -154,7 +158,7 @@ struct HintView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if let targetState = puzzle?.targetState {
+                if puzzle != nil {
                     Text("Target Shape")
                         .font(.headline)
                         .padding()

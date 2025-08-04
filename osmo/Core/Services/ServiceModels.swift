@@ -84,6 +84,18 @@ public struct UserSettings: Codable {
     public init() {}
 }
 
+// MARK: - Game Progress
+public struct GameProgress: Codable {
+    public var gameId: String
+    public var levelsCompleted: Set<String> = []
+    public var totalPlayTime: TimeInterval = 0
+    public var lastPlayed: Date = Date()
+    
+    public init(gameId: String) {
+        self.gameId = gameId
+    }
+}
+
 // MARK: - Persistence Keys
 enum PersistenceKey {
     case gameProgress(gameId: String)

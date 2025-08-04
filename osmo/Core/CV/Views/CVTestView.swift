@@ -11,12 +11,12 @@ import os.log
 
 enum TestMode: String, CaseIterable {
     case fingers = "Finger Detection"
-    case sudoku = "Rectangle Detection"
+    case rectangle = "Rectangle Detection"
 }
 
 struct CVTestView: View {
 
-    @Environment(\.cvService) private var cvService
+    // Use GameKit.cv directly instead of environment
     @State private var isSessionActive = false
     @State private var lastFingerCount: Int?
     
@@ -188,7 +188,7 @@ struct CVTestView: View {
         Task {
             do {
                 // Enable debug mode for more logging
-                if let cameraService = cvService as? CameraVisionService {
+                if let cameraService = GameKit.cv as? CameraVisionService {
                     cameraService.debugMode = true
                     logger.info("[CVTest] Debug mode enabled for CameraVisionService")
                     
@@ -196,18 +196,18 @@ struct CVTestView: View {
                     await MainActor.run {
                         cameraSession = cameraService.cameraSession
                     }
-                } else if let arKitService = cvService as? ARKitCVService {
+                } else if let arKitService = GameKit.cv as? ARKitCVService {
                     arKitService.debugMode = true
                     logger.info("[CVTest] Debug mode enabled for ARKitCVService")
                     // ARKit doesn't provide direct camera session access
                 }
                 
                 // Start CV session
-                try await cvService?.startSession()
+                try await GameKit.cv.startSession()
                 logger.info("[CVTest] Session started successfully")
                 
                 // Get the camera session after starting
-                if let cameraService = cvService as? CameraVisionService {
+                if let cameraService = GameKit.cv as? CameraVisionService {
                     await MainActor.run {
                         cameraSession = cameraService.cameraSession
                     }
@@ -231,7 +231,7 @@ struct CVTestView: View {
     }
     
     private func stopSession() {
-        cvService?.stopSession()
+        GameKit.cv.stopSession()
         isSessionActive = false
         lastFingerCount = nil
         eventCount = 0
@@ -242,11 +242,7 @@ struct CVTestView: View {
     }
     
     private func subscribeToEvents() async {
-        guard let cvService = cvService else { return }
-        let stream = cvService.eventStream(
-            gameId: "test",
-            events: [] // Subscribe to all events for debugging
-        )
+        let stream = GameKit.cv.eventStream(for: "test")
         
         for await event in stream {
                     eventCount += 1
@@ -255,73 +251,18 @@ struct CVTestView: View {
                     // Commented out due to complex type interpolation
                     // logger.debug("[CVTest] Received event")
                     
-                    switch event.type {
-                    case .fingerCountDetected(let count):
+                    // Simplified event handling for migration
+                    switch event {
+                    case .fingerDetected(let count):
                         logger.info("[CVTest] Finger count detected: \(count)")
                         lastFingerCount = count
-                        
-                        // Update overlay if in finger mode
-                        if testMode == .fingers, let metadata = event.metadata, let boundingBox = metadata.boundingBox {
-                            // Extract chirality from metadata if available
-                            let chirality: HandChirality = {
-                                if let chiralityString = metadata.additionalProperties["hand_chirality"] as? String,
-                                   let detectedChirality = HandChirality(rawValue: chiralityString) {
-                                    return detectedChirality
-                                }
-                                return .unknown
-                            }()
-                            
-                            // Check if this is for a specific hand (multiple hands case)
-                            if let handId = metadata.additionalProperties["hand_id"] as? String {
-                                // Multiple hands - update specific hand
-                                overlayViewModel.updateSpecificHand(
-                                    handId: handId,
-                                    boundingBox: boundingBox,
-                                    fingerCount: count,
-                                    confidence: event.confidence,
-                                    chirality: chirality
-                                )
-                            } else {
-                                // Single hand - use regular update
-                                overlayViewModel.updateHand(
-                                    boundingBox: boundingBox,
-                                    fingerCount: count,
-                                    confidence: event.confidence,
-                                    chirality: chirality
-                                )
-                            }
-                        }
-                        
-                    case .handDetected(let handId, let chirality):
-                        logger.info("[CVTest] Hand detected: \(handId), chirality: \(chirality.rawValue)")
-                        
-                    case .handLost(let handId):
-                        logger.info("[CVTest] Hand lost: \(handId)")
-                        if testMode == .fingers {
-                            overlayViewModel.clearHands()
-                        }
-                        
-                    case .handPoseChanged(let handId, let pose):
-                        logger.info("[CVTest] Hand pose changed: \(handId) -> \(pose.rawValue)")
-                        
-                    case .sudokuGridDetected(let gridId, let corners):
-                        logger.info("[CVTest] Rectangle detected: \(gridId), corners: \(corners.count)")
+                    case .pieceDetected(let piece):
+                        logger.info("[CVTest] Piece detected")
+                    case .rectangleDetected(let rect):
+                        logger.info("[CVTest] Rectangle detected")
                         rectangleDetected = true
-                        
-                        // Update overlay if in rectangle mode
-                        if testMode == .sudoku {
-                            overlayViewModel.updateRectangle(corners, confidence: event.confidence)
-                        }
-                        
-                    case .sudokuGridLost(let gridId):
-                        logger.info("[CVTest] Rectangle lost: \(gridId)")
-                        rectangleDetected = false
-                        if testMode == .sudoku {
-                            overlayViewModel.clearRectangles()
-                        }
-                        
-                    default:
-                        logger.debug("[CVTest] Other event type detected")
+                    case .error(let error):
+                        logger.error("[CVTest] Error: \(error)")
                     }
         }
     }

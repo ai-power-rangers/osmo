@@ -12,6 +12,7 @@ import os.log
 
 // MARK: - SwiftData Persistence Service
 @Observable
+@MainActor
 final class SwiftDataService: PersistenceServiceProtocol {
     private let logger = Logger(subsystem: "com.osmoapp", category: "persistence")
     private let modelContainer: ModelContainer
@@ -20,6 +21,7 @@ final class SwiftDataService: PersistenceServiceProtocol {
     // Cache for performance
     private var settingsCache: UserSettings?
     
+    @MainActor
     init() throws {
         let schema = Schema([
             SDGameProgress.self,
@@ -39,7 +41,8 @@ final class SwiftDataService: PersistenceServiceProtocol {
             configurations: [modelConfiguration]
         )
         
-        modelContext = ModelContext(modelContainer)
+        // Create context on main thread to avoid threading warnings
+        modelContext = modelContainer.mainContext
         modelContext.autosaveEnabled = true
         
         logger.info("[SwiftData] Service initialized")

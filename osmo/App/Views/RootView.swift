@@ -8,77 +8,46 @@
 import SwiftUI
 
 struct RootView: View {
-    @Environment(ServiceContainer.self) private var services
-    @State private var navigation = NavigationState()
-    @State private var selectedGame: String?
-    @State private var showingGameView = false
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack(path: $navigation.navigationPath) {
-            LobbyView(
-                navigationPath: $navigation.navigationPath,
-                onGameSelected: { gameId in
-                    selectedGame = gameId
-                    showingGameView = true
+        NavigationStack(path: $path) {
+            LobbyView(navigationPath: $path, onGameSelected: handleGameSelected)
+                .navigationDestination(for: AppRoute.self) { route in
+                    destination(for: route)
                 }
-            )
-            .navigationDestination(for: NavigationState.Route.self) { route in
-                destinationView(for: route)
-            }
         }
-        .environment(navigation)
-        .fullScreenCover(isPresented: $showingGameView) {
-            if let gameId = selectedGame {
-                GameHost(gameId: gameId) {
-                    showingGameView = false
-                    selectedGame = nil
-                }
-                .injectServices(from: services)
-            }
+    }
+    
+    private func handleGameSelected(_ gameId: String) {
+        switch gameId {
+        case "tangram":
+            path.append(AppRoute.tangramPuzzleSelect)
+        default:
+            break
         }
     }
     
     @ViewBuilder
-    private func destinationView(for route: NavigationState.Route) -> some View {
+    private func destination(for route: AppRoute) -> some View {
         switch route {
-        case .home:
-            LobbyView(
-                navigationPath: $navigation.navigationPath,
-                onGameSelected: { gameId in
-                    selectedGame = gameId
-                    showingGameView = true
-                }
-            )
-            
         case .lobby:
-            LobbyView(
-                navigationPath: $navigation.navigationPath,
-                onGameSelected: { gameId in
-                    selectedGame = gameId
-                    showingGameView = true
-                }
-            )
-            
-        case .game(let gameInfo):
-            GameHost(gameId: gameInfo.id) {
-                navigation.goBack()
-            }
-            .injectServices(from: services)
+            LobbyView(navigationPath: $path, onGameSelected: handleGameSelected)
             
         case .settings:
             SettingsView()
-                .injectServices(from: services)
             
-        case .editor(let gameInfo, let mode):
-            if gameInfo.id == "tangram" {
-                TangramEditor()
-                    .injectServices(from: services)
-            } else if gameInfo.id == "sudoku" {
-                SudokuEditorLauncher()
-                    .injectServices(from: services)
-            } else {
-                Text("Editor not available for \(gameInfo.displayName)")
-            }
+        case .tangramGame(let puzzleId):
+            TangramGame(puzzleId: puzzleId)
+            
+        case .tangramEditor(let puzzleId):
+            ImprovedTangramEditor(puzzleId: puzzleId)
+            
+        case .tangramPuzzleSelect:
+            TangramPuzzleSelect()
+            
+        case .cvTest:
+            CVTestView()
         }
     }
 }

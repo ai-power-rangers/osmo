@@ -15,6 +15,7 @@ struct ParentGate: View {
     @State private var userAnswer = ""
     @State private var showingError = false
     @State private var attempts = 0
+    @FocusState private var isInputFocused: Bool
     private let maxAttempts = 3
     
     var body: some View {
@@ -44,6 +45,10 @@ struct ParentGate: View {
                 .font(.system(size: 24, design: .rounded))
                 .multilineTextAlignment(.center)
                 .frame(width: 120)
+                .focused($isInputFocused)
+                .onSubmit {
+                    checkAnswer()
+                }
             
             // Error message
             if showingError {
@@ -87,7 +92,15 @@ struct ParentGate: View {
         }
         
         if answer == challenge.answer {
-            onSuccess()
+            // Dismiss keyboard before success callback
+            isInputFocused = false
+            // Add small delay to ensure keyboard dismissal
+            Task {
+                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                await MainActor.run {
+                    onSuccess()
+                }
+            }
         } else {
             attempts += 1
             showingError = true
@@ -100,8 +113,11 @@ struct ParentGate: View {
             }
             
             // Hide error after delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                showingError = false
+            Task {
+                try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+                await MainActor.run {
+                    showingError = false
+                }
             }
         }
     }
@@ -178,6 +194,10 @@ extension View {
                     Color.black.opacity(0.3)
                         .ignoresSafeArea()
                         .transition(.opacity)
+                        .onTapGesture {
+                            // Dismiss keyboard when tapping outside
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
                     
                     ParentGate(
                         onSuccess: {
@@ -187,6 +207,8 @@ extension View {
                             onSuccess()
                         },
                         onCancel: {
+                            // Dismiss keyboard before closing
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             withAnimation {
                                 isPresented.wrappedValue = false
                             }
@@ -208,34 +230,29 @@ struct ParentGateAlert: ViewModifier {
     @State private var challenge = MathChallenge.random()
     @State private var userAnswer = ""
     @State private var showingError = false
+    @FocusState private var isTextFieldFocused: Bool
     
     func body(content: Content) -> some View {
         content
             .alert("Parent Verification", isPresented: $isPresented) {
                 TextField("Answer", text: $userAnswer)
-                    .keyboardType(.numberPad)
+                    .focused($isTextFieldFocused)
+                    .onAppear {
+                        // Reset state when alert appears
+                        userAnswer = ""
+                        showingError = false
+                        challenge = MathChallenge.random()
+                    }
                 
                 Button("Cancel", role: .cancel) {
+                    dismissKeyboard()
                     userAnswer = ""
+                    showingError = false
                     challenge = MathChallenge.random()
                 }
                 
                 Button("Submit") {
-                    if let answer = Int(userAnswer), answer == challenge.answer {
-                        onSuccess()
-                        userAnswer = ""
-                        challenge = MathChallenge.random()
-                    } else {
-                        showingError = true
-                        userAnswer = ""
-                        // Generate new challenge on wrong answer
-                        challenge = MathChallenge.random()
-                        
-                        // Re-present the alert
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            isPresented = true
-                        }
-                    }
+                    handleSubmit()
                 }
             } message: {
                 VStack {
@@ -246,6 +263,43 @@ struct ParentGateAlert: ViewModifier {
                     }
                 }
             }
+            .onChange(of: isPresented) { _, newValue in
+                if !newValue {
+                    dismissKeyboard()
+                }
+            }
+    }
+    
+    private func handleSubmit() {
+        if let answer = Int(userAnswer), answer == challenge.answer {
+            dismissKeyboard()
+            // Add delay to prevent keyboard session conflicts
+            Task {
+                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                await MainActor.run {
+                    onSuccess()
+                    userAnswer = ""
+                    challenge = MathChallenge.random()
+                }
+            }
+        } else {
+            showingError = true
+            userAnswer = ""
+            challenge = MathChallenge.random()
+            
+            // Use Task instead of DispatchQueue for better async handling
+            Task {
+                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                await MainActor.run {
+                    isPresented = true
+                }
+            }
+        }
+    }
+    
+    private func dismissKeyboard() {
+        isTextFieldFocused = false
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

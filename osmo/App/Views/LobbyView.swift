@@ -17,33 +17,11 @@ struct LobbyView: View {
     // App icons including games and settings
     let appIcons = [
         AppIcon(
-            id: "rock-paper-scissors",
-            displayName: "Rock Paper",
-            iconName: "hand.raised",
-            backgroundColor: .blue,
-            action: .game("rock-paper-scissors")
-        ),
-        AppIcon(
-            id: "sudoku",
-            displayName: "Sudoku",
-            iconName: "square.grid.3x3",
-            backgroundColor: .green,
-            action: .game("sudoku")
-        ),
-        AppIcon(
             id: "tangram",
             displayName: "Tangram",
             iconName: "square.on.square",
             backgroundColor: .orange,
             action: .game("tangram")
-        ),
-        AppIcon(
-            id: "tic-tac-toe",
-            displayName: "Tic-Tac-Toe",
-            iconName: "grid",
-            backgroundColor: .gray,
-            action: .game("tic-tac-toe"),
-            isLocked: true
         ),
         AppIcon(
             id: "settings",
@@ -83,7 +61,7 @@ struct LobbyView: View {
             )
             .ignoresSafeArea()
         )
-        .parentGateAlert(isPresented: $showingParentGate) {
+        .parentGate(isPresented: $showingParentGate) {
             // Execute the pending action after successful parent gate
             pendingAction?()
             pendingAction = nil

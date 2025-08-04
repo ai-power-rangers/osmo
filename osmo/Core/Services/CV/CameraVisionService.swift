@@ -132,14 +132,6 @@ final class CameraVisionService: NSObject, CVServiceProtocol, ServiceLifecycle, 
         
         // Create appropriate processor
         switch gameId {
-        case RockPaperScissorsGameModule.gameId:
-            activeProcessor = RPSHandProcessor()
-        case SudokuGameModule.gameId:
-            // Get grid size from configuration or default to 9x9
-            let gridSizeRaw = configuration["gridSize"] as? Int ?? 9
-            let gridSize: GridSize = (gridSizeRaw == 4) ? .fourByFour : .nineByNine
-            activeProcessor = SudokuBoardProcessor(gridSize: gridSize)
-            logger.info("[CameraVision] Created Sudoku processor with grid size: \(gridSize.displayName)")
         default:
             logger.warning("[CameraVision] No processor for game: \(gameId)")
             activeProcessor = nil

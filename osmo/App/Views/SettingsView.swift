@@ -9,9 +9,6 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.persistenceService) private var persistenceService
-    @Environment(\.analyticsService) private var analyticsService
-    @Environment(\.audioService) private var audioService
     
     @State private var userSettings = UserSettings()
     @State private var isLoading = true
@@ -40,16 +37,8 @@ struct SettingsView: View {
             }
             
             Section("Games") {
-                ForEach(GameSettingsRegistry.shared.allProviders(), id: \.gameId) { provider in
-                    NavigationLink(destination: provider.createSettingsView()) {
-                        Label(provider.displayName, systemImage: provider.iconName)
-                    }
-                }
-                
-                if GameSettingsRegistry.shared.allProviders().isEmpty {
-                    Text("No game settings available")
-                        .foregroundColor(.secondary)
-                        .font(.caption)
+                NavigationLink(destination: Text("Tangram Settings")) {
+                    Label("Tangram", systemImage: "square.on.square")
                 }
             }
             
@@ -121,21 +110,24 @@ struct SettingsView: View {
     // MARK: - Data Operations
     
     private func loadSettings() async {
-        guard let persistence = persistenceService else { return }
-        
-        userSettings = await persistence.loadUserSettings()
+        // Load settings from GameKit storage
+        do {
+            userSettings = try await GameKit.storage.loadSettings()
+        } catch {
+            // Use default settings if not available
+            userSettings = UserSettings()
+        }
         hasChanges = false
     }
     
     private func saveSettings() async {
-        guard let persistence = persistenceService else { return }
-        
+        // Save settings using GameKit
         do {
-            try await persistence.saveUserSettings(userSettings)
+            try await GameKit.storage.saveSettings(userSettings)
             hasChanges = false
             
             // Log settings change
-            analyticsService?.logEvent("settings_updated", parameters: [
+            GameKit.analytics.logEvent("settings_updated", parameters: [
                 "sound_enabled": String(userSettings.soundEnabled),
                 "music_enabled": String(userSettings.musicEnabled),
                 "haptic_enabled": String(userSettings.hapticEnabled),
@@ -150,25 +142,25 @@ struct SettingsView: View {
     // MARK: - Service Updates
     
     private func updateAudioService() {
-        guard let audio = audioService as? AudioEngineService else { return }
-        
-        audio.updateSettings(userSettings)
+        // Audio settings are applied immediately through UserSettings
     }
     
     // MARK: - Test Actions
     
     private func testSound() {
-        audioService?.playSound("button_tap")
-        
-        // Log test action
-        analyticsService?.logEvent("debug_test_sound", parameters: [:])
+        // Use GameKit for immediate access
+        Task { @MainActor in
+            GameKit.audio.play(.buttonTap)
+            GameKit.analytics.logEvent("debug_test_sound", parameters: [:])
+        }
     }
     
     private func testHaptic() {
-        audioService?.playHaptic(.medium)
-        
-        // Log test action
-        analyticsService?.logEvent("debug_test_haptic", parameters: [:])
+        // Use GameKit for immediate access
+        Task { @MainActor in
+            GameKit.haptics.playHaptic(.medium)
+            GameKit.analytics.logEvent("debug_test_haptic", parameters: [:])
+        }
     }
 }
 

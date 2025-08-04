@@ -10,7 +10,7 @@ import SwiftUI
 struct CameraPermissionView: View {
     @State private var permissionManager = CameraPermissionManager.shared
     @Environment(\.dismiss) var dismiss
-    @Environment(\.audioService) private var audioService
+    // Use GameKit.audio directly
     let onAuthorized: () -> Void
     
     var body: some View {
@@ -123,9 +123,9 @@ struct CameraPermissionView: View {
         
         // Haptic feedback
         if status == .authorized {
-            audioService?.playHaptic(.success)
+            GameKit.haptics.notification(.success)
         } else {
-            audioService?.playHaptic(.error)
+            GameKit.haptics.notification(.error)
         }
     }
 }

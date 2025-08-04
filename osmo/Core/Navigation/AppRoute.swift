@@ -2,28 +2,22 @@
 //  AppRoute.swift
 //  osmo
 //
-//  Native iOS NavigationStack routing (replaces NavigationCoordinator)
+//  Single source of truth for all navigation
 //
 
 import Foundation
 
-/// Simple navigation routes for native iOS NavigationStack
-enum AppRoute: Hashable {
+/// All navigation routes in the app
+public enum AppRoute: Hashable {
+    // Main
+    case lobby
     case settings
-    case cvTest
-    case gameSettings
     
-    // Tangram routes
+    // Tangram
+    case tangramGame(puzzleId: String? = nil)
     case tangramEditor(puzzleId: String? = nil)
     case tangramPuzzleSelect
     
-    // Sudoku routes  
-    case sudokuEditor(puzzleId: String? = nil)
-    case sudokuPuzzleSelect
-    
-    // Game routes (fullscreen)
-    case game(gameId: String, puzzleId: String? = nil)
-    
-    // Grid editor
-    case gridEditor(gameType: String)
+    // Utility
+    case cvTest
 }
